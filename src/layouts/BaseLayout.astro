@@ -47,6 +47,7 @@ const seo = merge(baseSeo, seoProps, { arrayMerge: (_, sourceArray) => sourceArr
     <meta name="viewport" content="width=device-width" />
     <meta name="author" content="Piotr Kulpinski" />
     <meta name="generator" content={Astro.generator} />
+    <link rel="sitemap" href="/sitemap-index.xml" />
 
     <!-- Favicon guidelines generated with https://favicon.io/ -->
     <link rel="apple-touch-icon" sizes="180x180" href="/favicons/apple-touch-icon.png" />
@@ -57,7 +58,6 @@ const seo = merge(baseSeo, seoProps, { arrayMerge: (_, sourceArray) => sourceArr
     <!-- HTML in your document's head -->
     <link rel="preconnect" href="https://rsms.me/" />
     <link rel="stylesheet" href="https://rsms.me/inter/inter.css" />
-    <script is:inline defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
   </head>
 
   <body

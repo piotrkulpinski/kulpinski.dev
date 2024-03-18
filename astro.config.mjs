@@ -9,7 +9,9 @@ import cloudflare from "@astrojs/cloudflare"
 // https://astro.build/config
 export default defineConfig({
   output: "hybrid",
-  adapter: cloudflare(),
+  adapter: cloudflare({
+    imageServiceSection: "cloudflare",
+  }),
   markdown: {
     drafts: true,
     shikiConfig: {

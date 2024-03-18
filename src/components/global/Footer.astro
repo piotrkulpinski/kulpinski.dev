@@ -1,6 +1,10 @@
+---
+const year = new Date().getFullYear()
+---
+
 <footer class="mt-auto">
-  <p class="text-sm text-neutral-500" x-data="{ year: new Date().getFullYear() }">
-    © <span x-text="year"></span> &middot;
+  <p class="text-sm text-neutral-500">
+    © {year} &middot;
     <a
       href="https://x.com/piotrkulpinski"
       target="_blank"

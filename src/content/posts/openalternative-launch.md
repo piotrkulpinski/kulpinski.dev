@@ -1,6 +1,6 @@
 ---
 pubDate: 2024-03-15
-title: Behind OpenAlternative's 100k Unique Visitors Launch Week
+title: Growing OpenAlternative to 100k Unique Visitors in one week
 tags: ["side-projects", "marketing"]
 ---
 

@@ -1,6 +1,6 @@
 ---
 pubDate: 2024-03-10
-title: Simple Blogging
+title: Starting simple
 tags: []
 ---
 
