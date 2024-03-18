@@ -2,7 +2,6 @@
 import { getCollection } from "astro:content"
 import BaseLayout from "~/layouts/BaseLayout.astro"
 import ProjectList from "~/components/ProjectList.astro"
-import EntriesOne from "~/components/entries/EntriesOne.astro"
 const allProjects = await getCollection("projects")
 
 // Sort projects by date in descending order (newest first)

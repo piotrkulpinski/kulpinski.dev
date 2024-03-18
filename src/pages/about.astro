@@ -1,8 +1,6 @@
 ---
 import { getCollection } from "astro:content"
 import BaseLayout from "~/layouts/BaseLayout.astro"
-import PostList from "~/components/PostList.astro"
-import EntriesOne from "~/components/entries/EntriesOne.astro"
 const allPosts = await getCollection("posts")
 
 // Sort posts by date in descending order (newest first)

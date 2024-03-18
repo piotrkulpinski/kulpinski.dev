@@ -2,7 +2,7 @@
 import merge from "deepmerge"
 import { SEO, type SEOProps } from "astro-seo"
 import Navigation from "~/components/global/Navigation.astro"
-import Newsletter from "~/components/global/Newsletter.astro"
+import Newsletter from "~/components/dynamic/Newsletter"
 import Footer from "~/components/global/Footer.astro"
 
 import "~/styles/global.css"
@@ -65,7 +65,7 @@ const seo = merge(baseSeo, seoProps, { arrayMerge: (_, sourceArray) => sourceArr
   >
     <Navigation />
     <slot />
-    <Newsletter />
+    <Newsletter client:visible />
     <Footer />
   </body>
 </html>

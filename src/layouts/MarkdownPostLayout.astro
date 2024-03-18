@@ -1,10 +1,11 @@
 ---
 import { Image } from "astro:assets"
 import { formatDate } from "@curiousleaf/utils"
+import type { CollectionEntry } from "astro:content"
 
-type Props = CollectionEntry<"posts">
+type Props = CollectionEntry<"posts">["data"]
 
-const { author, title, description, image, tags, pubDate } = Astro.props
+const { title, description, image, tags, pubDate } = Astro.props
 ---
 
 <section class="flex flex-col gap-12">
