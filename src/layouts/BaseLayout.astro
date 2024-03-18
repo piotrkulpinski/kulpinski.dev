@@ -1,0 +1,73 @@
+---
+import merge from "deepmerge"
+import { SEO, type SEOProps } from "astro-seo"
+import Navigation from "~/components/global/Navigation.astro"
+import Newsletter from "~/components/global/Newsletter.astro"
+import Footer from "~/components/global/Footer.astro"
+
+import "~/styles/global.css"
+
+type Props = SEOProps
+
+const { title, description, ...seoProps } = Astro.props
+
+const globalTitle = "Piotr Kulpinski's Blog"
+const globalDescription =
+  "I work as an independent software engineer and designer. I'm passionate about creating beautiful, accessible, and performant web. I write about things I learn and find interesting."
+const metaUrl = new URL(Astro.url.pathname, import.meta.env.SITE).toString()
+const metaTitle = `${title ? `${title} - ` : ""}${globalTitle}`
+const metaDescription = description || globalDescription
+
+console.log(seoProps)
+
+const baseSeo = {
+  title: metaTitle,
+  description: metaDescription,
+  canonical: metaUrl,
+  openGraph: {
+    basic: {
+      title: metaTitle,
+      type: "website",
+      image: new URL("opengraph.png", import.meta.env.SITE).toString(),
+      url: metaUrl,
+    },
+  },
+  twitter: {
+    creator: "@piotrkulpinski",
+    card: "summary_large_image",
+  },
+} satisfies SEOProps
+
+const seo = merge(baseSeo, seoProps, { arrayMerge: (_, sourceArray) => sourceArray })
+---
+
+<html lang="en">
+  <head>
+    <SEO {...seo} />
+
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="author" content="Piotr Kulpinski" />
+    <meta name="generator" content={Astro.generator} />
+
+    <!-- Favicon guidelines generated with https://favicon.io/ -->
+    <link rel="apple-touch-icon" sizes="180x180" href="/favicons/apple-touch-icon.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicons/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicons/favicon-16x16.png" />
+    <link rel="manifest" href="/favicons/site.webmanifest" />
+
+    <!-- HTML in your document's head -->
+    <link rel="preconnect" href="https://rsms.me/" />
+    <link rel="stylesheet" href="https://rsms.me/inter/inter.css" />
+    <script is:inline defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+  </head>
+
+  <body
+    class="mx-auto flex min-h-screen max-w-[42.5rem] flex-col gap-12 bg-white p-8 text-neutral-800 dark:bg-neutral-900 dark:text-neutral-200"
+  >
+    <Navigation />
+    <slot />
+    <Newsletter />
+    <Footer />
+  </body>
+</html>

@@ -1,0 +1,28 @@
+---
+import { getCollection } from "astro:content"
+import BaseLayout from "~/layouts/BaseLayout.astro"
+import PostList from "~/components/PostList.astro"
+import EntriesOne from "~/components/entries/EntriesOne.astro"
+const allPosts = await getCollection("posts")
+
+// Sort posts by date in descending order (newest first)
+const sortedPosts = allPosts.sort(
+  (a, b) => new Date(b.data.pubDate).valueOf() - new Date(a.data.pubDate).valueOf()
+)
+---
+
+<BaseLayout>
+  <section class="space-y-2">
+    <h3 class="font-display font-medium">Today</h3>
+
+    <div class="prose-styles">
+      <p class="!m-0 text-sm">
+        I work as an independent software engineer and designer. I'm passionate about creating
+        beautiful, accessible, and performant web. I write about things I learn and find
+        interesting.
+      </p>
+    </div>
+  </section>
+
+  <PostList title="Latest Posts" posts={sortedPosts} />
+</BaseLayout>

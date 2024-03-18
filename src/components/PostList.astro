@@ -1,0 +1,32 @@
+---
+import { type HTMLAttributes } from "astro/types"
+import type { CollectionEntry } from "astro:content"
+import EntriesOne from "~/components/entries/EntriesOne.astro"
+
+type Props = HTMLAttributes<"div"> & {
+  title?: string
+  posts: CollectionEntry<"posts">[]
+}
+
+const { title, posts, ...props } = Astro.props
+---
+
+<section class="space-y-2" {...props}>
+  {
+    title && (
+      <h3 class="font-display font-medium text-neutral-800 dark:text-neutral-200">{title}</h3>
+    )
+  }
+
+  {
+    !!posts.length ? (
+      <ul>
+        {posts.map((post) => (
+          <EntriesOne url={"/posts/" + post.slug} {...post.data} />
+        ))}
+      </ul>
+    ) : (
+      <p>No posts found</p>
+    )
+  }
+</section>

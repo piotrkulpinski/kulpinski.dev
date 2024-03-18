@@ -1,0 +1,53 @@
+---
+import { Image } from "astro:assets"
+
+const pathname = new URL(Astro.request.url).pathname
+const currentPath = pathname.slice(1)
+---
+
+<div class="flex items-center justify-between">
+  <a href="/" class="group flex shrink-0 items-center gap-2">
+    <Image
+      class="inline-block h-6 w-6"
+      src="/images/logo.svg"
+      alt=""
+      height="128"
+      width="128"
+      loading="eager"
+    />
+
+    <p class="font-display text-sm font-medium group-hover:opacity-80">Piotr Kulpinski</p>
+  </a>
+
+  <nav class="flex items-center gap-3 text-neutral-600 dark:text-neutral-400">
+    <a
+      href="/"
+      class:list={[
+        "items-center gap-2 text-sm font-medium hover:text-neutral-700 dark:hover:text-neutral-300",
+        currentPath === "" || currentPath.includes("posts")
+          ? "text-black underline dark:text-neutral-200"
+          : "",
+      ]}
+    >
+      Articles
+    </a>
+    <a
+      href="/projects"
+      class:list={[
+        "items-center gap-2 text-sm font-medium hover:text-neutral-700 dark:hover:text-neutral-300",
+        currentPath === "projects" ? "text-black underline dark:text-neutral-200" : "",
+      ]}
+    >
+      Projects
+    </a>
+    <a
+      href="/about"
+      class:list={[
+        "items-center gap-2 text-sm font-medium hover:text-neutral-700 dark:hover:text-neutral-300",
+        currentPath === "about" ? "text-black underline dark:text-neutral-200" : "",
+      ]}
+    >
+      About
+    </a>
+  </nav>
+</div>

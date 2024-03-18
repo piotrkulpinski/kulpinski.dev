@@ -1,0 +1,29 @@
+---
+import type { HTMLAttributes } from "astro/types"
+
+type Props = HTMLAttributes<"div"> & {
+  title?: string
+}
+
+const { class: className, title, ...props } = Astro.props
+---
+
+<div class:list={[className, "flex flex-col items-start"]} {...props}>
+  {
+    title && (
+      <h1 class="font-display text-balance text-3xl font-semibold tracking-tight md:text-3xl">
+        {title}
+      </h1>
+    )
+  }
+
+  {
+    Astro.slots.has("description") && (
+      <div class="prose-styles">
+        <slot name="description" />
+      </div>
+    )
+  }
+
+  <slot />
+</div>

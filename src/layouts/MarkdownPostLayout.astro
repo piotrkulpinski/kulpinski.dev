@@ -1,0 +1,49 @@
+---
+import { Image } from "astro:assets"
+import { formatDate } from "@curiousleaf/utils"
+
+type Props = CollectionEntry<"posts">
+
+const { author, title, description, image, tags, pubDate } = Astro.props
+---
+
+<section class="flex flex-col gap-12">
+  {
+    image && (
+      <Image
+        class="w-full object-cover object-center lg:h-72"
+        src={image.url}
+        alt={image.alt}
+        height={288}
+        width={616}
+        loading="eager"
+      />
+    )
+  }
+
+  <div>
+    <h1 class="text-balance text-3xl font-semibold tracking-tight md:text-4xl">
+      {title}
+    </h1>
+
+    <div class="mt-4 flex flex-wrap gap-3 text-neutral-500">
+      <p class="text-xs">
+        {formatDate(pubDate)}
+      </p>
+
+      {
+        tags.map((tag) => (
+          <span class="inline-flex items-center text-xs lowercase hover:text-blue-500">
+            <a href={`/tags/${tag}`}>#{tag}</a>
+          </span>
+        ))
+      }
+    </div>
+  </div>
+
+  <div class="prose-styles">
+    {description && <p class="lead">{description}</p>}
+
+    <slot />
+  </div>
+</section>
