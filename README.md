@@ -1,11 +1,12 @@
-# Astro & Tailwind CSS Starter Kit by lexingtonthemes.com
+# Astro & Tailwind CSS Theme for kulpinski.dev
 
 ## Template Integrations
+
 - @astrojs/tailwind - https://docs.astro.build/en/guides/integrations-guide/tailwind/
 - @astrojs/sitemap - https://docs.astro.build/en/guides/integrations-guide/sitemap/
 - @astrojs/mdx - https://docs.astro.build/en/guides/markdown-content/
 - @astrojs/rss - https://docs.astro.build/en/guides/rss/
-- Astrolib SEO - https://github.com/onwidget/astrolib/tree/main/packages/seo
+- Astro SEO - https://github.com/jonasmerlin/astro-seo?tab=readme-ov-file
 
 ## Template Structure
 

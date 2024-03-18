@@ -5,12 +5,13 @@ const allPosts = await getCollection("posts")
 const tags = [...new Set(allPosts.map((post) => post.data.tags).flat())]
 const sortedTags = tags.sort((a, b) => a.localeCompare(b)) // Sort tags alphabetically
 
-const pageTitle = "Tag Index"
+const title = "Tag Index"
 ---
 
-<BaseLayout pageTitle={pageTitle}>
+<BaseLayout title={title}>
   <section class="space-y-2">
-    <h3 class="font-display font-medium text-neutral-800 dark:text-neutral-200">{pageTitle}</h3>
+    <h3 class="font-display font-medium text-neutral-800 dark:text-neutral-200">{title}</h3>
+
     <ol>
       {
         sortedTags.map((tag) => (

@@ -1,14 +1,14 @@
 ---
 import { type HTMLAttributes } from "astro/types"
 import type { CollectionEntry } from "astro:content"
-import PostItem from "~/components/PostItem.astro"
+import ProjectItem from "~/components/ProjectItem.astro"
 
 type Props = HTMLAttributes<"div"> & {
   title?: string
-  posts: CollectionEntry<"posts">[]
+  projects: CollectionEntry<"projects">[]
 }
 
-const { title, posts, ...props } = Astro.props
+const { title, projects, ...props } = Astro.props
 ---
 
 <section class="space-y-2" {...props}>
@@ -19,14 +19,14 @@ const { title, posts, ...props } = Astro.props
   }
 
   {
-    !!posts.length ? (
-      <ul>
-        {posts.map((post) => (
-          <PostItem url={"/posts/" + post.slug} {...post.data} />
+    !!projects.length ? (
+      <ul class="space-y-2">
+        {projects.map((project) => (
+          <ProjectItem url={"/projects/" + project.slug} {...project.data} />
         ))}
       </ul>
     ) : (
-      <p>No posts found</p>
+      <p>No projects found</p>
     )
   }
 </section>

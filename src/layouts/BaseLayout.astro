@@ -18,8 +18,6 @@ const metaUrl = new URL(Astro.url.pathname, import.meta.env.SITE).toString()
 const metaTitle = `${title ? `${title} - ` : ""}${globalTitle}`
 const metaDescription = description || globalDescription
 
-console.log(seoProps)
-
 const baseSeo = {
   title: metaTitle,
   description: metaDescription,
