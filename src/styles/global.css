@@ -63,6 +63,7 @@
   @apply prose-headings:font-semibold;
   @apply prose-headings:font-display;
   @apply prose-headings:text-neutral-800;
+  @apply prose-headings:tracking-tight;
   @apply dark:prose-headings:text-neutral-200;
   @apply text-neutral-600;
   @apply dark:text-neutral-400;

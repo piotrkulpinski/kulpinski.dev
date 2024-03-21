@@ -1,12 +1,5 @@
 ---
-import { getCollection } from "astro:content"
 import BaseLayout from "~/layouts/BaseLayout.astro"
-const allPosts = await getCollection("posts")
-
-// Sort posts by date in descending order (newest first)
-const sortedPosts = allPosts.sort(
-  (a, b) => new Date(b.data.pubDate).valueOf() - new Date(a.data.pubDate).valueOf()
-)
 
 const title = "About me"
 ---

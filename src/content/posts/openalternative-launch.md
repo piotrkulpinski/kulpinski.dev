@@ -30,7 +30,7 @@ I didn't want to include every open-source project I could find. I wanted to kee
 
 While browsing the Astro documentation, I found out they have a pretty easy way to implement a [View Transitions](https://developer.chrome.com/docs/web-platform/view-transitions) so I tought it would be a nice touch to the site.
 
-For the backend, I opted for [Airtable](https://airtable.com) as a database. It's a simple, no-code solution that I've used before. It's not the most powerful database, but it's perfect for a project like this. I could easily add, edit, and delete records, and it has an embeddable form functionality that I used for user submissions.
+For the backend, I opted for [Airtable](https://kulp.in/airtable) as a database. It's a simple, no-code solution that I've used before. It's not the most powerful database, but it's perfect for a project like this. I could easily add, edit, and delete records, and it has an embeddable form functionality that I used for user submissions.
 
 ![](https://i.imgur.com/eLxU165.jpg)
 
