@@ -3,14 +3,12 @@ import satori from "satori"
 import openGraphTemplate, { type OpenGraphTemplateProps } from "~/components/dynamic/OpenGraph"
 
 export const getOpenGraphTemplateResponse = async (
-  request: Request,
+  site: URL | undefined,
   templateProps: OpenGraphTemplateProps
 ) => {
-  const url = new URL(request.url)
-
   const [fontRegular, fontBold] = await Promise.all([
-    fetch(new URL("fonts/Inter-Regular.otf", url.origin)).then((res) => res.arrayBuffer()),
-    fetch(new URL("fonts/Inter-SemiBold.otf", url.origin)).then((res) => res.arrayBuffer()),
+    fetch(new URL("fonts/Inter-Regular.ttf", site?.origin)).then((res) => res.arrayBuffer()),
+    fetch(new URL("fonts/Inter-SemiBold.ttf", site?.origin)).then((res) => res.arrayBuffer()),
   ])
 
   const svg = await satori(openGraphTemplate(templateProps), {

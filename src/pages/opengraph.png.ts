@@ -1,8 +1,8 @@
 import type { APIRoute } from "astro"
 import { getOpenGraphTemplateResponse } from "~/utils/opengraph"
 
-export const GET: APIRoute = async ({ request }) => {
-  return await getOpenGraphTemplateResponse(request, {
+export const GET: APIRoute = async ({ site }) => {
+  return await getOpenGraphTemplateResponse(site, {
     title: "Independent software engineer and designer.",
   })
 }

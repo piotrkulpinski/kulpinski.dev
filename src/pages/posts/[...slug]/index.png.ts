@@ -12,8 +12,8 @@ export async function getStaticPaths() {
   }))
 }
 
-export const GET: APIRoute = async ({ request, props: { entry } }) => {
+export const GET: APIRoute = async ({ site, props: { entry } }) => {
   const { title, pubDate, tags } = (entry as CollectionEntry<"posts">).data
 
-  return await getOpenGraphTemplateResponse(request, { title, pubDate, tags })
+  return await getOpenGraphTemplateResponse(site, { title, pubDate, tags })
 }
