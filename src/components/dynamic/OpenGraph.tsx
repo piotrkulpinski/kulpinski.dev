@@ -30,41 +30,7 @@ export default function openGraphTemplate({ title, pubDate, tags }: OpenGraphTem
       >
         <div
           style={{
-            display: "flex",
-            flexDirection: "column",
-          }}
-        >
-          <p
-            style={{
-              fontSize: "4.8rem",
-              fontWeight: "bold",
-              letterSpacing: "-0.05em",
-            }}
-          >
-            {title}
-          </p>
-
-          {(pubDate || !!tags?.length) && (
-            <div
-              style={{
-                display: "flex",
-                flexWrap: "wrap",
-                alignItems: "center",
-                gap: "24",
-                marginTop: "-1rem",
-                fontSize: "1.8rem",
-                color: "#52525B",
-              }}
-            >
-              {pubDate && <p>{formatDate(pubDate)}</p>}
-              {tags?.map((tag) => <span>#{tag}</span>)}
-            </div>
-          )}
-        </div>
-
-        <div
-          style={{
-            marginTop: "auto",
+            // marginTop: "auto",
             display: "flex",
             alignItems: "center",
             gap: "20",
@@ -97,6 +63,40 @@ export default function openGraphTemplate({ title, pubDate, tags }: OpenGraphTem
           </svg>
 
           <strong style={{ fontWeight: "bold" }}>Piotr Kulpinski</strong>
+        </div>
+
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+          }}
+        >
+          <p
+            style={{
+              fontSize: "4.8rem",
+              fontWeight: "bold",
+              letterSpacing: "-0.05em",
+            }}
+          >
+            {title}
+          </p>
+
+          {(pubDate || !!tags?.length) && (
+            <div
+              style={{
+                display: "flex",
+                flexWrap: "wrap",
+                alignItems: "center",
+                gap: "24",
+                marginTop: "-1rem",
+                fontSize: "1.8rem",
+                color: "#52525B",
+              }}
+            >
+              {pubDate && <p>{formatDate(pubDate)}</p>}
+              {tags?.map((tag) => <span>#{tag}</span>)}
+            </div>
+          )}
         </div>
       </div>
     </div>
