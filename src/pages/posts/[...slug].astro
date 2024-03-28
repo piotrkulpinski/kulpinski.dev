@@ -17,7 +17,7 @@ const post = entry.data
 const seo = {
   title: post.title,
   description: post.description,
-  ...(post.image?.url ? { openGraph: { basic: { image: post.image?.url } } } : {}),
+  ...(post.ogImage ? { openGraph: { basic: { image: post.ogImage.src } } } : {}),
 } as SEOProps
 ---
 

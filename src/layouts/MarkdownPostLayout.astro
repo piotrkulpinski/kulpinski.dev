@@ -12,9 +12,9 @@ const { title, description, image, tags, pubDate } = Astro.props
   {
     image && (
       <Image
-        class="w-full object-cover object-center lg:h-72"
-        src={image.url}
-        alt={image.alt}
+        class="w-full object-cover object-center lg:max-h-72"
+        src={image}
+        alt={title}
         height={288}
         width={616}
         loading="eager"
