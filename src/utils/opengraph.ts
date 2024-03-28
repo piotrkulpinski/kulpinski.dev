@@ -2,13 +2,12 @@ import { Resvg } from "@resvg/resvg-js"
 import satori from "satori"
 import openGraphTemplate, { type OpenGraphTemplateProps } from "~/components/dynamic/OpenGraph"
 
-export const getOpenGraphTemplateResponse = async (
-  site: URL | undefined,
-  templateProps: OpenGraphTemplateProps
-) => {
+export const getOpenGraphTemplateResponse = async (templateProps: OpenGraphTemplateProps) => {
+  const url = process.env.SITE_URL
+
   const [fontRegular, fontBold] = await Promise.all([
-    fetch(new URL("fonts/Inter-Regular.ttf", site?.origin)).then((res) => res.arrayBuffer()),
-    fetch(new URL("fonts/Inter-SemiBold.ttf", site?.origin)).then((res) => res.arrayBuffer()),
+    fetch(new URL("fonts/Inter-Regular.ttf", url)).then((res) => res.arrayBuffer()),
+    fetch(new URL("fonts/Inter-SemiBold.ttf", url)).then((res) => res.arrayBuffer()),
   ])
 
   const svg = await satori(openGraphTemplate(templateProps), {
