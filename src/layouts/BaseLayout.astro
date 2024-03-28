@@ -67,5 +67,11 @@ const seo = merge(baseSeo, seoProps, { arrayMerge: (_, sourceArray) => sourceArr
     <slot />
     <Newsletter client:visible />
     <Footer />
+
+    <script
+      is:inline
+      defer
+      data-domain="kulpinski.dev"
+      src="https://plausible.kulpinski.dev/js/script.js"></script>
   </body>
 </html>
