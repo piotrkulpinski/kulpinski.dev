@@ -8,7 +8,7 @@ type Props = HTMLAttributes<"div"> & {
 const { class: className, title, ...props } = Astro.props
 ---
 
-<div class:list={[className, "flex flex-col items-start"]} {...props}>
+<div class:list={[className, "flex flex-col items-start gap-4"]} {...props}>
   {
     title && (
       <h1 class="font-display text-balance text-3xl font-semibold tracking-tight md:text-3xl">
@@ -19,7 +19,7 @@ const { class: className, title, ...props } = Astro.props
 
   {
     Astro.slots.has("description") && (
-      <div class="prose-styles">
+      <div class="prose-styles -mt-2">
         <slot name="description" />
       </div>
     )

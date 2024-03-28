@@ -14,7 +14,7 @@ const { title, description, ...seoProps } = Astro.props
 const globalTitle = "Piotr Kulpinski's Blog"
 const globalDescription =
   "I work as an independent software engineer and designer. I'm passionate about creating beautiful, accessible, and performant web. I write about things I learn and find interesting."
-const metaUrl = new URL(Astro.url.pathname, import.meta.env.SITE).toString()
+const metaUrl = Astro.request.url
 const metaTitle = `${title ? `${title} - ` : ""}${globalTitle}`
 const metaDescription = description || globalDescription
 
@@ -26,7 +26,7 @@ const baseSeo = {
     basic: {
       title: metaTitle,
       type: "website",
-      image: new URL("images/opengraph.png", import.meta.env.SITE).toString(),
+      image: new URL("opengraph.png", Astro.request.url).toString(),
       url: metaUrl,
     },
   },
