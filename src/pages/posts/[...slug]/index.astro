@@ -16,12 +16,12 @@ export async function getStaticPaths() {
 const { entry } = Astro.props
 const { Content } = await entry.render()
 const post = entry.data
-const pathname = new URL(Astro.request.url)
+const url = new URL(Astro.request.url).origin
 
 const seo = {
   title: post.title,
   description: post.description,
-  openGraph: { basic: { image: `${pathname}.png` } },
+  openGraph: { basic: { image: `${url}/posts/${entry.slug}.png` } },
 } as SEOProps
 ---
 
