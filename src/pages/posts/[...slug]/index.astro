@@ -5,7 +5,7 @@ import BaseLayout from "~/layouts/BaseLayout.astro"
 import MarkdownPostLayout from "~/layouts/MarkdownPostLayout.astro"
 
 export async function getStaticPaths() {
-  const blogEntries = await getCollection("posts")
+  const blogEntries = await getCollection("posts", ({ data }) => !data.isDraft)
 
   return blogEntries.map((entry) => ({
     params: { slug: entry.slug },

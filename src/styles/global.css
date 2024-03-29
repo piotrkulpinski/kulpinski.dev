@@ -89,6 +89,7 @@
   @apply prose-headings:font-display;
   @apply prose-headings:text-neutral-800;
   @apply prose-headings:tracking-tight;
+  @apply prose-h2:text-[1.8em];
   @apply dark:prose-headings:text-neutral-200;
   @apply text-neutral-600;
   @apply dark:text-neutral-400;
