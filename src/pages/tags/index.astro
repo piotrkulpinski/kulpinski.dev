@@ -1,9 +1,21 @@
 ---
 import { getCollection } from "astro:content"
+import plur from "plur"
 import BaseLayout from "~/layouts/BaseLayout.astro"
+
 const allPosts = await getCollection("posts")
-const tags = [...new Set(allPosts.map((post) => post.data.tags).flat())]
-const sortedTags = tags.sort((a, b) => a.localeCompare(b)) // Sort tags alphabetically
+const tagCountMap = new Map()
+
+for (const post of allPosts) {
+  post.data.tags.forEach((tag) => {
+    const count = tagCountMap.get(tag) || 0
+    tagCountMap.set(tag, count + 1)
+  })
+}
+
+const tags = Array.from(tagCountMap, ([tag, count]) => ({ tag, count })).sort((a, b) =>
+  a.tag.localeCompare(b.tag)
+)
 
 const title = "Tag Index"
 ---
@@ -14,12 +26,16 @@ const title = "Tag Index"
 
     <ol>
       {
-        sortedTags.map((tag) => (
+        tags.map((tag) => (
           <li>
-            <a href={`/tags/${tag}`} class="group flex min-w-0 items-center gap-4 py-1">
-              <p class="truncate text-sm group-hover:underline">{tag}</p>
+            <a href={`/tags/${tag.tag}`} class="group flex min-w-0 items-center gap-4 py-1">
+              <p class="truncate text-sm group-hover:underline">{tag.tag}</p>
 
               <span class="h-px min-w-[2rem] flex-1 bg-current opacity-15" />
+
+              <span class="shrink-0 text-xs text-neutral-500">
+                {tag.count} {plur("post", tag.count)}
+              </span>
             </a>
           </li>
         ))

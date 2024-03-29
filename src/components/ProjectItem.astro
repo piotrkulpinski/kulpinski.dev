@@ -18,10 +18,7 @@ const { url, title, description, year } = Astro.props
     </p>
 
     <span class="h-px min-w-[2rem] flex-1 bg-current opacity-15"></span>
-
-    <time datetime="2020-03-16" class="shrink-0 text-xs text-neutral-500">
-      {year}
-    </time>
+    <span class="shrink-0 text-xs text-neutral-500">{year}</span>
 
     {description && <p class="w-full text-xs text-neutral-500">{description}</p>}
   </a>
