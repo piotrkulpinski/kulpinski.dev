@@ -6,7 +6,7 @@ tags: ["side-projects", "marketing"]
 
 I'm a software engineer by trade, but I've always been interested in marketing and growth. I've been working on a various side projects for a while now, and I recently hit a major success: **100,000 unique visitors in one week**.
 
-Here's how I did it 👇
+Here's how I managed to grow [OpenAlternative](https://openalternative.co) to 100k users 👇
 
 <blockquote class="twitter-tweet"><p lang="en" dir="ltr">Launch week is finished for OpenAlternative, so here are some juicy stats you&#39;ve all been waiting for 🚀<br><br>🧑‍🦰 100k Unique Visitors<br>🖱️ 800k Page Views<br>😻 450 <a href="https://twitter.com/ProductHunt?ref_src=twsrc%5Etfw">@ProductHunt</a> upvotes<br>💌 250 Newsletter Subscribers<br>⬆️ 300 New Followers<br>🧑‍💻 90 Stars on GitHub<br><br>And for the most important…</p>&mdash; Piotr Kulpinski (@piotrkulpinski) <a href="https://twitter.com/piotrkulpinski/status/1767108966603980866?ref_src=twsrc%5Etfw">March 11, 2024</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 
