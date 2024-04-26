@@ -29,7 +29,6 @@
 
 :root {
   --astro-code-color-text: #24292e;
-  /* --astro-code-color-background: #f5f5f5; */
   --astro-code-token-constant: #0550ae;
   --astro-code-token-string: #032f62;
   --astro-code-token-comment: #6e7781;
@@ -44,7 +43,6 @@
 @media (prefers-color-scheme: dark) {
   :root {
     --astro-code-color-text: #c9d1d9;
-    /* --astro-code-color-background: #0d1117; */
     --astro-code-token-constant: #79c0ff;
     --astro-code-token-string: #a5d6ff;
     --astro-code-token-comment: #8b949e;
@@ -55,42 +53,4 @@
     --astro-code-token-punctuation: #c9d1d9;
     --astro-code-token-link: #58a6ff;
   }
-}
-
-.prose-styles {
-  @apply prose;
-  @apply prose-neutral;
-  @apply dark:prose-invert;
-  @apply prose-a:font-normal;
-  @apply prose-a:text-black;
-  @apply dark:prose-a:text-white;
-  @apply hover:prose-a:text-blue-500;
-  @apply first:prose-p:mt-0;
-  @apply last:prose-p:mb-0;
-  @apply first:prose-ul:mt-0;
-  @apply last:prose-ul:mb-0;
-  @apply prose-li:m-0;
-  @apply prose-img:border;
-  @apply prose-img:border-neutral-200;
-  @apply prose-img:rounded-md;
-  @apply prose-lead:text-lg/relaxed;
-  @apply prose-pre:!text-[0.8125em];
-  @apply prose-pre:!bg-neutral-100;
-  @apply dark:prose-pre:!bg-neutral-800;
-  /* @apply prose-code:before:content-none;
-  @apply prose-code:after:content-none;
-  @apply prose-code:bg-neutral-100;
-  @apply prose-code:border;
-  @apply prose-code:text-current;
-  @apply prose-code:rounded;
-  @apply prose-code:px-1;
-  @apply prose-code:py-px; */
-  @apply prose-headings:font-semibold;
-  @apply prose-headings:font-display;
-  @apply prose-headings:text-neutral-800;
-  @apply prose-headings:tracking-tight;
-  @apply prose-h2:text-[1.8em];
-  @apply dark:prose-headings:text-neutral-200;
-  @apply text-neutral-600;
-  @apply dark:text-neutral-400;
 }

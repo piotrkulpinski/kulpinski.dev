@@ -1,5 +1,6 @@
 ---
 import type { HTMLAttributes } from "astro/types"
+import Prose from "~/components/global/Prose.astro"
 
 type Props = HTMLAttributes<"div"> & {
   title?: string
@@ -19,9 +20,9 @@ const { class: className, title, ...props } = Astro.props
 
   {
     Astro.slots.has("description") && (
-      <div class="prose-styles -mt-2">
+      <Prose class="-mt-2">
         <slot name="description" />
-      </div>
+      </Prose>
     )
   }
 

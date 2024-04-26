@@ -1,0 +1,120 @@
+---
+pubDate: 2024-04-26
+title: Supercharge Your Number Inputs with Custom Step Sizes
+tags: ["engineering"]
+---
+
+import NumberInput from "~/components/examples/NumberInput"
+
+The `<input type="number">` element provides a convenient way to handle numeric input in web forms. You can set bounds with the `min` and `max` attributes, and users can press the up and down arrow keys to increment or decrement the value by the specified `step` size. However, what if you want to allow users to adjust the value using different step sizes?
+
+By default, the `step` attribute not only determines the increment/decrement amount but also clips the value to the nearest multiple of the step. For example, if you have an input with a value of 5 and a step of 10, pressing the up arrow key will set the value to 10 (the nearest multiple of the step) instead of 15 (5 + 10).
+
+## How to build a better number input
+
+In this article, we'll explore how to enhance the functionality of number inputs to support custom step sizes. We'll implement the following features:
+
+- `↑/↓` – adjusts the value by the specified `step` size (1 if step is not specified).
+- `Shift`+`↑/↓` – adjusts the value by step **multiplied by 10**.
+- `Alt`+`↑/↓` – adjusts the value by step **divided by 10**.
+- `Ctrl/Cmd`+`↑/↓` – adjusts the value by step **multiplied by 100**.
+- If the input is empty, the value is calculated based on the `min` attribute (0 if `min` is not specified).
+
+Here's a preview of what we'll be building:
+
+<NumberInput client:visible />
+
+Let's dive into the implementation!
+
+## Helper Functions
+
+First, let's define some utility functions that we'll use throughout the implementation.
+
+```ts
+const parseNumericValue = (value?: string | number | null) => {
+  if (value === undefined || value === null) return undefined
+  const parsed = Number.parseFloat(value.toString())
+
+  return Number.isNaN(parsed) ? undefined : parsed
+}
+```
+
+The `parseNumericValue` function takes a value (which can be a string, number, or null) and parses it as a floating-point number. If the value is `undefined` or `null`, it returns `undefined`. If the parsing fails, it also returns `undefined`.
+
+This function will be useful for parsing the `min`, `max`, `step`, and current value of the input elements.
+
+```ts
+const preciseRound = (value: number, decimals = 2) => {
+  const factor = Math.pow(10, decimals)
+
+  return Math.round((value + Number.EPSILON) * factor) / factor
+}
+```
+
+The `preciseRound` function rounds a number to a specified number of decimal places. It uses the `Number.EPSILON` constant to handle [floating-point precision issues](https://blog.demofox.org/2017/11/21/floating-point-precision/).
+
+```ts
+const keepNumberInRange = (value: number, min?: number, max?: number) => {
+  if (min !== undefined && max !== undefined) {
+    return Math.min(Math.max(value, min), max)
+  }
+  if (min !== undefined) {
+    return Math.max(value, min)
+  }
+  if (max !== undefined) {
+    return Math.min(value, max)
+  }
+
+  return value
+}
+```
+
+The `keepNumberInRange` function ensures that a given number stays within the specified `min` and `max` bounds. I like to use reusable utility functions like this to keep the code clean and maintainable.
+
+## Implementing the Key Up Handler
+
+Here's the main event handler function that will be called when the user presses the up or down arrow keys on a number input:
+
+```ts
+import { KeyboardEvent } from "react"
+
+const handleKeyUp = (e: KeyboardEvent<HTMLInputElement>) => {
+  if (!["ArrowUp", "ArrowDown"].includes(e.key)) {
+    return
+  }
+
+  const target = e.currentTarget
+  const direction = e.key === "ArrowUp" ? 1 : -1
+  const min = parseNumericValue(target.getAttribute("min"))
+  const max = parseNumericValue(target.getAttribute("max"))
+  const step = parseNumericValue(target.getAttribute("step")) || 1
+  const value = parseNumericValue(target.value) || min || 0
+  const increment = step * (e.metaKey ? 100 : e.shiftKey ? 10 : e.altKey ? 1 / 10 : 1)
+
+  const newValue = preciseRound(value + direction * Math.max(increment, 0.1), 2)
+
+  if (newValue !== value) {
+    target.value = keepNumberInRange(newValue, min, max)
+    e.preventDefault()
+  }
+}
+
+// Usage: <input type="number" onKeyUp={handleKeyUp} />
+```
+
+Let's break down the code:
+
+1. We check if the pressed key is either "ArrowUp" or "ArrowDown". If not, we return early.
+2. We get the current target input element and determine the direction based on the pressed key (+1 for "ArrowUp", -1 for "ArrowDown").
+3. We parse the `min`, `max`, and `step` attributes of the input element using the `parseNumericValue` utility function.
+4. We parse the current value of the input using `parseNumericValue` or fallback to the `min` value or 0 if the input is empty.
+5. We calculate the increment based on the modifier keys: Ctrl/Cmd multiplies the step by 100, Shift multiplies it by 10, Alt divides it by 10, and the default is 1.
+6. We calculate the new value by adding the product of the direction and the increment to the current value, using the `preciseRound` utility function to handle floating-point precision.
+7. If the new value is different from the current value, we update the input value using the `setInputValue` function, ensuring it stays within the specified `min` and `max` range.
+8. Finally, we call `e.preventDefault()` to prevent the default browser behavior.
+
+With this implementation, your number inputs will have the desired supercharged behavior, allowing users to quickly adjust values using different step sizes based on the modifier keys they press.
+
+You can easily integrate this code into your project by attaching the `handleKeyUp` event handler to your number input elements.
+
+Happy coding!

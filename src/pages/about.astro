@@ -1,5 +1,6 @@
 ---
 import BaseLayout from "~/layouts/BaseLayout.astro"
+import Prose from "~/components/global/Prose.astro"
 
 const title = "About me"
 ---
@@ -8,7 +9,7 @@ const title = "About me"
   <section class="space-y-2">
     <h3 class="font-display font-medium">{title}</h3>
 
-    <div class="prose-styles">
+    <Prose>
       <ul class="text-sm">
         <li>born in late 80s in the beautiful city of Krakow</li>
         <li>programmer-turned-solopreneur</li>
@@ -19,6 +20,6 @@ const title = "About me"
         <li>passionate about minimalism & simplicity</li>
         <li>built and shipped a lot of useful <a href="/projects">web projects</a></li>
       </ul>
-    </div>
+    </Prose>
   </section>
 </BaseLayout>
