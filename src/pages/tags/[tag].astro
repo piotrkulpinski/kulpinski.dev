@@ -4,12 +4,12 @@ import { getCollection } from "astro:content"
 import PostList from "~/components/PostList.astro"
 
 export async function getStaticPaths() {
-  const allPosts = await getCollection("posts")
-  const uniqueTags = [...new Set(allPosts.map((post) => post.data.tags).flat())]
+  const posts = await getCollection("posts", ({ data }) => !data.isDraft)
+  const uniqueTags = [...new Set(posts.map((post) => post.data.tags).flat())]
 
   return uniqueTags.map((tag) => {
     // Filter posts by tag
-    const filteredPosts = allPosts.filter((post) => post.data.tags.includes(tag))
+    const filteredPosts = posts.filter((post) => post.data.tags.includes(tag))
     // Sort filtered posts by date in descending order
     const sortedPosts = filteredPosts.sort(
       (a, b) => new Date(b.data.pubDate).valueOf() - new Date(a.data.pubDate).valueOf()

@@ -3,11 +3,11 @@ import { getCollection } from "astro:content"
 import plur from "plur"
 import BaseLayout from "~/layouts/BaseLayout.astro"
 
-const allPosts = await getCollection("posts")
+const posts = await getCollection("posts", ({ data }) => !data.isDraft)
 const tagCountMap = new Map()
 
-for (const post of allPosts) {
-  post.data.tags.forEach((tag) => {
+for (const post of posts) {
+  post.data.tags.forEach((tag: string) => {
     const count = tagCountMap.get(tag) || 0
     tagCountMap.set(tag, count + 1)
   })

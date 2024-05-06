@@ -3,10 +3,10 @@ import { getCollection } from "astro:content"
 import BaseLayout from "~/layouts/BaseLayout.astro"
 import PostList from "~/components/PostList.astro"
 import Prose from "~/components/global/Prose.astro"
-const allPosts = await getCollection("posts", ({ data }) => !data.isDraft)
+const posts = await getCollection("posts", ({ data }) => !data.isDraft)
 
 // Sort posts by date in descending order (newest first)
-const sortedPosts = allPosts.sort(
+const sortedPosts = posts.sort(
   (a, b) => new Date(b.data.pubDate).valueOf() - new Date(a.data.pubDate).valueOf()
 )
 ---
