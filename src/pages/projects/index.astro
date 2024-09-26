@@ -10,8 +10,10 @@ const sortedProjects = allProjects.sort(
 )
 
 const title = "Recent Projects"
+const description =
+  "Some of my recent projects. I'm always working on something new, so this list is always changing. If you're interested in seeing more, check out my Twitter profile."
 ---
 
-<BaseLayout title={title}>
-  <ProjectList title={title} projects={sortedProjects} />
+<BaseLayout title={title} description={description}>
+  <ProjectList title={title} description={description} projects={sortedProjects} />
 </BaseLayout>

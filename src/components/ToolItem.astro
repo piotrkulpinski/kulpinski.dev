@@ -1,10 +1,11 @@
 ---
 import { formatDate } from "@curiousleaf/utils"
+import { Image } from "astro:assets"
 import type { CollectionEntry } from "astro:content"
 
-type Props = CollectionEntry<"projects">["data"]
+type Props = CollectionEntry<"tools">["data"]
 
-const { url, title, description, year } = Astro.props
+const { url, title, description, image } = Astro.props
 ---
 
 <li>
@@ -18,7 +19,9 @@ const { url, title, description, year } = Astro.props
     </p>
 
     <span class="h-px min-w-[2rem] flex-1 bg-current opacity-15"></span>
-    <span class="shrink-0 text-xs text-neutral-500">{year}</span>
+    <span class="shrink-0 text-xs text-neutral-500">
+      {image && <Image src={image} alt={title} width={24} height={24} class="rounded-md" />}
+    </span>
 
     {description && <p class="w-full text-xs/normal text-neutral-500">{description}</p>}
   </a>

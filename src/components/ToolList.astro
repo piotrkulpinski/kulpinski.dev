@@ -1,16 +1,16 @@
 ---
 import { type HTMLAttributes } from "astro/types"
 import type { CollectionEntry } from "astro:content"
-import ProjectItem from "~/components/ProjectItem.astro"
+import ToolItem from "~/components/ToolItem.astro"
 import Prose from "~/components/global/Prose.astro"
 
 type Props = HTMLAttributes<"div"> & {
   title?: string
   description?: string
-  projects: CollectionEntry<"projects">[]
+  tools: CollectionEntry<"tools">[]
 }
 
-const { title, description, projects, ...props } = Astro.props
+const { title, description, tools, ...props } = Astro.props
 ---
 
 <section class="space-y-2" {...props}>
@@ -30,13 +30,13 @@ const { title, description, projects, ...props } = Astro.props
 </section>
 
 {
-  !!projects.length ? (
+  !!tools.length ? (
     <ul class="space-y-2">
-      {projects.map((project) => (
-        <ProjectItem {...project.data} />
+      {tools.map((tool) => (
+        <ToolItem {...tool.data} />
       ))}
     </ul>
   ) : (
-    <p>No projects found</p>
+    <p>No tools found</p>
   )
 }

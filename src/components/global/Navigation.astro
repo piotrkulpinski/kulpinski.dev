@@ -41,6 +41,15 @@ const currentPath = pathname.slice(1)
       Projects
     </a>
     <a
+      href="/tools"
+      class:list={[
+        "text-sm hover:text-neutral-700 dark:hover:text-neutral-300",
+        currentPath === "tools" ? "text-black underline dark:text-neutral-200" : "",
+      ]}
+    >
+      Tools
+    </a>
+    <a
       href="/about"
       class:list={[
         "text-sm hover:text-neutral-700 dark:hover:text-neutral-300",

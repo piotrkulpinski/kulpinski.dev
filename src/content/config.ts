@@ -23,7 +23,17 @@ const projectsCollection = defineCollection({
   }),
 })
 
+const toolsCollection = defineCollection({
+  schema: z.object({
+    title: z.string(),
+    description: z.string().optional(),
+    url: z.string().url().optional(),
+    image: z.string().url().optional(),
+  }),
+})
+
 export const collections = {
   posts: postsCollection,
   projects: projectsCollection,
+  tools: toolsCollection,
 }
