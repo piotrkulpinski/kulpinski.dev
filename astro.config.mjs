@@ -1,3 +1,4 @@
+import rehypeExternalLinks from "rehype-external-links"
 import { defineConfig } from "astro/config"
 import tailwind from "@astrojs/tailwind"
 import sitemap from "@astrojs/sitemap"
@@ -21,9 +22,8 @@ export default defineConfig({
   },
   markdown: {
     drafts: true,
-    shikiConfig: {
-      theme: "css-variables",
-    },
+    shikiConfig: { theme: "css-variables" },
+    rehypePlugins: [[rehypeExternalLinks, { target: "_blank" }]],
   },
   shikiConfig: {
     wrap: true,

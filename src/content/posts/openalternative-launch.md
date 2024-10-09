@@ -2,7 +2,7 @@
 pubDate: 2024-03-15
 title: Growing OpenAlternative to 100k Unique Visitors in one week
 description: Discover how OpenAlternative hit 100k visitors in a week! A software engineer's journey in side-project growth, SEO, and digital marketing success.
-tags: ["side-projects", "marketing"]
+tags: ["side-projects", "marketing", "directory-websites"]
 ---
 
 I'm a software engineer by trade, but I've always been interested in marketing and growth. I've been working on a various side projects for a while now, and I recently hit a major success: **100,000 unique visitors in one week**.
