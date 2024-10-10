@@ -11,7 +11,7 @@ import cloudflare from "@astrojs/cloudflare"
 export default defineConfig({
   output: "hybrid",
   compressHTML: true,
-  trailingSlash: "never",
+  trailingSlash: "always",
   adapter: cloudflare({
     imageServiceSection: "cloudflare",
   }),
