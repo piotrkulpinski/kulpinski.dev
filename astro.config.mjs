@@ -1,9 +1,9 @@
-import rehypeExternalLinks from "rehype-external-links"
-import { defineConfig } from "astro/config"
-import tailwind from "@astrojs/tailwind"
-import sitemap from "@astrojs/sitemap"
 import mdx from "@astrojs/mdx"
 import preact from "@astrojs/preact"
+import sitemap from "@astrojs/sitemap"
+import tailwind from "@astrojs/tailwind"
+import { defineConfig } from "astro/config"
+import rehypeExternalLinks from "rehype-external-links"
 
 import cloudflare from "@astrojs/cloudflare"
 
@@ -12,6 +12,9 @@ export default defineConfig({
   output: "hybrid",
   compressHTML: true,
   trailingSlash: "never",
+  build: {
+    format: "file", // Fix trailing slash never in production builds
+  },
   adapter: cloudflare({
     imageServiceSection: "cloudflare",
   }),
