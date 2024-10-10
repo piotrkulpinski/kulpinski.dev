@@ -12,9 +12,6 @@ export default defineConfig({
   output: "hybrid",
   compressHTML: true,
   trailingSlash: "never",
-  build: {
-    format: "file", // Fix trailing slash never in production builds
-  },
   adapter: cloudflare({
     imageServiceSection: "cloudflare",
   }),

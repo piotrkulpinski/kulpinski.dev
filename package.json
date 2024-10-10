@@ -11,25 +11,25 @@
     "astro": "astro"
   },
   "dependencies": {
-    "@astrojs/cloudflare": "^9.1.0",
-    "@astrojs/mdx": "^2.1.1",
-    "@astrojs/preact": "^3.1.1",
-    "@astrojs/rss": "^4.0.5",
-    "@astrojs/sitemap": "^3.0.5",
-    "@astrojs/tailwind": "^5.1.0",
-    "@curiousleaf/utils": "^1.0.19",
+    "@astrojs/cloudflare": "^9.2.1",
+    "@astrojs/mdx": "^2.3.1",
+    "@astrojs/preact": "^3.5.3",
+    "@astrojs/rss": "^4.0.8",
+    "@astrojs/sitemap": "^3.2.0",
+    "@astrojs/tailwind": "^5.1.2",
+    "@curiousleaf/utils": "1.0.19",
     "@resvg/resvg-js": "^2.6.2",
-    "@tailwindcss/typography": "^0.5.10",
-    "astro": "^4.4.0",
-    "astro-seo": "^0.8.3",
+    "@tailwindcss/typography": "^0.5.15",
+    "astro": "^4.16.0",
+    "astro-seo": "^0.8.4",
     "deepmerge": "^4.3.1",
-    "ky": "^1.2.2",
+    "ky": "^1.7.2",
     "plur": "^5.1.0",
-    "preact": "^10.19.7",
+    "preact": "^10.24.2",
     "rehype-external-links": "^3.0.0",
-    "satori": "^0.10.13",
-    "tailwindcss": "^3.4.1",
-    "zod": "^3.22.4"
+    "satori": "^0.10.14",
+    "tailwindcss": "^3.4.13",
+    "zod": "^3.23.8"
   },
   "prettier": {
     "semi": false,
@@ -38,6 +38,6 @@
     "printWidth": 100
   },
   "devDependencies": {
-    "@biomejs/biome": "^1.9.2"
+    "@biomejs/biome": "^1.9.3"
   }
 }

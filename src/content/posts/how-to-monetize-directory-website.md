@@ -1,5 +1,5 @@
 ---
-isDraft: false
+isDraft: true
 pubDate: 2024-09-28
 title: How I Monetized My Niche Directory Website
 description: Discover six effective strategies for monetizing a directory website, including advertising, premium listings, sponsored content, and more.
