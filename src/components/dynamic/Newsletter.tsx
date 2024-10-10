@@ -34,8 +34,6 @@ export default function Newsletter() {
 
         {!responseMessage && (
           <form
-            method="post"
-            action="https://dashboard.mailerlite.com/jsonp/875209/forms/116159593851127329/subscribe"
             class="relative w-full max-w-xs"
             onSubmit={onSubmit}
           >

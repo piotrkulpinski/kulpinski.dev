@@ -1,6 +1,6 @@
 ---
-import { type HTMLAttributes } from "astro/types"
 import type { CollectionEntry } from "astro:content"
+import type { HTMLAttributes } from "astro/types"
 import PostItem from "~/components/PostItem.astro"
 
 type Props = HTMLAttributes<"div"> & {
@@ -22,7 +22,7 @@ const { title, posts, ...props } = Astro.props
     !!posts.length ? (
       <ul>
         {posts.map((post) => (
-          <PostItem url={"/posts/" + post.slug} {...post.data} />
+          <PostItem url={`/posts/${post.slug}/`} {...post.data} />
         ))}
       </ul>
     ) : (
