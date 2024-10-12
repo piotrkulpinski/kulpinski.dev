@@ -16,7 +16,9 @@ const currentPath = pathname.slice(1)
       loading="eager"
     />
 
-    <p class="font-display text-sm font-medium group-hover:opacity-80">Piotr Kulpinski</p>
+    <p class="font-display text-sm font-medium group-hover:opacity-80 max-sm:hidden">
+      Piotr Kulpinski
+    </p>
   </a>
 
   <nav class="flex items-center gap-3 text-neutral-600 md:gap-4 dark:text-neutral-400">
@@ -24,7 +26,7 @@ const currentPath = pathname.slice(1)
       href="/"
       class:list={[
         "text-sm hover:text-neutral-700 dark:hover:text-neutral-300",
-        currentPath === "" || currentPath.includes("posts")
+        currentPath === "" || currentPath.startsWith("posts")
           ? "text-black underline dark:text-neutral-200"
           : "",
       ]}
@@ -35,7 +37,7 @@ const currentPath = pathname.slice(1)
       href="/projects/"
       class:list={[
         "text-sm hover:text-neutral-700 dark:hover:text-neutral-300",
-        currentPath === "projects" ? "text-black underline dark:text-neutral-200" : "",
+        currentPath.startsWith("projects") ? "text-black underline dark:text-neutral-200" : "",
       ]}
     >
       Projects
@@ -44,7 +46,7 @@ const currentPath = pathname.slice(1)
       href="/tools/"
       class:list={[
         "text-sm hover:text-neutral-700 dark:hover:text-neutral-300",
-        currentPath === "tools" ? "text-black underline dark:text-neutral-200" : "",
+        currentPath.startsWith("tools") ? "text-black underline dark:text-neutral-200" : "",
       ]}
     >
       Tools
@@ -53,7 +55,7 @@ const currentPath = pathname.slice(1)
       href="/about/"
       class:list={[
         "text-sm hover:text-neutral-700 dark:hover:text-neutral-300",
-        currentPath === "about" ? "text-black underline dark:text-neutral-200" : "",
+        currentPath.startsWith("about") ? "text-black underline dark:text-neutral-200" : "",
       ]}
     >
       About
