@@ -13,7 +13,7 @@ const tools = allTools.sort((a, b) => a.data.title.localeCompare(b.data.title))
   !!tools.length ? (
     <nav class="space-y-2">
       {tools.map(({ data }) => (
-        <a href={data.url} target="_blank" class="block">
+        <a href={data.url} target="_blank" rel="noopener noreferrer nofollow" class="block">
           <Item>
             <Fragment slot="title">{data.title}</Fragment>
 
