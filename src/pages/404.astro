@@ -1,17 +1,16 @@
 ---
+import Button from "~/components/global/Button.astro"
 import Intro from "~/components/global/Intro.astro"
 import BaseLayout from "~/layouts/BaseLayout.astro"
 ---
 
 <BaseLayout>
-  <Intro title="Page not found">
+  <Intro>
+    <h1 slot="title">Page not found</h1>
     <p slot="description">The page you are looking for does not exist.</p>
 
-    <a
-      href="/"
-      class="inline-flex items-center justify-center rounded bg-current px-3 py-1.5 text-[13px] duration-200 hover:opacity-80 lg:px-4 lg:py-2"
-    >
-      <span class="invert">Go back to the home page</span>
+    <a href="/">
+      <Button>Go back to the home page</Button>
     </a>
   </Intro>
 </BaseLayout>

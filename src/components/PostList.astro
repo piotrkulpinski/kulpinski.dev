@@ -1,32 +1,31 @@
 ---
 import type { CollectionEntry } from "astro:content"
-import type { HTMLAttributes } from "astro/types"
-import PostItem from "~/components/PostItem.astro"
+import { formatDate } from "@curiousleaf/utils"
+import Item from "~/components/global/Item.astro"
 
-type Props = HTMLAttributes<"div"> & {
-  title?: string
+type Props = {
   posts: CollectionEntry<"posts">[]
 }
 
-const { title, posts, ...props } = Astro.props
+const { posts } = Astro.props
 ---
 
-<section class="space-y-2" {...props}>
-  {
-    title && (
-      <h3 class="font-display font-medium text-neutral-800 dark:text-neutral-200">{title}</h3>
-    )
-  }
+{
+  !!posts.length ? (
+    <nav>
+      {posts.map(({ data, slug }) => (
+        <a href={`/posts/${slug}`} title={data.title} class="block">
+          <Item>
+            <Fragment slot="title">{data.title}</Fragment>
 
-  {
-    !!posts.length ? (
-      <ul>
-        {posts.map((post) => (
-          <PostItem url={`/posts/${post.slug}/`} {...post.data} />
-        ))}
-      </ul>
-    ) : (
-      <p>No posts found</p>
-    )
-  }
-</section>
+            <time datetime="2020-03-16" slot="aside">
+              {formatDate(data.pubDate)}
+            </time>
+          </Item>
+        </a>
+      ))}
+    </nav>
+  ) : (
+    <p>No posts found</p>
+  )
+}

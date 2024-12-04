@@ -1,0 +1,30 @@
+---
+import plur from "plur"
+import Item from "~/components/global/Item.astro"
+
+type Props = {
+  tags: { tag: string; count: number }[]
+}
+
+const { tags } = Astro.props
+---
+
+{
+  !!tags.length ? (
+    <nav>
+      {tags.map((tag) => (
+        <a href={`/tags/${tag.tag}/`} class="block">
+          <Item>
+            <Fragment slot="title">{tag.tag}</Fragment>
+
+            <Fragment slot="aside">
+              {tag.count}&nbsp;{plur("post", tag.count)}
+            </Fragment>
+          </Item>
+        </a>
+      ))}
+    </nav>
+  ) : (
+    <p>No tags found</p>
+  )
+}

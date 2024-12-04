@@ -1,41 +1,39 @@
 ---
-import type { HTMLAttributes } from "astro/types"
-import type { CollectionEntry } from "astro:content"
-import ToolItem from "~/components/ToolItem.astro"
-import Prose from "~/components/global/Prose.astro"
+import { Image } from "astro:assets"
+import { getCollection } from "astro:content"
+import Item from "~/components/global/Item.astro"
 
-type Props = HTMLAttributes<"div"> & {
-  title?: string
-  description?: string
-  tools: CollectionEntry<"tools">[]
-}
+const allTools = await getCollection("tools")
 
-const { title, description, tools, ...props } = Astro.props
+// Sort tools by title in ascending order (alphabetically)
+const tools = allTools.sort((a, b) => a.data.title.localeCompare(b.data.title))
 ---
-
-<section class="space-y-2" {...props}>
-  {
-    title && (
-      <h3 class="font-display font-medium text-neutral-800 dark:text-neutral-200">{title}</h3>
-    )
-  }
-
-  {
-    description && (
-      <Prose>
-        <p class="!m-0 text-sm">{description}</p>
-      </Prose>
-    )
-  }
-</section>
 
 {
   !!tools.length ? (
-    <ul class="space-y-2">
-      {tools.map((tool) => (
-        <ToolItem {...tool.data} />
+    <nav class="space-y-2">
+      {tools.map(({ data }) => (
+        <a href={data.url} target="_blank" class="block">
+          <Item>
+            <Fragment slot="title">{data.title}</Fragment>
+
+            {data.image && (
+              <Fragment slot="aside">
+                <Image
+                  src={data.image}
+                  alt={data.title}
+                  width={24}
+                  height={24}
+                  class="rounded-md"
+                />
+              </Fragment>
+            )}
+
+            {data.description && <Fragment slot="description">{data.description}</Fragment>}
+          </Item>
+        </a>
       ))}
-    </ul>
+    </nav>
   ) : (
     <p>No tools found</p>
   )

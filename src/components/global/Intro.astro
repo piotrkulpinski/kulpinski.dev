@@ -2,29 +2,27 @@
 import type { HTMLAttributes } from "astro/types"
 import Prose from "~/components/global/Prose.astro"
 
-type Props = HTMLAttributes<"div"> & {
-  title?: string
-}
+type Props = HTMLAttributes<"div">
 
-const { class: className, title, ...props } = Astro.props
+const { class: className, ...props } = Astro.props
 ---
 
-<div class:list={[className, "flex flex-col items-start gap-4"]} {...props}>
+<section class:list={[className, "flex flex-col gap-2 md:gap-3"]} {...props}>
   {
-    title && (
-      <h1 class="font-display text-balance text-3xl font-semibold tracking-tight md:text-3xl">
-        {title}
-      </h1>
+    Astro.slots.has("title") && (
+      <div class="font-medium lg:text-lg">
+        <slot name="title" />
+      </div>
     )
   }
 
   {
     Astro.slots.has("description") && (
-      <Prose class="-mt-2">
+      <Prose class="text-sm max-w-none">
         <slot name="description" />
       </Prose>
     )
   }
 
   <slot />
-</div>
+</section>

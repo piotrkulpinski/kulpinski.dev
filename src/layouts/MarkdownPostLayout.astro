@@ -6,10 +6,10 @@ import Prose from "~/components/global/Prose.astro"
 
 type Props = CollectionEntry<"posts">["data"]
 
-const { title, description, image, tags, pubDate } = Astro.props
+const { title, image, tags, pubDate } = Astro.props
 ---
 
-<section class="flex flex-col gap-12">
+<section class="flex flex-col items-start gap-12">
   {
     image && (
       <Image
@@ -28,14 +28,14 @@ const { title, description, image, tags, pubDate } = Astro.props
       {title}
     </h1>
 
-    <div class="mt-4 flex flex-wrap gap-3 text-neutral-500">
+    <div class="mt-4 flex flex-wrap gap-3 text-muted">
       <p class="text-xs">
         {formatDate(pubDate)}
       </p>
 
       {
         tags.map((tag) => (
-          <span class="inline-flex items-center text-xs lowercase hover:text-blue-500">
+          <span class="inline-flex items-center text-xs lowercase hover:text-primary">
             <a href={`/tags/${tag}`}>#{tag}</a>
           </span>
         ))
@@ -47,5 +47,5 @@ const { title, description, image, tags, pubDate } = Astro.props
     <slot />
   </Prose>
 
-  <a href="/" class="text-neutral-600 hover:text-inherit dark:text-neutral-400">&xlarr; back</a>
+  <a href="/" class="text-secondary hover:text-foreground">&xlarr; back</a>
 </section>

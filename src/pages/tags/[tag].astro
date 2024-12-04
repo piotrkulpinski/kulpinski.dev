@@ -1,11 +1,12 @@
 ---
-import BaseLayout from "~/layouts/BaseLayout.astro"
 import { getCollection } from "astro:content"
 import PostList from "~/components/PostList.astro"
+import Intro from "~/components/global/Intro.astro"
+import BaseLayout from "~/layouts/BaseLayout.astro"
 
 export async function getStaticPaths() {
   const posts = await getCollection("posts", ({ data }) => !data.isDraft)
-  const uniqueTags = [...new Set(posts.map((post) => post.data.tags).flat())]
+  const uniqueTags = [...new Set(posts.flatMap((post) => post.data.tags))]
 
   return uniqueTags.map((tag) => {
     // Filter posts by tag
@@ -27,6 +28,9 @@ const { posts } = Astro.props
 const title = `Posts tagged "${tag}"`
 ---
 
-<BaseLayout title={title}>
-  <PostList title={title} posts={posts} />
+<BaseLayout>
+  <Intro>
+    <h2 slot="title">{title}</h2>
+    <PostList posts={posts} />
+  </Intro>
 </BaseLayout>

@@ -1,0 +1,19 @@
+<div class="group flex min-w-0 flex-wrap items-center gap-x-4 gap-y-1 py-1">
+  <h3 class="truncate text-sm group-hover:underline">
+    <slot name="title" />
+  </h3>
+
+  <span class="h-px min-w-[2rem] flex-1 bg-border"></span>
+
+  <span class="shrink-0 text-xs text-muted">
+    <slot name="aside" />
+  </span>
+
+  {
+    Astro.slots.has("description") && (
+      <p class="w-full text-xs/normal text-muted">
+        <slot name="description" />
+      </p>
+    )
+  }
+</div>

@@ -21,7 +21,7 @@ export default function NumberInput() {
   }
 
   const preciseRound = (value: number, decimals = 2) => {
-    const factor = Math.pow(10, decimals)
+    const factor = 10 ** decimals
 
     return Math.round((value + Number.EPSILON) * factor) / factor
   }
@@ -50,7 +50,7 @@ export default function NumberInput() {
   return (
     <input
       type="number"
-      className="py-1 px-3 border-2 rounded border-neutral-400 w-full [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
+      className="py-1 px-3 border-2 rounded border-primary w-full [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
       placeholder="Try me"
       min="0"
       max="100"

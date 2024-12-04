@@ -1,11 +1,7 @@
 ---
-import { getCollection } from "astro:content"
-import BaseLayout from "~/layouts/BaseLayout.astro"
 import ToolList from "~/components/ToolList.astro"
-const allTools = await getCollection("tools")
-
-// Sort tools by title in ascending order (alphabetically)
-const sortedTools = allTools.sort((a, b) => a.data.title.localeCompare(b.data.title))
+import Intro from "~/components/global/Intro.astro"
+import BaseLayout from "~/layouts/BaseLayout.astro"
 
 const title = "Tools I Use"
 const description =
@@ -13,5 +9,10 @@ const description =
 ---
 
 <BaseLayout title={title} description={description}>
-  <ToolList title={title} description={description} tools={sortedTools} />
+  <Intro>
+    <h2 slot="title">{title}</h2>
+    <p slot="description">{description}</p>
+  </Intro>
+
+  <ToolList />
 </BaseLayout>

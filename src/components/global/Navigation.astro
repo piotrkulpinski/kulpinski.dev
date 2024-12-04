@@ -1,14 +1,12 @@
 ---
 import { Image } from "astro:assets"
-
-const pathname = new URL(Astro.request.url).pathname
-const currentPath = pathname.slice(1)
+import Link from "~/components/global/Link.astro"
 ---
 
 <div class="flex items-center justify-between">
   <a href="/" class="group flex shrink-0 items-center gap-2">
     <Image
-      class="inline-block h-6 w-6"
+      class="inline-block size-6"
       src="/images/logo.svg"
       alt=""
       height="128"
@@ -21,44 +19,9 @@ const currentPath = pathname.slice(1)
     </p>
   </a>
 
-  <nav class="flex items-center gap-3 text-neutral-600 md:gap-4 dark:text-neutral-400">
-    <a
-      href="/"
-      class:list={[
-        "text-sm hover:text-neutral-700 dark:hover:text-neutral-300",
-        currentPath === "" || currentPath.startsWith("posts")
-          ? "text-black underline dark:text-neutral-200"
-          : "",
-      ]}
-    >
-      Articles
-    </a>
-    <a
-      href="/projects/"
-      class:list={[
-        "text-sm hover:text-neutral-700 dark:hover:text-neutral-300",
-        currentPath.startsWith("projects") ? "text-black underline dark:text-neutral-200" : "",
-      ]}
-    >
-      Projects
-    </a>
-    <a
-      href="/tools/"
-      class:list={[
-        "text-sm hover:text-neutral-700 dark:hover:text-neutral-300",
-        currentPath.startsWith("tools") ? "text-black underline dark:text-neutral-200" : "",
-      ]}
-    >
-      Tools
-    </a>
-    <a
-      href="/about/"
-      class:list={[
-        "text-sm hover:text-neutral-700 dark:hover:text-neutral-300",
-        currentPath.startsWith("about") ? "text-black underline dark:text-neutral-200" : "",
-      ]}
-    >
-      About
-    </a>
+  <nav class="flex flex-wrap items-center gap-3 md:gap-4">
+    <Link href="/">Home</Link>
+    <Link href="/tools">Tools</Link>
+    <Link href="/about">About</Link>
   </nav>
 </div>

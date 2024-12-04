@@ -1,16 +1,17 @@
 ---
 import { getCollection } from "astro:content"
-import plur from "plur"
+import TagList from "~/components/TagList.astro"
+import Intro from "~/components/global/Intro.astro"
 import BaseLayout from "~/layouts/BaseLayout.astro"
 
 const posts = await getCollection("posts", ({ data }) => !data.isDraft)
-const tagCountMap = new Map()
+const tagCountMap = new Map<string, number>()
 
 for (const post of posts) {
-  post.data.tags.forEach((tag: string) => {
+  for (const tag of post.data.tags) {
     const count = tagCountMap.get(tag) || 0
     tagCountMap.set(tag, count + 1)
-  })
+  }
 }
 
 const tags = Array.from(tagCountMap, ([tag, count]) => ({ tag, count })).sort((a, b) =>
@@ -21,25 +22,8 @@ const title = "Tag Index"
 ---
 
 <BaseLayout title={title}>
-  <section class="space-y-2">
-    <h3 class="font-display font-medium text-neutral-800 dark:text-neutral-200">{title}</h3>
-
-    <ol>
-      {
-        tags.map((tag) => (
-          <li>
-            <a href={`/tags/${tag.tag}/`} class="group flex min-w-0 items-center gap-4 py-1">
-              <p class="truncate text-sm group-hover:underline">{tag.tag}</p>
-
-              <span class="h-px min-w-[2rem] flex-1 bg-current opacity-15" />
-
-              <span class="shrink-0 text-xs text-neutral-500">
-                {tag.count} {plur("post", tag.count)}
-              </span>
-            </a>
-          </li>
-        ))
-      }
-    </ol>
-  </section>
+  <Intro>
+    <h1 slot="title">{title}</h1>
+    <TagList tags={tags} />
+  </Intro>
 </BaseLayout>

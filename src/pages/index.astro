@@ -1,28 +1,41 @@
 ---
 import { getCollection } from "astro:content"
-import BaseLayout from "~/layouts/BaseLayout.astro"
 import PostList from "~/components/PostList.astro"
-import Prose from "~/components/global/Prose.astro"
-const posts = await getCollection("posts", ({ data }) => !data.isDraft)
+import ProjectList from "~/components/ProjectList.astro"
+import Intro from "~/components/global/Intro.astro"
+import BaseLayout from "~/layouts/BaseLayout.astro"
+
+const allPosts = await getCollection("posts", ({ data }) => !data.isDraft)
+const allProjects = await getCollection("projects")
 
 // Sort posts by date in descending order (newest first)
-const sortedPosts = posts.sort(
+const posts = allPosts.sort(
   (a, b) => new Date(b.data.pubDate).valueOf() - new Date(a.data.pubDate).valueOf()
+)
+
+// Sort projects by year in descending order (newest first)
+const projects = allProjects.sort(
+  (a, b) => new Date(b.data.year).valueOf() - new Date(a.data.year).valueOf()
 )
 ---
 
 <BaseLayout>
-  <section class="space-y-2">
-    <h3 class="font-display font-medium">Today</h3>
+  <Intro>
+    <h2 slot="title">Today</h2>
 
-    <Prose>
-      <p class="!m-0 text-sm">
-        I work as an independent software engineer and designer. I'm passionate about creating
-        beautiful, accessible, and performant web. I write about things I learn and find
-        interesting.
-      </p>
-    </Prose>
-  </section>
+    <p slot="description">
+      I work as an independent software engineer and designer. I'm passionate about creating
+      beautiful, accessible, and performant web. I write about things I learn and find interesting.
+    </p>
+  </Intro>
 
-  <PostList title="Latest Posts" posts={sortedPosts} />
+  <Intro>
+    <h2 slot="title">Projects</h2>
+    <ProjectList projects={projects} />
+  </Intro>
+
+  <Intro>
+    <h2 slot="title">Latest Posts</h2>
+    <PostList posts={posts} />
+  </Intro>
 </BaseLayout>

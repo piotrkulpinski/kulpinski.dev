@@ -5,6 +5,14 @@ import plugin from "tailwindcss/plugin"
 export default {
   content: ["./src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}"],
   theme: {
+    colors: {
+      primary: "hsl(var(--color-primary) / <alpha-value>)",
+      background: "hsl(var(--color-background) / <alpha-value>)",
+      muted: "hsl(var(--color-muted) / <alpha-value>)",
+      secondary: "hsl(var(--color-secondary) / <alpha-value>)",
+      foreground: "hsl(var(--color-foreground) / <alpha-value>)",
+      border: "hsl(var(--color-border) / <alpha-value>)",
+    },
     fontSize: {
       xs: ["0.75rem", { lineHeight: "1rem" }],
       sm: ["0.875rem", { lineHeight: "1.5rem" }],
@@ -29,8 +37,8 @@ export default {
     plugin(({ addVariant }) => {
       addVariant(
         "prose-inline-code",
-        "&.prose :where(:not(pre)>code):not(:where([class~='not-prose'] *))"
+        "&.prose :where(:not(pre)>code):not(:where([class~='not-prose'] *))",
       )
-    })
+    }),
   ],
 } satisfies Config

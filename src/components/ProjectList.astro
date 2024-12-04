@@ -1,41 +1,28 @@
 ---
-import type { HTMLAttributes } from "astro/types"
 import type { CollectionEntry } from "astro:content"
-import ProjectItem from "~/components/ProjectItem.astro"
-import Prose from "~/components/global/Prose.astro"
+import Item from "~/components/global/Item.astro"
 
-type Props = HTMLAttributes<"div"> & {
-  title?: string
-  description?: string
+type Props = {
   projects: CollectionEntry<"projects">[]
 }
 
-const { title, description, projects, ...props } = Astro.props
+const { projects } = Astro.props
 ---
-
-<section class="space-y-2" {...props}>
-  {
-    title && (
-      <h3 class="font-display font-medium text-neutral-800 dark:text-neutral-200">{title}</h3>
-    )
-  }
-
-  {
-    description && (
-      <Prose>
-        <p class="!m-0 text-sm">{description}</p>
-      </Prose>
-    )
-  }
-</section>
 
 {
   !!projects.length ? (
-    <ul class="space-y-2">
-      {projects.map((project) => (
-        <ProjectItem {...project.data} />
+    <nav class="space-y-2">
+      {projects.map(({ data }) => (
+        <a href={data.url} target="_blank" class="block">
+          <Item>
+            <Fragment slot="title">{data.title}</Fragment>
+            <Fragment slot="aside">{data.year}</Fragment>
+
+            {data.description && <Fragment slot="description">{data.description}</Fragment>}
+          </Item>
+        </a>
       ))}
-    </ul>
+    </nav>
   ) : (
     <p>No projects found</p>
   )
