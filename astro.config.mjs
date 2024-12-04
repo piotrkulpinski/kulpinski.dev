@@ -13,11 +13,6 @@ export default defineConfig({
   adapter: cloudflare({
     imageServiceSection: "cloudflare",
   }),
-  vite: {
-    optimizeDeps: {
-      exclude: ["@resvg/resvg-js"],
-    },
-  },
   markdown: {
     drafts: true,
     shikiConfig: { theme: "css-variables" },

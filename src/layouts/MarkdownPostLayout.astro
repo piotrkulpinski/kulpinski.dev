@@ -2,6 +2,7 @@
 import { Image } from "astro:assets"
 import type { CollectionEntry } from "astro:content"
 import { formatDate } from "@curiousleaf/utils"
+import Link from "~/components/global/Link.astro"
 import Prose from "~/components/global/Prose.astro"
 
 type Props = CollectionEntry<"posts">["data"]
@@ -47,5 +48,5 @@ const { title, image, tags, pubDate } = Astro.props
     <slot />
   </Prose>
 
-  <a href="/" class="text-secondary hover:text-foreground">&xlarr; back</a>
+  <Link href="/">&xlarr; back</Link>
 </section>

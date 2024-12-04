@@ -13,7 +13,7 @@ const { href, ...props } = Astro.props as Props
     "text-sm",
     href === pathname || (href !== "/" && pathname.startsWith(href as string))
       ? "text-foreground underline"
-      : "text-secondary hover:text-foreground",
+      : "text-muted hover:text-foreground",
   ]}
   {...props}
 >

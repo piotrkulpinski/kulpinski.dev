@@ -1,6 +1,6 @@
 ---
-import type { SEOProps } from "astro-seo"
 import { getCollection } from "astro:content"
+import type { SEOProps } from "astro-seo"
 import BaseLayout from "~/layouts/BaseLayout.astro"
 import MarkdownPostLayout from "~/layouts/MarkdownPostLayout.astro"
 
@@ -8,7 +8,7 @@ export async function getStaticPaths() {
   const blogEntries = await getCollection("posts", ({ data }) => !data.isDraft)
 
   return blogEntries.map((entry) => ({
-    params: { slug: entry.slug },
+    params: { post: entry.slug },
     props: { entry },
   }))
 }
@@ -16,12 +16,10 @@ export async function getStaticPaths() {
 const { entry } = Astro.props
 const { Content } = await entry.render()
 const post = entry.data
-const url = new URL(Astro.request.url).origin
 
 const seo = {
   title: post.title,
   description: post.description,
-  openGraph: { basic: { image: `${url}/posts/${entry.slug}.png` } },
 } as SEOProps
 ---
 
