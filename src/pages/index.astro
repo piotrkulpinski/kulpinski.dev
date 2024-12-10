@@ -20,7 +20,7 @@ const projects = allProjects.sort(
 ---
 
 <BaseLayout>
-  <Intro>
+  <Intro id="today">
     <h2 slot="title">Today</h2>
 
     <p slot="description">
@@ -29,12 +29,12 @@ const projects = allProjects.sort(
     </p>
   </Intro>
 
-  <Intro>
+  <Intro id="projects">
     <h2 slot="title">Projects</h2>
     <ProjectList projects={projects} />
   </Intro>
 
-  <Intro>
+  <Intro id="posts">
     <h2 slot="title">Latest Posts</h2>
     <PostList posts={posts} />
   </Intro>
