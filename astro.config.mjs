@@ -9,9 +9,7 @@ import rehypeExternalLinks from "rehype-external-links"
 // https://astro.build/config
 export default defineConfig({
   compressHTML: true,
-  adapter: cloudflare({
-    imageServiceSection: "cloudflare",
-  }),
+  adapter: cloudflare(),
   markdown: {
     drafts: true,
     shikiConfig: { theme: "css-variables" },

@@ -5,22 +5,22 @@ import { z } from "zod"
 export const prerender = false
 
 export const POST: APIRoute = async ({ request }) => {
-  const data = await request.formData()
-  const email = data.get("email")
+  const formData = await request.formData()
+  const email = formData.get("email")
 
   const subscriberSchema = z.object({
     email: z.string().email().min(1),
     groups: z.array(z.string()).optional(),
   })
 
-  const subscriber = subscriberSchema.safeParse({ email })
+  const { data, success } = subscriberSchema.safeParse({ email })
 
-  if (!subscriber.success) {
+  if (!success) {
     return new Response(JSON.stringify({ message: "Invalid email address" }), { status: 400 })
   }
 
   const response = await ky.post("https://connect.mailerlite.com/api/subscribers", {
-    body: JSON.stringify(subscriber),
+    body: JSON.stringify(data),
     headers: {
       "content-type": "application/json",
       authorization: `Bearer ${import.meta.env.MAILERLITE_API_TOKEN}`,
