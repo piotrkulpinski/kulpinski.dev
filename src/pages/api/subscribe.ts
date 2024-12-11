@@ -13,18 +13,22 @@ export const POST: APIRoute = async ({ request }) => {
     groups: z.array(z.string()).optional(),
   })
 
-  const subscriber = subscriberSchema.parse({ email })
+  const subscriber = subscriberSchema.safeParse({ email })
+
+  if (!subscriber.success) {
+    return new Response(JSON.stringify({ message: "Invalid email address" }), { status: 400 })
+  }
 
   const response = await ky.post("https://connect.mailerlite.com/api/subscribers", {
     body: JSON.stringify(subscriber),
     headers: {
       "content-type": "application/json",
-      authorization: `Bearer ${process.env.MAILERLITE_API_TOKEN}`,
+      authorization: `Bearer ${import.meta.env.MAILERLITE_API_TOKEN}`,
     },
   })
 
   if (!response.ok) {
-    throw new Error(`Fetch error: ${response}`)
+    return new Response(JSON.stringify({ message: "Failed to subscribe" }), { status: 400 })
   }
 
   // Do something with the data, then return a success response
