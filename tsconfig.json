@@ -5,6 +5,7 @@
   "compilerOptions": {
     "skipLibCheck": true,
     "jsx": "react-jsx",
+    "jsxImportSource": "preact",
     "baseUrl": ".",
     "paths": {
       "~/*": ["./src/*"]

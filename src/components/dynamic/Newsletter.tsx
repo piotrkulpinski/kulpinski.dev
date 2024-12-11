@@ -1,5 +1,6 @@
 import ky from "ky"
-import { type FormEventHandler, useState } from "react"
+import type { FormEventHandler } from "preact/compat"
+import { useState } from "preact/hooks"
 import Loader from "~/components/dynamic/Loader"
 
 export default function Newsletter() {

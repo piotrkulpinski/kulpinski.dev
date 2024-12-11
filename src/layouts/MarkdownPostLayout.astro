@@ -2,10 +2,8 @@
 import { Image } from "astro:assets"
 import type { CollectionEntry } from "astro:content"
 import { formatDate } from "@curiousleaf/utils"
-import Comments from "~/components/dynamic/Comments"
 import Link from "~/components/global/Link.astro"
 import Prose from "~/components/global/Prose.astro"
-import { setupCodeBlockCopy } from "~/utils/copyCode"
 
 type Props = CollectionEntry<"posts">["data"]
 
@@ -50,7 +48,70 @@ const { title, image, tags, pubDate } = Astro.props
     <slot />
   </Prose>
 
-  <Comments client:idle />
+  <script
+    is:inline
+    src="https://giscus.app/client.js"
+    data-repo="piotrkulpinski/kulpinski.dev"
+    data-repo-id="R_kgDOLiBz0Q"
+    data-category="Comments"
+    data-category-id="DIC_kwDOLiBz0c4ClH-k"
+    data-mapping="og:title"
+    data-strict="0"
+    data-reactions-enabled="1"
+    data-emit-metadata="0"
+    data-input-position="top"
+    data-theme="preferred_color_scheme"
+    data-lang="en"
+    data-loading="lazy"
+    crossorigin="anonymous"
+    async></script>
 
   <Link href="/">&xlarr; back</Link>
+
+  <script>
+    const copyButtonLabel = "Copy"
+    const codeBlocks = Array.from(document.querySelectorAll("pre"))
+
+    codeBlocks.forEach(wrapCodeBlock)
+
+    function wrapCodeBlock(codeBlock: HTMLPreElement) {
+      const wrapper = createWrapper()
+      const copyButton = createCopyButton()
+
+      codeBlock.setAttribute("tabindex", "0")
+      codeBlock.appendChild(copyButton)
+
+      // Wrap codeblock with relative parent element
+      codeBlock.parentNode?.insertBefore(wrapper, codeBlock)
+      wrapper.appendChild(codeBlock)
+
+      copyButton.addEventListener("click", () => handleCopy(codeBlock, copyButton))
+    }
+
+    function createWrapper() {
+      const wrapper = document.createElement("div")
+      wrapper.style.position = "relative"
+      return wrapper
+    }
+
+    function createCopyButton() {
+      const button = document.createElement("button")
+      button.className =
+        "absolute top-0 right-0 text-[10px] bg-border rounded-tr-md rounded-bl-md px-1.5 py-0.5"
+      button.innerHTML = copyButtonLabel
+      return button
+    }
+
+    async function handleCopy(block: HTMLPreElement, button: HTMLButtonElement) {
+      const code = block.querySelector("code")
+      if (!code) return
+
+      await navigator.clipboard.writeText(code.innerText)
+
+      button.innerText = "Copied"
+      setTimeout(() => {
+        button.innerText = copyButtonLabel
+      }, 1000)
+    }
+  </script>
 </section>
