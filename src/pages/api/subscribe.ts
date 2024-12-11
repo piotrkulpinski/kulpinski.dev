@@ -19,11 +19,13 @@ export const POST: APIRoute = async ({ request }) => {
     return new Response(JSON.stringify({ message: "Invalid email address" }), { status: 400 })
   }
 
+  console.log(process.env.MAILERLITE_API_TOKEN)
+
   const response = await ky.post("https://connect.mailerlite.com/api/subscribers", {
     body: JSON.stringify(data),
     headers: {
       "content-type": "application/json",
-      authorization: `Bearer ${import.meta.env.MAILERLITE_API_TOKEN}`,
+      authorization: `Bearer ${process.env.MAILERLITE_API_TOKEN}`,
     },
   })
 

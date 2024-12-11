@@ -11,8 +11,6 @@ export default function Newsletter() {
 
     const formData = new FormData(e.target as HTMLFormElement)
 
-    console.log(formData.get("email"))
-
     const response = await fetch("/api/subscribe", {
       method: "POST",
       body: formData,
