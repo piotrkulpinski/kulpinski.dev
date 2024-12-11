@@ -20,7 +20,7 @@ export const POST: APIRoute = async ({ request }) => {
       body: JSON.stringify(subscriber),
       headers: {
         "content-type": "application/json",
-        authorization: `Bearer ${process.env.MAILERLITE_API_TOKEN}`,
+        authorization: `Bearer ${import.meta.env.MAILERLITE_API_TOKEN}`,
       },
     })
 
