@@ -4,7 +4,7 @@ pubDate: 2024-09-28
 title: How I Monetized My Niche Directory Website
 description: Discover six effective strategies for monetizing a directory website, including advertising, premium listings, sponsored content, and more.
 tags: ["marketing", "directory-websites", "side-projects"]
-# image: ./images/remix-breadcrumbs.png
+# image: ./images/remix-breadcrumbs.webp
 ---
 
 If you've ever built a directory website, you know that it can be a great way to showcase a collection of resources, products, or services. However, monetizing a directory website can be a bit of a challenge.

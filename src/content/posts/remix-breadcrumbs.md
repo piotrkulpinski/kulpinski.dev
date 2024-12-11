@@ -3,7 +3,7 @@ pubDate: 2024-03-28
 title: How to Build Dynamic Breadcrumbs in Remix.run
 description: Learn to build dynamic breadcrumbs in Remix, enhancing site navigation and SEO. This guide covers useMatches/handle capabilities, and schema metadata.
 tags: ["engineering", "remix"]
-image: ./images/remix-breadcrumbs.png
+image: ./images/remix-breadcrumbs.webp
 ---
 
 In Remix, building dynamic breadcrumbs that reflect your route hierarchy is straightforward. This tutorial will guide you through leveraging the `useMatches` and `handle` capabilities to achieve this.

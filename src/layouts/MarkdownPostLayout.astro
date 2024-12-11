@@ -5,6 +5,7 @@ import { formatDate } from "@curiousleaf/utils"
 import Comments from "~/components/dynamic/Comments"
 import Link from "~/components/global/Link.astro"
 import Prose from "~/components/global/Prose.astro"
+import { setupCodeBlockCopy } from "~/utils/copyCode"
 
 type Props = CollectionEntry<"posts">["data"]
 
@@ -16,10 +17,10 @@ const { title, image, tags, pubDate } = Astro.props
     image && (
       <Image
         class="w-full object-cover object-center lg:max-h-72"
-        src={image}
+        src={image as string}
         alt={title}
-        height={288}
-        width={616}
+        height={image.height}
+        width={image.width}
         loading="eager"
       />
     )
@@ -52,4 +53,51 @@ const { title, image, tags, pubDate } = Astro.props
   <Comments client:idle />
 
   <Link href="/">&xlarr; back</Link>
+
+  <script>
+    const copyButtonLabel = "Copy"
+    const codeBlocks = Array.from(document.querySelectorAll("pre"))
+
+    codeBlocks.forEach(wrapCodeBlock)
+
+    function wrapCodeBlock(codeBlock: HTMLPreElement) {
+      const wrapper = createWrapper()
+      const copyButton = createCopyButton()
+
+      codeBlock.setAttribute("tabindex", "0")
+      codeBlock.appendChild(copyButton)
+
+      // Wrap codeblock with relative parent element
+      codeBlock.parentNode?.insertBefore(wrapper, codeBlock)
+      wrapper.appendChild(codeBlock)
+
+      copyButton.addEventListener("click", () => handleCopy(codeBlock, copyButton))
+    }
+
+    function createWrapper() {
+      const wrapper = document.createElement("div")
+      wrapper.style.position = "relative"
+      return wrapper
+    }
+
+    function createCopyButton() {
+      const button = document.createElement("button")
+      button.className =
+        "absolute top-0 right-0 text-[10px] bg-border rounded-tr-md rounded-bl-md px-1.5 py-0.5"
+      button.innerHTML = copyButtonLabel
+      return button
+    }
+
+    async function handleCopy(block: HTMLPreElement, button: HTMLButtonElement) {
+      const code = block.querySelector("code")
+      if (!code) return
+
+      await navigator.clipboard.writeText(code.innerText)
+
+      button.innerText = "Copied"
+      setTimeout(() => {
+        button.innerText = copyButtonLabel
+      }, 1000)
+    }
+  </script>
 </section>
