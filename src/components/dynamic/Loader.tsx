@@ -10,7 +10,7 @@ export default function Loader() {
       strokeWidth="2"
       strokeLinecap="round"
       strokeLinejoin="round"
-      className="size-4 animate-spin"
+      class="size-4 animate-spin"
       role="img"
       aria-label="Loading..."
     >
