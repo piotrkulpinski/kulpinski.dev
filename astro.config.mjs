@@ -22,6 +22,7 @@ export default defineConfig({
     skipInline: false,
     drafts: true,
   },
+  vite: { ssr: { external: ["node:buffer"] } },
   site: process.env.SITE_URL || "http://localhost:4321",
   integrations: [tailwind({ applyBaseStyles: false }), react(), sitemap(), mdx()],
 })
