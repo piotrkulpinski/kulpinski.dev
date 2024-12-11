@@ -1,3 +1,4 @@
+import { MAILERLITE_API_TOKEN } from "astro:env/server"
 import type { APIRoute } from "astro"
 import ky from "ky"
 import { z } from "zod"
@@ -20,7 +21,7 @@ export const POST: APIRoute = async ({ request }) => {
       body: JSON.stringify(subscriber),
       headers: {
         "content-type": "application/json",
-        authorization: `Bearer ${import.meta.env.MAILERLITE_API_TOKEN}`,
+        authorization: `Bearer ${MAILERLITE_API_TOKEN}`,
       },
     })
 
