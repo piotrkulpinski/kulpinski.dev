@@ -1,7 +1,6 @@
 ---
 import { SEO, type SEOProps } from "astro-seo"
 import merge from "deepmerge"
-import type { Fragment } from "preact"
 import Newsletter from "~/components/dynamic/Newsletter"
 import Footer from "~/components/global/Footer.astro"
 import Navigation from "~/components/global/Navigation.astro"
@@ -73,7 +72,7 @@ const seo = merge(baseSeo, seoProps, { arrayMerge: (_, sourceArray) => sourceArr
   >
     <Navigation />
     <slot />
-    <Newsletter client:visible />
+    <Newsletter client:idle />
     <Footer />
   </body>
 </html>

@@ -7,10 +7,12 @@ export default function Loader() {
       viewBox="0 0 24 24"
       fill="none"
       stroke="currentColor"
-      stroke-width="2"
-      stroke-linecap="round"
-      stroke-linejoin="round"
-      class="size-4 animate-spin"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className="size-4 animate-spin"
+      role="img"
+      aria-label="Loading..."
     >
       <line x1="12" x2="12" y1="2" y2="6" />
       <line x1="12" x2="12" y1="18" y2="22" />

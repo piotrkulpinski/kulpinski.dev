@@ -27,7 +27,7 @@
   --color-foreground: 0 0% 13%;
   --color-border: 0 0% 88%;
 
-  --astro-code-color-text: #24292e;
+  --astro-code-foreground: #24292e;
   --astro-code-token-constant: #0550ae;
   --astro-code-token-string: #032f62;
   --astro-code-token-comment: #6e7781;
@@ -45,7 +45,7 @@
     --color-foreground: 0 0% 87%;
     --color-border: 0 0% 18%;
 
-    --astro-code-color-text: #c9d1d9;
+    --astro-code-foreground: #c9d1d9;
     --astro-code-token-constant: #79c0ff;
     --astro-code-token-string: #a5d6ff;
     --astro-code-token-comment: #8b949e;

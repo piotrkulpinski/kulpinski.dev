@@ -2,6 +2,7 @@
 import { Image } from "astro:assets"
 import type { CollectionEntry } from "astro:content"
 import { formatDate } from "@curiousleaf/utils"
+import Comments from "~/components/dynamic/Comments"
 import Link from "~/components/global/Link.astro"
 import Prose from "~/components/global/Prose.astro"
 
@@ -48,23 +49,7 @@ const { title, image, tags, pubDate } = Astro.props
     <slot />
   </Prose>
 
-  <script
-    is:inline
-    src="https://giscus.app/client.js"
-    data-repo="piotrkulpinski/kulpinski.dev"
-    data-repo-id="R_kgDOLiBz0Q"
-    data-category="Comments"
-    data-category-id="DIC_kwDOLiBz0c4ClH-k"
-    data-mapping="og:title"
-    data-strict="0"
-    data-reactions-enabled="1"
-    data-emit-metadata="0"
-    data-input-position="top"
-    data-theme="preferred_color_scheme"
-    data-lang="en"
-    data-loading="lazy"
-    crossorigin="anonymous"
-    async></script>
+  <Comments client:idle />
 
   <Link href="/">&xlarr; back</Link>
 </section>
