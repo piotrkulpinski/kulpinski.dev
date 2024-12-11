@@ -10,7 +10,7 @@ const { class: className, ...props } = Astro.props
 <section class:list={[className, "flex flex-col gap-2 md:gap-3"]} {...props}>
   {
     Astro.slots.has("title") && (
-      <div class="font-medium lg:text-lg">
+      <div class="font-medium font-display text-foreground lg:text-lg">
         <slot name="title" />
       </div>
     )

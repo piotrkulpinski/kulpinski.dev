@@ -1,0 +1,11 @@
+---
+import NewsletterForm from "~/components/dynamic/NewsletterForm"
+import Intro from "~/components/global/Intro.astro"
+---
+
+<Intro id="newsletter" class="mt-auto">
+  <h2 slot="title">Newsletter</h2>
+  <p slot="description">Get notified when I publish new posts.</p>
+
+  <NewsletterForm client:load />
+</Intro>
