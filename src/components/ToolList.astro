@@ -22,9 +22,12 @@ const tools = allTools.sort((a, b) => a.data.title.localeCompare(b.data.title))
                 <Image
                   src={data.image}
                   alt={data.title}
-                  width={24}
-                  height={24}
-                  class="rounded-md"
+                  width={48}
+                  height={48}
+                  class="rounded-md size-6"
+                  loading="eager"
+                  fit="cover"
+                  layout="responsive"
                 />
               </Fragment>
             )}

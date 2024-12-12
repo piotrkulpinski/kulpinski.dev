@@ -12,6 +12,8 @@ export default {
       secondary: "hsl(var(--color-secondary) / <alpha-value>)",
       foreground: "hsl(var(--color-foreground) / <alpha-value>)",
       border: "hsl(var(--color-border) / <alpha-value>)",
+      success: "hsl(var(--color-success) / <alpha-value>)",
+      error: "hsl(var(--color-error) / <alpha-value>)",
     },
     fontSize: {
       xs: ["0.75rem", { lineHeight: "1rem" }],

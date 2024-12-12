@@ -1,0 +1,33 @@
+---
+import { actions, isInputError } from "astro:actions"
+import Input from "~/components/global/Input.astro"
+
+const result = Astro.getActionResult(actions.subscribe)
+const inputErrors = isInputError(result?.error) ? result.error.fields : {}
+
+console.log(result)
+---
+
+<form method="POST" class="relative w-full max-w-xs" action={actions.subscribe} novalidate>
+  <Input
+    name="email"
+    type="email"
+    placeholder="Enter your email..."
+    aria-describedby="error"
+    transition:persist
+    data-1p-ignore
+  />
+
+  <button
+    type="submit"
+    class="absolute inset-y-1 right-1 inline-flex items-center justify-center rounded bg-foreground px-3 py-1 text-[13px] duration-200 hover:opacity-80"
+  >
+    <span class="invert">Subscribe</span>
+  </button>
+</form>
+
+{inputErrors.email && <p class="text-sm text-error">{inputErrors.email.join(",")}</p>}
+
+{result?.error && <p class="text-sm text-error">Unable to sign up. Please try again later.</p>}
+
+{result && !result.error && <p class="text-sm text-success">{result.data.message}</p>}

@@ -1,5 +1,6 @@
 ---
-import NewsletterForm from "~/components/dynamic/NewsletterForm"
+import NewsletterForm from "~/components/NewsletterForm.astro"
+import Input from "~/components/global/Input.astro"
 import Intro from "~/components/global/Intro.astro"
 ---
 
@@ -7,5 +8,7 @@ import Intro from "~/components/global/Intro.astro"
   <h2 slot="title">Newsletter</h2>
   <p slot="description">Get notified when I publish new posts.</p>
 
-  <NewsletterForm client:load />
+  <NewsletterForm server:defer>
+    <Input disabled slot="fallback" />
+  </NewsletterForm>
 </Intro>

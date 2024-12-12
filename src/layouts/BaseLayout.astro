@@ -1,9 +1,10 @@
 ---
+import { ClientRouter } from "astro:transitions"
 import { SEO, type SEOProps } from "astro-seo"
 import merge from "deepmerge"
+import Newsletter from "~/components/Newsletter.astro"
 import Footer from "~/components/global/Footer.astro"
 import Navigation from "~/components/global/Navigation.astro"
-import Newsletter from "~/components/global/Newsletter.astro"
 
 import "~/styles.css"
 
@@ -65,6 +66,8 @@ const seo = merge(baseSeo, seoProps, { arrayMerge: (_, sourceArray) => sourceArr
       defer
       data-domain="kulpinski.dev"
       src="https://plausible.kulpinski.dev/js/script.js"></script>
+
+    <ClientRouter />
   </head>
 
   <body

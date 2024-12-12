@@ -8,6 +8,10 @@ import rehypeExternalLinks from "rehype-external-links"
 
 // https://astro.build/config
 export default defineConfig({
+  experimental: {
+    responsiveImages: true,
+    svg: true,
+  },
   compressHTML: true,
   adapter: cloudflare(),
   markdown: {

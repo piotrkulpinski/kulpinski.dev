@@ -9,6 +9,8 @@
   --color-secondary: 0 0% 30%;
   --color-foreground: 0 0% 13%;
   --color-border: 0 0% 88%;
+  --color-success: 142 76% 36%;
+  --color-error: 0 76% 57%;
 
   --astro-code-foreground: #24292e;
   --astro-code-token-constant: #0550ae;
