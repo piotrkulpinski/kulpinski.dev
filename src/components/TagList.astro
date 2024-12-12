@@ -1,5 +1,4 @@
 ---
-import plur from "plur"
 import Item from "~/components/global/Item.astro"
 
 type Props = {
@@ -18,7 +17,7 @@ const { tags } = Astro.props
             <Fragment slot="title">{tag.tag}</Fragment>
 
             <Fragment slot="aside">
-              {tag.count}&nbsp;{plur("post", tag.count)}
+              {tag.count}&nbsp;{tag.count === 1 ? "post" : "posts"}
             </Fragment>
           </Item>
         </a>

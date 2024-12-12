@@ -4,8 +4,6 @@ import Input from "~/components/global/Input.astro"
 
 const result = Astro.getActionResult(actions.subscribe)
 const inputErrors = isInputError(result?.error) ? result.error.fields : {}
-
-console.log(result)
 ---
 
 <form method="POST" class="relative w-full max-w-xs" action={actions.subscribe} novalidate>
@@ -26,8 +24,13 @@ console.log(result)
   </button>
 </form>
 
-{inputErrors.email && <p class="text-sm text-error">{inputErrors.email.join(",")}</p>}
-
-{result?.error && <p class="text-sm text-error">Unable to sign up. Please try again later.</p>}
+{
+  result?.error &&
+    (inputErrors.email ? (
+      <p class="text-sm text-error">{inputErrors.email.join(",")}</p>
+    ) : (
+      <p class="text-sm text-error">Unable to sign up. Please try again later.</p>
+    ))
+}
 
 {result && !result.error && <p class="text-sm text-success">{result.data.message}</p>}

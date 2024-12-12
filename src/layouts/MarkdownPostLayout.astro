@@ -1,11 +1,11 @@
 ---
 import { Image } from "astro:assets"
-import type { CollectionEntry } from "astro:content"
-import { formatDate } from "@curiousleaf/utils"
+import type { InferEntrySchema } from "astro:content"
 import Link from "~/components/global/Link.astro"
 import Prose from "~/components/global/Prose.astro"
+import { formatDate } from "~/utils"
 
-type Props = CollectionEntry<"posts">["data"]
+type Props = InferEntrySchema<"posts">
 
 const { title, image, tags, pubDate } = Astro.props
 ---
