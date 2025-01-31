@@ -1,11 +1,12 @@
 ---
-import { actions, isInputError } from "astro:actions"
+import LoaderIcon from "~/assets/loader.svg"
 import Input from "~/components/global/Input.astro"
 ---
 
 <form class="w-full max-w-xs" id="email-form" novalidate>
   <div class="relative w-full">
     <Input
+      id="email"
       name="email"
       type="email"
       placeholder="Enter your email..."
@@ -16,66 +17,56 @@ import Input from "~/components/global/Input.astro"
 
     <button
       type="submit"
-      class="absolute inset-y-1 right-1 inline-flex items-center justify-center rounded bg-foreground px-3 py-1 text-[13px] duration-200 hover:opacity-80"
+      class="absolute inset-y-1 right-1 inline-flex items-center justify-center gap-2 rounded bg-foreground text-background px-3 py-1 text-[13px] duration-200 hover:opacity-80 disabled:opacity-50"
     >
-      <span class="invert">Subscribe</span>
+      <LoaderIcon class="hidden animate-spin size-5" />
+      <span>Subscribe</span>
     </button>
   </div>
 </form>
 
 <script>
-  import { actions } from "astro:actions"
-  import { isInputError } from "astro:actions"
+  import { actions, isInputError } from "astro:actions"
 
-  function clearPreviousMessage(id: string) {
-    const messageElement = document.getElementById(id)
-    if (messageElement) {
-      messageElement.remove()
-    }
-  }
-
-  function addMessageElement(message: string, type: "error" | "success", element: HTMLElement) {
-    const p = document.createElement("p")
-
-    p.id = "message"
-    p.className = `message ${type === "success" ? "text-success" : "text-error"} mt-2 text-sm`
-    p.innerText = message
-    form.appendChild(p)
-    p.innerText = message
-    element.appendChild(p)
-  }
-
-  function clearInput(id: string) {
-    const emailInput = document.getElementById(id) as HTMLInputElement
-    if (emailInput) emailInput.value = ""
-  }
-
-  function renderMessage(error: any, data: any, form: HTMLFormElement) {
-    if (error && isInputError(error)) {
-      const message = error.fields.email && error.fields.email[0]
-      addMessageElement(message || "", "error", form)
-    } else {
-      if (data?.strapiErrors) {
-        const message = data?.strapiErrors.message
-        addMessageElement(message, "error", form)
-      } else {
-        clearInput("email")
-        addMessageElement(data?.message, "success", form)
-      }
-    }
-  }
+  type MessageType = "error" | "success"
 
   const form = document.getElementById("email-form") as HTMLFormElement
+  const submitButton = form.querySelector("button") as HTMLButtonElement
+  const spinner = submitButton.querySelector("svg") as SVGElement
+  const buttonText = submitButton.querySelector("span") as HTMLSpanElement
 
-  async function handleFormSubmit(e: Event) {
+  const handleMessage = (message: string, type: MessageType) => {
+    document.getElementById("message")?.remove()
+
+    const messageEl = document.createElement("p")
+    messageEl.id = "message"
+    messageEl.className = `${type === "success" ? "text-success" : "text-error"} mt-2 text-sm`
+    messageEl.innerText = message
+    form.appendChild(messageEl)
+  }
+
+  const handleFormSubmit = async (e: Event) => {
     e.preventDefault()
 
-    const formData = new FormData(form)
+    submitButton.disabled = true
+    spinner.classList.remove("hidden")
+    buttonText.innerText = "Subscribing..."
 
-    const { data, error } = await actions.subscribe(formData)
+    try {
+      const { data, error } = await actions.subscribe(new FormData(form))
 
-    clearPreviousMessage("message")
-    renderMessage(error, data, form)
+      if (error && isInputError(error)) {
+        handleMessage(error.fields.email?.[0] ?? "Invalid email", "error")
+        return
+      }
+
+      ;(document.getElementById("email") as HTMLInputElement).value = ""
+      handleMessage(data?.message ?? "Success!", "success")
+    } finally {
+      submitButton.disabled = false
+      spinner.classList.add("hidden")
+      buttonText.innerText = "Subscribe"
+    }
   }
 
   form.addEventListener("submit", handleFormSubmit)
