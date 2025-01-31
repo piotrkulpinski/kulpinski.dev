@@ -1,0 +1,37 @@
+[
+  {
+    "slug": "chipmunk-theme",
+    "title": "Chipmunk Theme",
+    "description": "A WordPress Theme for directory website builders.",
+    "year": 2016,
+    "url": "https://chipmunktheme.com"
+  },
+  {
+    "slug": "devsuite",
+    "title": "DevSuite",
+    "description": "Find the perfect developer tools for your next project.",
+    "year": 2024,
+    "url": "https://devsuite.co"
+  },
+  {
+    "slug": "openalternative",
+    "title": "OpenAlternative",
+    "description": "A community driven list of open source alternatives to proprietary software.",
+    "year": 2024,
+    "url": "https://openalternative.co"
+  },
+  {
+    "slug": "superstash",
+    "title": "Superstash",
+    "description": "The simplest way to build and launch a directory website.",
+    "year": 2023,
+    "url": "https://superstash.co"
+  },
+  {
+    "slug": "openads",
+    "title": "OpenAds",
+    "description": "Automate ad spot management, increase revenue and make advertisers happy.",
+    "year": 2025,
+    "url": "https://openads.co"
+  }
+]

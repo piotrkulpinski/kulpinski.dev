@@ -1,36 +1,82 @@
 ---
 import { actions, isInputError } from "astro:actions"
 import Input from "~/components/global/Input.astro"
-
-const result = Astro.getActionResult(actions.subscribe)
-const inputErrors = isInputError(result?.error) ? result.error.fields : {}
 ---
 
-<form method="POST" class="relative w-full max-w-xs" action={actions.subscribe} novalidate>
-  <Input
-    name="email"
-    type="email"
-    placeholder="Enter your email..."
-    aria-describedby="error"
-    transition:persist
-    data-1p-ignore
-  />
+<form class="w-full max-w-xs" id="email-form" novalidate>
+  <div class="relative w-full">
+    <Input
+      name="email"
+      type="email"
+      placeholder="Enter your email..."
+      aria-describedby="error"
+      transition:persist
+      data-1p-ignore
+    />
 
-  <button
-    type="submit"
-    class="absolute inset-y-1 right-1 inline-flex items-center justify-center rounded bg-foreground px-3 py-1 text-[13px] duration-200 hover:opacity-80"
-  >
-    <span class="invert">Subscribe</span>
-  </button>
+    <button
+      type="submit"
+      class="absolute inset-y-1 right-1 inline-flex items-center justify-center rounded bg-foreground px-3 py-1 text-[13px] duration-200 hover:opacity-80"
+    >
+      <span class="invert">Subscribe</span>
+    </button>
+  </div>
 </form>
 
-{
-  result?.error &&
-    (inputErrors.email ? (
-      <p class="text-sm text-error">{inputErrors.email.join(",")}</p>
-    ) : (
-      <p class="text-sm text-error">Unable to sign up. Please try again later.</p>
-    ))
-}
+<script>
+  import { actions } from "astro:actions"
+  import { isInputError } from "astro:actions"
 
-{result && !result.error && <p class="text-sm text-success">{result.data.message}</p>}
+  function clearPreviousMessage(id: string) {
+    const messageElement = document.getElementById(id)
+    if (messageElement) {
+      messageElement.remove()
+    }
+  }
+
+  function addMessageElement(message: string, type: "error" | "success", element: HTMLElement) {
+    const p = document.createElement("p")
+
+    p.id = "message"
+    p.className = `message ${type === "success" ? "text-success" : "text-error"} mt-2 text-sm`
+    p.innerText = message
+    form.appendChild(p)
+    p.innerText = message
+    element.appendChild(p)
+  }
+
+  function clearInput(id: string) {
+    const emailInput = document.getElementById(id) as HTMLInputElement
+    if (emailInput) emailInput.value = ""
+  }
+
+  function renderMessage(error: any, data: any, form: HTMLFormElement) {
+    if (error && isInputError(error)) {
+      const message = error.fields.email && error.fields.email[0]
+      addMessageElement(message || "", "error", form)
+    } else {
+      if (data?.strapiErrors) {
+        const message = data?.strapiErrors.message
+        addMessageElement(message, "error", form)
+      } else {
+        clearInput("email")
+        addMessageElement(data?.message, "success", form)
+      }
+    }
+  }
+
+  const form = document.getElementById("email-form") as HTMLFormElement
+
+  async function handleFormSubmit(e: Event) {
+    e.preventDefault()
+
+    const formData = new FormData(form)
+
+    const { data, error } = await actions.subscribe(formData)
+
+    clearPreviousMessage("message")
+    renderMessage(error, data, form)
+  }
+
+  form.addEventListener("submit", handleFormSubmit)
+</script>

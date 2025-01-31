@@ -1,3 +1,4 @@
+// @ts-check
 import cloudflare from "@astrojs/cloudflare"
 import mdx from "@astrojs/mdx"
 import preact from "@astrojs/preact"
@@ -15,14 +16,8 @@ export default defineConfig({
   compressHTML: true,
   adapter: cloudflare(),
   markdown: {
-    drafts: true,
-    shikiConfig: { theme: "css-variables" },
+    shikiConfig: { theme: "css-variables", wrap: true },
     rehypePlugins: [[rehypeExternalLinks, { target: "_blank" }]],
-  },
-  shikiConfig: {
-    wrap: true,
-    skipInline: false,
-    drafts: true,
   },
   env: {
     schema: {

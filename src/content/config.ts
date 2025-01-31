@@ -1,4 +1,5 @@
 import { defineCollection, z } from "astro:content"
+import { file } from "astro/loaders"
 
 const postsCollection = defineCollection({
   schema: ({ image }) =>
@@ -15,6 +16,7 @@ const postsCollection = defineCollection({
 })
 
 const projectsCollection = defineCollection({
+  loader: file("src/content/projects.json"),
   schema: z.object({
     title: z.string(),
     year: z.number(),
@@ -24,6 +26,7 @@ const projectsCollection = defineCollection({
 })
 
 const toolsCollection = defineCollection({
+  loader: file("src/content/tools.json"),
   schema: z.object({
     title: z.string(),
     description: z.string().optional(),

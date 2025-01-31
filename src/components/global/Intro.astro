@@ -5,11 +5,15 @@ import Prose from "~/components/global/Prose.astro"
 type Props = HTMLAttributes<"div">
 
 const { class: className, ...props } = Astro.props
+
+const slots = Astro.slots
+const hasTitle = slots.has("title")
+const hasDescription = slots.has("description")
 ---
 
 <section class:list={[className, "flex flex-col gap-2 md:gap-3"]} {...props}>
   {
-    Astro.slots.has("title") && (
+    hasTitle && (
       <div class="font-medium font-display text-foreground lg:text-lg">
         <slot name="title" />
       </div>
@@ -17,7 +21,7 @@ const { class: className, ...props } = Astro.props
   }
 
   {
-    Astro.slots.has("description") && (
+    hasDescription && (
       <Prose class="text-sm max-w-none">
         <slot name="description" />
       </Prose>
