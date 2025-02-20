@@ -7,6 +7,13 @@
     "image": "https://www.google.com/s2/favicons?sz=128&domain_url=https://airtable.com"
   },
   {
+    "slug": "seline",
+    "title": "Seline",
+    "description": "Privacy-first Google Analytics alternative for the modern web.",
+    "url": "https://kulp.in/seline",
+    "image": "https://www.google.com/s2/favicons?sz=128&domain_url=https://seline.co"
+  },
+  {
     "slug": "cleanshot",
     "title": "CleanShot",
     "description": "Takes screenshots and records videos. It's one of my favorite Mac apps of all time.",
