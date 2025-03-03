@@ -14,17 +14,9 @@ const hasDescription = slots.has("description")
 <section class:list={[className, "flex flex-col gap-2 md:gap-3"]} {...props}>
   {
     hasTitle && (
-      <div class="font-medium font-display text-foreground lg:text-lg">
+      <div class="font-medium text-muted">
         <slot name="title" />
       </div>
-    )
-  }
-
-  {
-    hasDescription && (
-      <Prose class="text-sm max-w-none">
-        <slot name="description" />
-      </Prose>
     )
   }
 

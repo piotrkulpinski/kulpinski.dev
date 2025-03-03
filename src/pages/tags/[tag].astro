@@ -2,6 +2,7 @@
 import { getCollection } from "astro:content"
 import PostList from "~/components/PostList.astro"
 import Intro from "~/components/global/Intro.astro"
+import Prose from "~/components/global/Prose.astro"
 import BaseLayout from "~/layouts/BaseLayout.astro"
 
 export async function getStaticPaths() {
@@ -31,6 +32,9 @@ const title = `Posts tagged "${tag}"`
 <BaseLayout>
   <Intro>
     <h2 slot="title">{title}</h2>
-    <PostList posts={posts} />
+
+    <Prose>
+      <PostList posts={posts} />
+    </Prose>
   </Intro>
 </BaseLayout>

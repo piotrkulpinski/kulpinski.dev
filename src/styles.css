@@ -4,10 +4,10 @@
 
 :root {
   --color-primary: 209 100% 51%;
-  --color-background: 0 0% 100%;
+  --color-background: 0 0% 98%;
   --color-muted: 0 0% 50%;
   --color-secondary: 0 0% 30%;
-  --color-foreground: 0 0% 13%;
+  --color-foreground: 0 0% 9%;
   --color-border: 0 0% 88%;
   --color-success: 142 76% 36%;
   --color-error: 0 76% 57%;
@@ -24,10 +24,10 @@
   --astro-code-token-link: #0969da;
 
   @media (prefers-color-scheme: dark) {
-    --color-background: 0 0% 8%;
+    --color-background: 0 0% 10%;
     --color-muted: 0 0% 50%;
     --color-secondary: 0 0% 70%;
-    --color-foreground: 0 0% 87%;
+    --color-foreground: 0 0% 84%;
     --color-border: 0 0% 18%;
 
     --astro-code-foreground: #c9d1d9;
@@ -47,18 +47,20 @@
     /* Square quotes */ "ss08" 1, /* Slashed zero */ "zero" 1, /* Tabular numbers */ "tnum" 1,
     /* Open six */ "cv03" 1, /* Open nine */ "cv04" 1, /* Alternate one */ "cv01" 1,
     /* Flat-top three */ "cv09", /* Open 4 */ "cv02" 1;
-
-  @supports (font-variation-settings: normal) {
-    /* Use variable font if supported */
-    .font-display {
-      font-family: InterVariable, sans-serif;
-    }
-  }
 }
 
-* {
-  @apply underline-offset-2;
+*,
+::after,
+::before,
+::backdrop,
+::file-selector-button {
   @apply border-border;
+}
+
+a {
+  @apply text-primary;
+  @apply hover:text-primary/75;
+  @apply hover:underline;
 }
 
 a,
@@ -66,7 +68,6 @@ button,
 label[for],
 [href] [class*="group-hover"] {
   @apply transition;
-  @apply ease-out;
-  @apply duration-150;
+  @apply duration-100;
   @apply cursor-pointer;
 }

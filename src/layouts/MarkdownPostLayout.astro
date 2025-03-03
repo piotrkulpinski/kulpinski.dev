@@ -27,20 +27,23 @@ const { title, image, tags, pubDate } = Astro.props
   }
 
   <div>
-    <h1 class="text-pretty text-3xl font-display font-semibold tracking-tight md:text-4xl">
+    <h1 class="text-pretty text-3xl font-bold tracking-tight md:text-4xl">
       {title}
     </h1>
 
     <div class="mt-4 flex flex-wrap gap-3 text-muted">
-      <p class="text-xs">
+      <p class="text-sm">
         {formatDate(pubDate)}
       </p>
 
       {
         tags.map((tag) => (
-          <span class="inline-flex items-center text-xs lowercase hover:text-primary">
-            <a href={`/tags/${tag}`}>#{tag}</a>
-          </span>
+          <a
+            href={`/tags/${tag}`}
+            class="inline-flex items-center text-sm lowercase text-[inherit]"
+          >
+            #{tag}
+          </a>
         ))
       }
     </div>
@@ -68,7 +71,7 @@ const { title, image, tags, pubDate } = Astro.props
     crossorigin="anonymous"
     async></script>
 
-  <Link href="/">&xlarr; back</Link>
+  <Link href="/">← back</Link>
 
   <script>
     const copyButtonLabel = "Copy"

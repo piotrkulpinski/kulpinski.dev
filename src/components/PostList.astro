@@ -12,19 +12,19 @@ const { posts } = Astro.props
 
 {
   !!posts.length ? (
-    <nav>
+    <ul>
       {posts.map(({ data, slug }) => (
-        <a href={`/posts/${slug}`} title={data.title} class="block">
-          <Item>
-            <Fragment slot="title">{data.title}</Fragment>
+        <Item>
+          <a href={`/posts/${slug}`} title={data.title} class="">
+            {data.title}
+          </a>
 
-            <time datetime="2020-03-16" slot="aside">
-              {formatDate(data.pubDate)}
-            </time>
-          </Item>
-        </a>
+          <time datetime={data.pubDate.toISOString()} slot="aside">
+            {formatDate(data.pubDate)}
+          </time>
+        </Item>
       ))}
-    </nav>
+    </ul>
   ) : (
     <p>No posts found</p>
   )

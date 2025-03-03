@@ -11,18 +11,15 @@ const { projects } = Astro.props
 
 {
   !!projects.length ? (
-    <nav class="space-y-2">
+    <ul>
       {projects.map(({ data }) => (
-        <a href={data.url} target="_blank" class="block">
-          <Item>
-            <Fragment slot="title">{data.title}</Fragment>
-            <Fragment slot="aside">{data.year}</Fragment>
-
-            {data.description && <Fragment slot="description">{data.description}</Fragment>}
-          </Item>
-        </a>
+        <Item>
+          <a href={data.url} target="_blank" title={data.description}>
+            {data.title}
+          </a>
+        </Item>
       ))}
-    </nav>
+    </ul>
   ) : (
     <p>No projects found</p>
   )

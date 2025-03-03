@@ -3,6 +3,8 @@ import { getCollection } from "astro:content"
 import PostList from "~/components/PostList.astro"
 import ProjectList from "~/components/ProjectList.astro"
 import Intro from "~/components/global/Intro.astro"
+import Item from "~/components/global/Item.astro"
+import Prose from "~/components/global/Prose.astro"
 import BaseLayout from "~/layouts/BaseLayout.astro"
 
 const allPosts = await getCollection("posts", ({ data }) => !data.isDraft)
@@ -20,22 +22,83 @@ const projects = allProjects.sort(
 ---
 
 <BaseLayout>
-  <Intro id="today">
-    <h2 slot="title">Today</h2>
+  <Intro id="about">
+    <h2 slot="title">About</h2>
 
-    <p slot="description">
-      I work as an independent software engineer and designer. I'm passionate about creating
-      beautiful, accessible, and performant web. I write about things I learn and find interesting.
-    </p>
+    <Prose>
+      <p>
+        I am an independent software engineer and designer. I'm passionate about creating beautiful,
+        accessible, and performant web. I write about things I learn and find interesting.
+      </p>
+
+      <ul>
+        <li>born in late 80s in the beautiful city of Krakow</li>
+        <li>programmer-turned-solopreneur</li>
+        <li>15+ years of experience</li>
+        <li>interested in software, seo, open source & ai</li>
+        <li>passionate about minimalism & simplicity</li>
+        <li>built and shipped a lot of useful <a href="/#projects">web projects</a></li>
+      </ul>
+    </Prose>
   </Intro>
 
   <Intro id="projects">
     <h2 slot="title">Projects</h2>
-    <ProjectList projects={projects} />
+
+    <Prose>
+      <p>I am also tinkering away and building web projects.</p>
+
+      <ProjectList projects={projects} />
+
+      <p>
+        If you are interested in a coffee chat or discussing potential projects, feel free to <a
+          href="/#contact">reach out</a
+        >.
+      </p>
+    </Prose>
   </Intro>
 
   <Intro id="posts">
     <h2 slot="title">Latest Posts</h2>
-    <PostList posts={posts} />
+
+    <Prose>
+      <PostList posts={posts} />
+    </Prose>
+  </Intro>
+
+  <Intro id="contact">
+    <h2 slot="title">Get in touch</h2>
+
+    <Prose>
+      <ul>
+        <Item>
+          <a href="mailto:piotr@kulpinski.pl" target="_blank" rel="nofollow noreferrer">
+            <span class="text-muted">piotr(at)</span>kulpinski.pl
+          </a>
+        </Item>
+
+        <Item>
+          <a href="https://x.com/piotrkulpinski" target="_blank" rel="nofollow noreferrer">
+            <span class="text-muted">x.com/</span>piotrkulpinski
+          </a>
+        </Item>
+
+        <Item>
+          <a
+            href="https://bsky.app/profile/kulpinski.dev"
+            target="_blank"
+            rel="nofollow noreferrer"
+          >
+            <span class="text-muted">bsky.app/profile/</span>kulpinski.dev
+          </a>
+        </Item>
+
+        <Item>
+          <a href="https://github.com/piotrkulpinski" target="_blank" rel="nofollow noreferrer">
+            <span class="text-muted">github.com/</span>piotrkulpinski
+          </a>
+        </Item>
+      </ul>
+    </Prose>
   </Intro>
 </BaseLayout>

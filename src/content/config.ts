@@ -25,18 +25,7 @@ const projectsCollection = defineCollection({
   }),
 })
 
-const toolsCollection = defineCollection({
-  loader: file("src/content/tools.json"),
-  schema: z.object({
-    title: z.string(),
-    description: z.string().optional(),
-    url: z.string().url().optional(),
-    image: z.string().url().optional(),
-  }),
-})
-
 export const collections = {
   posts: postsCollection,
   projects: projectsCollection,
-  tools: toolsCollection,
 }

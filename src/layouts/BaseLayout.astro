@@ -3,7 +3,6 @@ import { PLAUSIBLE_DOMAIN, PLAUSIBLE_URL } from "astro:env/client"
 import { ClientRouter } from "astro:transitions"
 import { SEO, type SEOProps } from "astro-seo"
 import merge from "deepmerge"
-import Newsletter from "~/components/Newsletter.astro"
 import Footer from "~/components/global/Footer.astro"
 import Navigation from "~/components/global/Navigation.astro"
 
@@ -41,7 +40,7 @@ const baseSeo = {
 const seo = merge(baseSeo, seoProps, { arrayMerge: (_, sourceArray) => sourceArray })
 ---
 
-<html lang="en">
+<html lang="en" style="font-size: 81.25%;">
   <head>
     <SEO {...seo} />
 
@@ -56,10 +55,12 @@ const seo = merge(baseSeo, seoProps, { arrayMerge: (_, sourceArray) => sourceArr
     <link rel="icon" type="image/png" sizes="32x32" href="/favicons/favicon-32x32.png" />
     <link rel="icon" type="image/png" sizes="16x16" href="/favicons/favicon-16x16.png" />
     <link rel="manifest" href="/favicons/site.webmanifest" />
-
-    <!-- HTML in your document's head -->
-    <link rel="preconnect" href="https://rsms.me/" />
-    <link rel="stylesheet" href="https://rsms.me/inter/inter.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@100..900&display=swap"
+      rel="stylesheet"
+    />
 
     <!-- Plausible Analytics -->
     <script is:inline defer data-domain={PLAUSIBLE_DOMAIN} src={`${PLAUSIBLE_URL}/js/script.js`}
@@ -69,11 +70,10 @@ const seo = merge(baseSeo, seoProps, { arrayMerge: (_, sourceArray) => sourceArr
   </head>
 
   <body
-    class="mx-auto flex min-h-screen max-w-[42.5rem] flex-col gap-12 bg-background text-foreground p-8"
+    class="mx-auto flex min-h-screen max-w-[46rem] flex-col gap-12 bg-background text-foreground p-6 md:py-8 lg:py-10"
   >
     <Navigation />
     <slot />
-    <Newsletter />
     <Footer />
   </body>
 </html>

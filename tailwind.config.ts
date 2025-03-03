@@ -28,8 +28,8 @@ export default {
     },
     extend: {
       fontFamily: {
-        sans: ["Inter", ...defaultTheme.fontFamily.sans],
-        display: ["Inter", ...defaultTheme.fontFamily.sans],
+        sans: ["Geist Mono", ...defaultTheme.fontFamily.sans],
+        mono: ["Geist Mono", ...defaultTheme.fontFamily.mono],
       },
     },
   },

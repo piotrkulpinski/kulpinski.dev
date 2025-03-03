@@ -7,15 +7,14 @@ const { pathname } = new URL(Astro.request.url)
 const { href, ...props } = Astro.props as Props
 ---
 
-<a
-  href={href}
-  class:list={[
-    "text-sm",
-    href === pathname || (href !== "/" && pathname.startsWith(href as string))
-      ? "text-foreground underline"
-      : "text-muted hover:text-foreground",
-  ]}
-  {...props}
->
-  <slot />
-</a>
+{
+  href === pathname || (href !== "/" && pathname.startsWith(href as string)) ? (
+    <span class="font-medium text-muted" {...props}>
+      <slot />
+    </span>
+  ) : (
+    <a href={href} {...props}>
+      <slot />
+    </a>
+  )
+}

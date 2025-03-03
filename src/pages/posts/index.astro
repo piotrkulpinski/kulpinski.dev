@@ -1,0 +1,26 @@
+---
+import { getCollection } from "astro:content"
+import PostList from "~/components/PostList.astro"
+import Intro from "~/components/global/Intro.astro"
+import Prose from "~/components/global/Prose.astro"
+import BaseLayout from "~/layouts/BaseLayout.astro"
+
+const allPosts = await getCollection("posts", ({ data }) => !data.isDraft)
+
+// Sort posts by date in descending order (newest first)
+const posts = allPosts.sort(
+  (a, b) => new Date(b.data.pubDate).valueOf() - new Date(a.data.pubDate).valueOf()
+)
+
+const title = "Posts"
+---
+
+<BaseLayout title={title}>
+  <Intro>
+    <h1 slot="title">{title}</h1>
+
+    <Prose>
+      <PostList posts={posts} />
+    </Prose>
+  </Intro>
+</BaseLayout>

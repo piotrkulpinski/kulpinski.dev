@@ -10,19 +10,17 @@ const { tags } = Astro.props
 
 {
   !!tags.length ? (
-    <nav>
+    <ul>
       {tags.map((tag) => (
-        <a href={`/tags/${tag.tag}/`} class="block">
-          <Item>
-            <Fragment slot="title">{tag.tag}</Fragment>
+        <Item>
+          <a href={`/tags/${tag.tag}/`}>{tag.tag}</a>
 
-            <Fragment slot="aside">
-              {tag.count}&nbsp;{tag.count === 1 ? "post" : "posts"}
-            </Fragment>
-          </Item>
-        </a>
+          <Fragment slot="aside">
+            {tag.count}&nbsp;{tag.count === 1 ? "post" : "posts"}
+          </Fragment>
+        </Item>
       ))}
-    </nav>
+    </ul>
   ) : (
     <p>No tags found</p>
   )
