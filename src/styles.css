@@ -59,15 +59,14 @@
 
 a {
   @apply text-primary;
-  @apply hover:text-primary/75;
-  @apply hover:underline;
+  @apply hover:opacity-90;
 }
 
 a,
 button,
 label[for],
 [href] [class*="group-hover"] {
-  @apply transition;
+  @apply ease-out;
   @apply duration-100;
   @apply cursor-pointer;
 }
