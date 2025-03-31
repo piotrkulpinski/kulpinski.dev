@@ -1,5 +1,7 @@
 ---
+import { Image } from "astro:assets"
 import { getCollection } from "astro:content"
+import ProfilePicture from "~/assets/piotrkulpinski.webp"
 import PostList from "~/components/PostList.astro"
 import ProjectList from "~/components/ProjectList.astro"
 import Intro from "~/components/global/Intro.astro"
@@ -25,8 +27,16 @@ const projects = allProjects.sort(
   <Intro id="about">
     <h2 slot="title">About</h2>
 
-    <Prose>
+    <Prose class="flow-root">
       <p>
+        <Image
+          src={ProfilePicture}
+          alt="Piotr Kulpinski"
+          width={256}
+          height={256}
+          class="not-prose size-24 rounded-full float-start mr-8 [shape-outside:circle(50%)]"
+        />
+
         I am an independent software engineer and designer. I'm passionate about creating beautiful,
         accessible, and performant websites. I write about things I learn and find interesting.
       </p>
@@ -61,7 +71,7 @@ const projects = allProjects.sort(
     <h2 slot="title">Latest Posts</h2>
 
     <Prose>
-      <PostList posts={posts} />
+      <PostList posts={posts} class="flex-1 truncate" />
     </Prose>
   </Intro>
 

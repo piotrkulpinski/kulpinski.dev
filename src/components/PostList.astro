@@ -1,13 +1,14 @@
 ---
 import type { CollectionEntry } from "astro:content"
+import type { HTMLAttributes } from "astro/types"
 import Item from "~/components/global/Item.astro"
 import { formatDate } from "~/utils"
 
-type Props = {
+type Props = HTMLAttributes<"a"> & {
   posts: CollectionEntry<"posts">[]
 }
 
-const { posts } = Astro.props
+const { posts, ...props } = Astro.props
 ---
 
 {
@@ -15,7 +16,7 @@ const { posts } = Astro.props
     <ul>
       {posts.map(({ data, slug }) => (
         <Item>
-          <a href={`/posts/${slug}`} title={data.title} class="">
+          <a href={`/posts/${slug}`} title={data.title} {...props}>
             {data.title}
           </a>
 

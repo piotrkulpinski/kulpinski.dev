@@ -28,7 +28,7 @@ export default {
     },
     extend: {
       fontFamily: {
-        sans: ["Geist Mono", ...defaultTheme.fontFamily.sans],
+        sans: ["Geist Mono", ...defaultTheme.fontFamily.mono],
         mono: ["Geist Mono", ...defaultTheme.fontFamily.mono],
       },
     },
