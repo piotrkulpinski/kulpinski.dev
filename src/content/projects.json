@@ -33,5 +33,12 @@
     "description": "A platform to automate ad spot management.",
     "year": 2025,
     "url": "https://openads.co"
+  },
+  {
+    "slug": "euroalternative",
+    "title": "EuroAlternative",
+    "description": "Discover European alternatives to big tech companies.",
+    "year": 2025,
+    "url": "https://euroalternative.co"
   }
 ]
