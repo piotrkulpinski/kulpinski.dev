@@ -40,5 +40,12 @@
     "description": "Discover European alternatives to big tech companies.",
     "year": 2025,
     "url": "https://euroalternative.co"
+  },
+  {
+    "slug": "dirstarter",
+    "title": "Dirstarter",
+    "description": "Next.js boilerplate for building profitable directory websites",
+    "year": 2025,
+    "url": "https://dirstarter.com"
   }
 ]
