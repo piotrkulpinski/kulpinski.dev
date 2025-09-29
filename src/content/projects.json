@@ -1,51 +1,50 @@
 [
   {
-    "slug": "chipmunk-theme",
-    "title": "Chipmunk Theme",
-    "description": "A WordPress Theme for directory website builders.",
-    "year": 2016,
-    "url": "https://chipmunktheme.com"
-  },
-  {
     "slug": "devsuite",
     "title": "DevSuite",
     "description": "Find the perfect developer tools for your next project.",
-    "year": 2024,
-    "url": "https://devsuite.co"
+    "order": 5,
+    "url": "https://devsuite.co",
+    "category": "directory"
   },
   {
     "slug": "openalternative",
     "title": "OpenAlternative",
     "description": "Discover open source alternatives to popular software.",
-    "year": 2024,
-    "url": "https://openalternative.co"
+    "order": 1,
+    "url": "https://openalternative.co",
+    "category": "directory"
   },
   {
     "slug": "superstash",
     "title": "Superstash",
     "description": "The simplest way to build and launch a directory website.",
-    "year": 2023,
-    "url": "https://superstash.co"
+    "order": 99,
+    "url": "https://superstash.co",
+    "category": "saas"
   },
   {
     "slug": "openads",
     "title": "OpenAds",
     "description": "A platform to automate ad spot management.",
-    "year": 2025,
-    "url": "https://openads.co"
+    "order": 3,
+    "url": "https://openads.co",
+    "category": "saas"
   },
   {
     "slug": "euroalternative",
     "title": "EuroAlternative",
     "description": "Discover European alternatives to big tech companies.",
-    "year": 2025,
-    "url": "https://euroalternative.co"
+    "order": 4,
+    "url": "https://euroalternative.co",
+    "category": "directory"
   },
   {
     "slug": "dirstarter",
     "title": "Dirstarter",
     "description": "Next.js boilerplate for building profitable directory websites",
-    "year": 2025,
-    "url": "https://dirstarter.com"
+    "order": 2,
+    "url": "https://dirstarter.com",
+    "category": "boilerplate"
   }
 ]

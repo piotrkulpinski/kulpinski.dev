@@ -19,7 +19,7 @@ const posts = allPosts.sort(
 
 // Sort projects by year in descending order (newest first)
 const projects = allProjects.sort(
-  (a, b) => new Date(b.data.year).valueOf() - new Date(a.data.year).valueOf()
+  (a, b) => new Date(a.data.order).valueOf() - new Date(b.data.order).valueOf()
 )
 ---
 
@@ -56,13 +56,17 @@ const projects = allProjects.sort(
     <h2 slot="title">Projects</h2>
 
     <Prose>
-      <p>I am also tinkering away and building web projects.</p>
+      <p>I'm constantly tinkering and building exciting web projects:</p>
 
-      <ProjectList projects={projects} />
+      <ProjectList projects={projects.filter(({ data }) => data.category !== "directory")} />
+
+      <p>I've also created several successful directory websites:</p>
+
+      <ProjectList projects={projects.filter(({ data }) => data.category === "directory")} />
 
       <p>
-        If you are interested in a coffee chat or discussing potential projects, feel free to reach
-        out.
+        If you're interested in a coffee chat or want to discuss potential projects, I'd love to
+        hear from you.
       </p>
     </Prose>
   </Intro>
