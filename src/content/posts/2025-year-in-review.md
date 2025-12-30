@@ -1,7 +1,7 @@
 ---
 pubDate: 2025-12-30
 title: "2025: A Year in Review"
-description: "Reflecting on a year of growing side projects, hitting 1M visitors at OpenAlternative, $20k revenue with Dirstarter, and embracing AI-assisted coding."
+description: "Reflecting on a year of growing side projects, hitting 1M visitors and $57k revenue at OpenAlternative, $22k with Dirstarter, and embracing AI-assisted coding."
 tags: ["year-in-review", "side-projects", "personal"]
 image: ./images/2025-year-in-review.webp
 ---
@@ -10,7 +10,7 @@ As 2025 comes to a close, I'm reflecting on an incredible year. It's been define
 
 Here's a look at everything that happened.
 
-## OpenAlternative: From Side Project to 1 Million Visitors
+## OpenAlternative: From Side Project to 1M Visitors and $57,361 in Revenue
 
 The biggest win of 2025 was [OpenAlternative](https://openalternative.co) crossing **1 million unique visitors**. When I launched in early 2024 and [hit 100k visitors in the first week](/posts/openalternative-launch), I thought I'd reached the peak. I was wrong.
 
@@ -26,13 +26,25 @@ Looking back, a few key factors contributed to this milestone:
 
 Reaching 1 million visitors with a project I built in 48 hours feels surreal. It's proof that starting simple and iterating works.
 
-## Dirstarter: $20k in Revenue
+### Turning Traffic into Revenue
+
+But traffic alone doesn't pay the bills. This year, I focused on monetization, and it paid off. OpenAlternative generated **$57,361 in gross revenue**, a **516% increase** from the previous year. By December, the project crossed **$6k MRR** – a milestone I never dreamed of when I started.
+
+![OpenAlternative revenue growth in 2025](./images/2025-year-in-review-1.webp)
+
+The revenue comes from a mix of featured listings, sponsorships, and advertising. What started as a free directory now has a sustainable business model that lets me keep investing in the project.
+
+Seeing those numbers climb throughout the year was incredibly motivating. It validated that you can build something useful, keep it free for users, and still generate meaningful revenue.
+
+## Dirstarter: $22k in Revenue
 
 While OpenAlternative grew, I noticed a pattern across my other directory projects: I was rebuilding the same features over and over.
 
 I decided to package everything I'd learned into [Dirstarter](https://dirstarter.com) – a Next.js boilerplate for building profitable directory websites.
 
-The result? **$20,000 in total revenue**.
+The result? **$22,000 in total revenue** ([proof](https://trustmrr.com/startup/dirstarter)).
+
+[![Dirstarter landing page](./images/2025-year-in-review-2.webp)](https://dirstarter.com)
 
 What worked:
 
