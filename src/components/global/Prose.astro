@@ -1,9 +1,9 @@
 ---
-import type { HTMLAttributes } from "astro/types"
+import type { HTMLAttributes } from "astro/types";
 
-type Props = HTMLAttributes<"div">
+type Props = HTMLAttributes<"div">;
 
-const { class: className, ...props } = Astro.props
+const { class: className, ...props } = Astro.props;
 ---
 
 <div
@@ -11,7 +11,7 @@ const { class: className, ...props } = Astro.props
     className,
     "w-full max-w-none text-foreground text-pretty tracking-[0.0125em] prose dark:prose-invert",
     "prose-p:px-4 first:prose-p:mt-0 last:prose-p:mb-0 md:prose-p:px-6",
-    "prose-a:font-normal prose-a:no-underline prose-a:text-primary hover:prose-a:text-primary/75",
+    "prose-a:font-normal prose-a:underline prose-a:decoration-neutral-500 prose-a:decoration-1 prose-a:underline-offset-[2.5px] prose-a:hover:decoration-neutral-400 prose-a:dark:hover:decoration-neutral-600",
     "prose-ul:mx-4 prose-ol:mx-4 prose-ul:list-outside prose-ol:list-outside first:prose-ul:mt-0 last:prose-ul:mb-0 md:prose-ul:mx-6 md:prose-ol:mx-6",
     "prose-li:m-0",
     "prose-img:border prose-img:rounded-md",

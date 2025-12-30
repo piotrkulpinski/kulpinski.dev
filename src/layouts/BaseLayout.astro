@@ -1,23 +1,23 @@
 ---
-import { PLAUSIBLE_DOMAIN, PLAUSIBLE_URL } from "astro:env/client"
-import { ClientRouter } from "astro:transitions"
-import { SEO, type SEOProps } from "astro-seo"
-import merge from "deepmerge"
-import Footer from "~/components/global/Footer.astro"
-import Navigation from "~/components/global/Navigation.astro"
+import { PLAUSIBLE_DOMAIN, PLAUSIBLE_URL } from "astro:env/client";
+import { ClientRouter } from "astro:transitions";
+import { SEO, type SEOProps } from "astro-seo";
+import merge from "deepmerge";
+import Footer from "~/components/global/Footer.astro";
+import Navigation from "~/components/global/Navigation.astro";
 
-import "~/styles.css"
+import "~/styles.css";
 
-type Props = SEOProps
+type Props = SEOProps;
 
-const { title, description, ...seoProps } = Astro.props
+const { title, description, ...seoProps } = Astro.props;
 
-const globalTitle = "Piotr Kulpinski's Blog"
+const globalTitle = "Piotr Kulpinski's Blog";
 const globalDescription =
-  "I work as an independent software engineer and designer. I'm passionate about creating beautiful, accessible, and performant web. I write about things I learn and find interesting."
-const metaUrl = Astro.request.url
-const metaTitle = `${title ? `${title} - ` : ""}${globalTitle}`
-const metaDescription = description || globalDescription
+  "I work as an independent software engineer and designer. I'm passionate about creating beautiful, accessible, and performant web. I write about things I learn and find interesting.";
+const metaUrl = Astro.request.url;
+const metaTitle = `${title ? `${title} - ` : ""}${globalTitle}`;
+const metaDescription = description || globalDescription;
 
 const baseSeo = {
   title: metaTitle,
@@ -35,9 +35,11 @@ const baseSeo = {
     creator: "@piotrkulpinski",
     card: "summary_large_image",
   },
-} satisfies SEOProps
+} satisfies SEOProps;
 
-const seo = merge(baseSeo, seoProps, { arrayMerge: (_, sourceArray) => sourceArray })
+const seo = merge(baseSeo, seoProps, {
+  arrayMerge: (_, sourceArray) => sourceArray,
+});
 ---
 
 <html lang="en" style="font-size: 87.5%;">
@@ -51,9 +53,23 @@ const seo = merge(baseSeo, seoProps, { arrayMerge: (_, sourceArray) => sourceArr
     <link rel="sitemap" href="/sitemap-index.xml" />
 
     <!-- Favicon guidelines generated with https://favicon.io/ -->
-    <link rel="apple-touch-icon" sizes="180x180" href="/favicons/apple-touch-icon.png" />
-    <link rel="icon" type="image/png" sizes="32x32" href="/favicons/favicon-32x32.png" />
-    <link rel="icon" type="image/png" sizes="16x16" href="/favicons/favicon-16x16.png" />
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="/favicons/apple-touch-icon.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="/favicons/favicon-32x32.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="/favicons/favicon-16x16.png"
+    />
     <link rel="manifest" href="/favicons/site.webmanifest" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -63,8 +79,11 @@ const seo = merge(baseSeo, seoProps, { arrayMerge: (_, sourceArray) => sourceArr
     />
 
     <!-- Plausible Analytics -->
-    <script is:inline defer data-domain={PLAUSIBLE_DOMAIN} src={`${PLAUSIBLE_URL}/js/script.js`}
-    ></script>
+    <script
+      is:inline
+      defer
+      data-domain={PLAUSIBLE_DOMAIN}
+      src={`${PLAUSIBLE_URL}/js/script.js`}></script>
 
     <ClientRouter />
   </head>

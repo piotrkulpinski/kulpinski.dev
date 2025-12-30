@@ -1,13 +1,13 @@
 ---
-import { Image } from "astro:assets"
-import type { InferEntrySchema } from "astro:content"
-import Link from "~/components/global/Link.astro"
-import Prose from "~/components/global/Prose.astro"
-import { formatDate } from "~/utils"
+import { Image } from "astro:assets";
+import type { InferEntrySchema } from "astro:content";
+import Link from "~/components/global/Link.astro";
+import Prose from "~/components/global/Prose.astro";
+import { formatDate } from "~/utils";
 
-type Props = InferEntrySchema<"posts">
+type Props = InferEntrySchema<"posts">;
 
-const { title, image, tags, pubDate } = Astro.props
+const { title, image, tags, pubDate } = Astro.props;
 ---
 
 <section class="flex flex-col items-start gap-12">
@@ -20,14 +20,14 @@ const { title, image, tags, pubDate } = Astro.props
         width={1280}
         height={640}
         loading="eager"
-        fit="cover"
-        layout="responsive"
       />
     )
   }
 
   <div>
-    <h1 class="text-pretty font-serif text-3xl font-bold tracking-tight md:text-4xl">
+    <h1
+      class="text-pretty font-serif text-3xl font-bold tracking-tight md:text-4xl"
+    >
       {title}
     </h1>
 
@@ -74,49 +74,54 @@ const { title, image, tags, pubDate } = Astro.props
   <Link href="/">← back</Link>
 
   <script>
-    const copyButtonLabel = "Copy"
-    const codeBlocks = Array.from(document.querySelectorAll("pre"))
+    const copyButtonLabel = "Copy";
+    const codeBlocks = Array.from(document.querySelectorAll("pre"));
 
-    codeBlocks.forEach(wrapCodeBlock)
+    codeBlocks.forEach(wrapCodeBlock);
 
     function wrapCodeBlock(codeBlock: HTMLPreElement) {
-      const wrapper = createWrapper()
-      const copyButton = createCopyButton()
+      const wrapper = createWrapper();
+      const copyButton = createCopyButton();
 
-      codeBlock.setAttribute("tabindex", "0")
-      codeBlock.appendChild(copyButton)
+      codeBlock.setAttribute("tabindex", "0");
+      codeBlock.appendChild(copyButton);
 
       // Wrap codeblock with relative parent element
-      codeBlock.parentNode?.insertBefore(wrapper, codeBlock)
-      wrapper.appendChild(codeBlock)
+      codeBlock.parentNode?.insertBefore(wrapper, codeBlock);
+      wrapper.appendChild(codeBlock);
 
-      copyButton.addEventListener("click", () => handleCopy(codeBlock, copyButton))
+      copyButton.addEventListener("click", () =>
+        handleCopy(codeBlock, copyButton)
+      );
     }
 
     function createWrapper() {
-      const wrapper = document.createElement("div")
-      wrapper.style.position = "relative"
-      return wrapper
+      const wrapper = document.createElement("div");
+      wrapper.style.position = "relative";
+      return wrapper;
     }
 
     function createCopyButton() {
-      const button = document.createElement("button")
+      const button = document.createElement("button");
       button.className =
-        "absolute top-0 right-0 text-[10px] bg-border rounded-tr-md rounded-bl-md px-1.5 py-0.5"
-      button.innerHTML = copyButtonLabel
-      return button
+        "absolute top-0 right-0 text-[10px] bg-border rounded-tr-md rounded-bl-md px-1.5 py-0.5";
+      button.innerHTML = copyButtonLabel;
+      return button;
     }
 
-    async function handleCopy(block: HTMLPreElement, button: HTMLButtonElement) {
-      const code = block.querySelector("code")
-      if (!code) return
+    async function handleCopy(
+      block: HTMLPreElement,
+      button: HTMLButtonElement
+    ) {
+      const code = block.querySelector("code");
+      if (!code) return;
 
-      await navigator.clipboard.writeText(code.innerText)
+      await navigator.clipboard.writeText(code.innerText);
 
-      button.innerText = "Copied"
+      button.innerText = "Copied";
       setTimeout(() => {
-        button.innerText = copyButtonLabel
-      }, 1000)
+        button.innerText = copyButtonLabel;
+      }, 1000);
     }
   </script>
 </section>
