@@ -9,16 +9,16 @@ const { class: className, ...props } = Astro.props
 <div
   class:list={[
     className,
-    "w-full max-w-none text-foreground tracking-[0.0125em] prose dark:prose-invert",
-    "prose-p:px-4 prose-p:text-pretty first:prose-p:mt-0 last:prose-p:mb-0 md:prose-p:px-6",
+    "w-full max-w-none text-foreground text-pretty tracking-[0.0125em] prose dark:prose-invert",
+    "prose-p:px-4 first:prose-p:mt-0 last:prose-p:mb-0 md:prose-p:px-6",
     "prose-a:font-normal prose-a:no-underline prose-a:text-primary hover:prose-a:text-primary/75",
     "prose-ul:mx-4 prose-ol:mx-4 prose-ul:list-outside prose-ol:list-outside first:prose-ul:mt-0 last:prose-ul:mb-0 md:prose-ul:mx-6 md:prose-ol:mx-6",
     "prose-li:m-0",
     "prose-img:border prose-img:rounded-md",
     "prose-lead:text-lg/relaxed",
     "prose-pre:!bg-foreground/5 prose-pre:text-base",
-    "prose-inline-code:before:hidden prose-inline-code:after:hidden prose-inline-code:bg-foreground/10 prose-inline-code:rounded prose-inline-code:px-[0.33em] prose-inline-code:py-[0.166em] prose-inline-code:font-norma",
-    "prose-headings:font-semibold prose-headings:text-foreground prose-headings:tracking-tight prose-h2:text-[1.8em]",
+    "prose-inline-code:before:hidden prose-inline-code:after:hidden prose-inline-code:bg-foreground/10 prose-inline-code:rounded prose-inline-code:px-[0.33em] prose-inline-code:py-[0.166em] prose-inline-code:font-normal",
+    "prose-headings:font-serif prose-headings:font-semibold prose-headings:text-foreground prose-headings:tracking-tight prose-h2:text-[1.8em]",
   ]}
   {...props}
 >

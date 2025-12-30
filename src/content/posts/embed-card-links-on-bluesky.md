@@ -129,7 +129,7 @@ type Metadata = {
  * @returns The metadata
  */
 const getUrlMetadata = async (url: string) => {
-  const req = await fetch(`https://api.dub.co/metatags?url=${url}`)
+  const req = await fetch(`https://app.dub.co/api/links/metatags?url=${url}`)
   const metadata: Metadata = await req.json()
 
   return metadata
@@ -216,7 +216,7 @@ type Metadata = {
  * @returns The metadata
  */
 const getUrlMetadata = async (url: string) => {
-  const req = await fetch(`https://api.dub.co/metatags?url=${url}`)
+  const req = await fetch(`https://app.dub.co/api/links/metatags?url=${url}`)
   const metadata: Metadata = await req.json()
 
   return metadata

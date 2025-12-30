@@ -16,14 +16,6 @@
     "category": "directory"
   },
   {
-    "slug": "superstash",
-    "title": "Superstash",
-    "description": "The simplest way to build and launch a directory website.",
-    "order": 99,
-    "url": "https://superstash.co",
-    "category": "saas"
-  },
-  {
     "slug": "openads",
     "title": "OpenAds",
     "description": "A platform to automate ad spot management.",

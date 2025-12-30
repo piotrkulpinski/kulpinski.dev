@@ -17,6 +17,7 @@ export default {
     },
     extend: {
       fontFamily: {
+        serif: ["STIX Two Text", ...defaultTheme.fontFamily.serif],
         sans: ["Inter", ...defaultTheme.fontFamily.sans],
       },
     },
