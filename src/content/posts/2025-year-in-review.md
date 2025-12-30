@@ -54,6 +54,16 @@ Each project taught me something new. DevSuite helped me understand the develope
 
 The directory website niche has been good to me. There's something satisfying about curating useful resources and watching people find value in them.
 
+## Letting Go of Old Projects
+
+Not everything in 2025 was about building new things. Sometimes growth means knowing when to let go.
+
+This year, I made the decision to **shut down [Superstash](https://superstash.co)** – a no-code platform for creating directory websites that I'd been running for a while. Despite genuine effort, I wasn't able to find the momentum needed to grow it into a sustainable business. Rather than letting it limp along, I decided to sunset it gracefully. The lessons learned from Superstash directly shaped Dirstarter, so in a way, it lives on.
+
+I also **open sourced [Chipmunk Theme](https://chipmunktheme.com)**, my premium WordPress theme. All the premium features are now available for free on [GitHub](https://github.com/chipmunktheme/chipmunk). It felt like the right move to give back to the community and let others enjoy something I'd built without any barriers.
+
+Closing and releasing these projects was bittersweet, but it freed up mental space to focus on what's working. Sometimes the best thing you can do for a project is to let it go.
+
 ## How AI Changed My Workflow
 
 I can't talk about 2025 without mentioning AI. This year, I fully embraced [Cursor](https://cursor.com) and [Claude Code](https://claude.ai) in my development workflow.
