@@ -19,3 +19,7 @@ pnpm-debug.log*
 .DS_Store
 
 .astro
+
+.cursor
+.claude
+.wrangler
