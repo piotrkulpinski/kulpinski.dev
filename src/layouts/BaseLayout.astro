@@ -1,7 +1,7 @@
 ---
+import { SEO, type SEOProps } from "astro-seo";
 import { PLAUSIBLE_DOMAIN, PLAUSIBLE_URL } from "astro:env/client";
 import { ClientRouter } from "astro:transitions";
-import { SEO, type SEOProps } from "astro-seo";
 import merge from "deepmerge";
 import Footer from "~/components/global/Footer.astro";
 import Navigation from "~/components/global/Navigation.astro";
@@ -27,7 +27,7 @@ const baseSeo = {
     basic: {
       title: metaTitle,
       type: "website",
-      image: new URL("/images/opengraph.png", Astro.request.url).toString(),
+      image: new URL("/opengraph.png", Astro.request.url).toString(),
       url: metaUrl,
     },
   },
@@ -52,25 +52,7 @@ const seo = merge(baseSeo, seoProps, {
     <meta name="generator" content={Astro.generator} />
     <link rel="sitemap" href="/sitemap-index.xml" />
 
-    <!-- Favicon guidelines generated with https://favicon.io/ -->
-    <link
-      rel="apple-touch-icon"
-      sizes="180x180"
-      href="/favicons/apple-touch-icon.png"
-    />
-    <link
-      rel="icon"
-      type="image/png"
-      sizes="32x32"
-      href="/favicons/favicon-32x32.png"
-    />
-    <link
-      rel="icon"
-      type="image/png"
-      sizes="16x16"
-      href="/favicons/favicon-16x16.png"
-    />
-    <link rel="manifest" href="/favicons/site.webmanifest" />
+    <link rel="icon" href="/favicon.ico" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
