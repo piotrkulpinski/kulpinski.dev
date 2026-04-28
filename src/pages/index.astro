@@ -2,19 +2,19 @@
 import { Image } from "astro:assets"
 import { getCollection } from "astro:content"
 import ProfilePicture from "~/assets/piotrkulpinski.webp"
-import PostList from "~/components/PostList.astro"
-import ProjectList from "~/components/ProjectList.astro"
 import HoverList from "~/components/global/HoverList.astro"
 import Intro from "~/components/global/Intro.astro"
 import Item from "~/components/global/Item.astro"
 import Prose from "~/components/global/Prose.astro"
+import PostList from "~/components/PostList.astro"
+import ProjectList from "~/components/ProjectList.astro"
 import BaseLayout from "~/layouts/BaseLayout.astro"
 
 const allPosts = await getCollection("posts", ({ data }) => !data.isDraft)
 const allProjects = await getCollection("projects")
 
 const posts = allPosts.sort(
-  (a, b) => new Date(b.data.pubDate).valueOf() - new Date(a.data.pubDate).valueOf()
+  (a, b) => new Date(b.data.pubDate).valueOf() - new Date(a.data.pubDate).valueOf(),
 )
 
 const projects = allProjects.sort((a, b) => b.data.year - a.data.year)
@@ -22,7 +22,11 @@ const projects = allProjects.sort((a, b) => b.data.year - a.data.year)
 const contacts = [
   { label: "piotr(at)", value: "kulpinski.pl", href: "mailto:piotr@kulpinski.pl" },
   { label: "x.com/", value: "piotrkulpinski", href: "https://x.com/piotrkulpinski" },
-  { label: "bsky.app/profile/", value: "kulpinski.dev", href: "https://bsky.app/profile/kulpinski.dev" },
+  {
+    label: "bsky.app/profile/",
+    value: "kulpinski.dev",
+    href: "https://bsky.app/profile/kulpinski.dev",
+  },
   { label: "github.com/", value: "piotrkulpinski", href: "https://github.com/piotrkulpinski" },
 ]
 ---
@@ -38,7 +42,7 @@ const contacts = [
     />
 
     <div class="flex flex-col gap-1.5">
-      <h1 class="text-2xl font-semibold tracking-tight text-foreground md:text-[1.75rem]">
+      <h1 class="text-lg font-semibold tracking-tight text-foreground md:text-xl">
         Piotr Kulpinski
       </h1>
       <p class="text-secondary leading-relaxed">
