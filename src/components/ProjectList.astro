@@ -1,5 +1,6 @@
 ---
 import type { CollectionEntry } from "astro:content"
+import HoverList from "~/components/global/HoverList.astro"
 import Item from "~/components/global/Item.astro"
 
 type Props = {
@@ -11,15 +12,29 @@ const { projects } = Astro.props
 
 {
   !!projects.length ? (
-    <ul>
-      {projects.map(({ data }) => (
-        <Item>
-          <a href={data.url} target="_blank" title={data.description}>
-            {data.title}
-          </a>
+    <HoverList>
+      {projects.map(({ data }, i) => (
+        <Item
+          index={i}
+          href={data.url}
+          target="_blank"
+          rel="noopener noreferrer"
+          linkTitle={data.description}
+        >
+          <span class="font-medium">{data.title}</span>
+
+          {data.description && (
+            <span class="hidden text-muted text-sm sm:inline">
+              — {data.description}
+            </span>
+          )}
+
+          <span slot="aside" class="text-muted tabular-nums">
+            {data.year}
+          </span>
         </Item>
       ))}
-    </ul>
+    </HoverList>
   ) : (
     <p>No projects found</p>
   )

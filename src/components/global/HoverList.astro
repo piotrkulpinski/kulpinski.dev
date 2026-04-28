@@ -1,0 +1,87 @@
+---
+import type { HTMLAttributes } from "astro/types"
+
+type Props = HTMLAttributes<"ul">
+
+const { class: className, ...props } = Astro.props
+---
+
+<ul
+  class:list={[className, "relative isolate flex flex-col not-prose"]}
+  data-hover-list
+  {...props}
+>
+  <span
+    class="pointer-events-none absolute left-0 top-0 -z-10 rounded-md bg-foreground/[0.06] opacity-0"
+    data-hover-bg
+    aria-hidden="true"
+  ></span>
+
+  <slot />
+</ul>
+
+<script>
+  import { animate } from "motion"
+
+  type State = { list: HTMLElement; bg: HTMLElement; active: boolean }
+
+  const states = new Map<HTMLElement, State>()
+
+  const hideOthers = (current: HTMLElement) => {
+    for (const state of states.values()) {
+      if (state.list !== current && state.active) {
+        state.active = false
+        animate(state.bg, { opacity: 0 }, { duration: 0.08 })
+      }
+    }
+  }
+
+  const init = () => {
+    for (const list of document.querySelectorAll<HTMLElement>("[data-hover-list]")) {
+      if (list.dataset.hoverBound === "1") continue
+      list.dataset.hoverBound = "1"
+
+      const bg = list.querySelector<HTMLElement>("[data-hover-bg]")
+      if (!bg) continue
+
+      const state: State = { list, bg, active: false }
+      states.set(list, state)
+
+      const move = (item: HTMLElement) => {
+        hideOthers(list)
+
+        const rect = item.getBoundingClientRect()
+        const listRect = list.getBoundingClientRect()
+        const x = rect.left - listRect.left
+        const y = rect.top - listRect.top
+
+        if (!state.active) {
+          bg.style.transform = `translate(${x}px, ${y}px)`
+          bg.style.width = `${rect.width}px`
+          bg.style.height = `${rect.height}px`
+          animate(bg, { opacity: 1 }, { duration: 0.12 })
+          state.active = true
+        } else {
+          animate(
+            bg,
+            { x, y, width: rect.width, height: rect.height, opacity: 1 },
+            { type: "spring", stiffness: 600, damping: 42, mass: 0.6 },
+          )
+        }
+      }
+
+      for (const item of list.querySelectorAll<HTMLElement>("[data-hover-item]")) {
+        item.addEventListener("mouseenter", () => move(item))
+        item.addEventListener("focusin", () => move(item))
+      }
+
+      list.addEventListener("mouseleave", () => {
+        state.active = false
+        animate(bg, { opacity: 0 }, { duration: 0.12 })
+      })
+    }
+  }
+
+  init()
+  document.addEventListener("astro:page-load", init)
+</script>

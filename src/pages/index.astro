@@ -4,6 +4,7 @@ import { getCollection } from "astro:content"
 import ProfilePicture from "~/assets/piotrkulpinski.webp"
 import PostList from "~/components/PostList.astro"
 import ProjectList from "~/components/ProjectList.astro"
+import HoverList from "~/components/global/HoverList.astro"
 import Intro from "~/components/global/Intro.astro"
 import Item from "~/components/global/Item.astro"
 import Prose from "~/components/global/Prose.astro"
@@ -12,105 +13,86 @@ import BaseLayout from "~/layouts/BaseLayout.astro"
 const allPosts = await getCollection("posts", ({ data }) => !data.isDraft)
 const allProjects = await getCollection("projects")
 
-// Sort posts by date in descending order (newest first)
 const posts = allPosts.sort(
   (a, b) => new Date(b.data.pubDate).valueOf() - new Date(a.data.pubDate).valueOf()
 )
 
-// Sort projects by year in descending order (newest first)
-const projects = allProjects.sort(
-  (a, b) => new Date(a.data.order).valueOf() - new Date(b.data.order).valueOf()
-)
+const projects = allProjects.sort((a, b) => b.data.year - a.data.year)
+
+const contacts = [
+  { label: "piotr(at)", value: "kulpinski.pl", href: "mailto:piotr@kulpinski.pl" },
+  { label: "x.com/", value: "piotrkulpinski", href: "https://x.com/piotrkulpinski" },
+  { label: "bsky.app/profile/", value: "kulpinski.dev", href: "https://bsky.app/profile/kulpinski.dev" },
+  { label: "github.com/", value: "piotrkulpinski", href: "https://github.com/piotrkulpinski" },
+]
 ---
 
 <BaseLayout>
+  <section class="reveal flex items-start gap-5" style="--i: 0">
+    <Image
+      src={ProfilePicture}
+      alt="Piotr Kulpinski"
+      width={256}
+      height={256}
+      class="size-16 rounded-full ring-1 ring-border md:size-20"
+    />
+
+    <div class="flex flex-col gap-1.5">
+      <h1 class="text-2xl font-semibold tracking-tight text-foreground md:text-[1.75rem]">
+        Piotr Kulpinski
+      </h1>
+      <p class="text-secondary leading-relaxed">
+        Solopreneur building directory websites and SaaS from Kraków, PL. Writing about
+        software, SEO, and the joy of shipping small things.
+      </p>
+    </div>
+  </section>
+
   <Intro id="about">
     <h2 slot="title">About</h2>
 
-    <Prose class="flow-root">
+    <Prose>
       <p>
-        <Image
-          src={ProfilePicture}
-          alt="Piotr Kulpinski"
-          width={256}
-          height={256}
-          class="not-prose size-24 rounded-full float-start mr-8 [shape-outside:circle(50%)]"
-        />
-
-        I'm a solopreneur building my own projects and directory websites. I write about software,
-        SEO, open source, and things I learn along the way.
+        I was born in the late 80s in Kraków, Poland, where I still live and work today. For
+        15+ years I've been building software — first inside agencies and product teams,
+        more recently as an independent solopreneur shipping projects under my own name.
       </p>
-
-      <ul>
-        <li>Born in the late 80s in Kraków, Poland</li>
-        <li>15+ years of experience as a software engineer</li>
-        <li>Creator of <a href="https://openalternative.co" target="_blank" rel="noopener noreferrer">OpenAlternative</a> and <a href="https://dirstarter.com" target="_blank" rel="noopener noreferrer">Dirstarter</a></li>
-        <li>Passionate about minimalism, simplicity & AI-assisted development</li>
-        <li>Building in public and sharing the journey</li>
-      </ul>
+      <p>
+        I run <a href="https://openalternative.co" target="_blank" rel="noopener noreferrer">OpenAlternative</a>,
+        the largest directory of open source software, and <a href="https://dirstarter.com" target="_blank" rel="noopener noreferrer">Dirstarter</a>,
+        a Next.js boilerplate that powers a growing number of indie directories. Alongside
+        them I'm always tinkering on smaller bets.
+      </p>
+      <p>
+        I care about minimalism, simplicity, and using AI to ship faster than I have any
+        right to. I build in public, and most of what I learn ends up here.
+      </p>
     </Prose>
   </Intro>
 
   <Intro id="projects">
     <h2 slot="title">Projects</h2>
 
-    <Prose>
-      <p>I'm constantly tinkering and building exciting web projects:</p>
-
-      <ProjectList projects={projects.filter(({ data }) => data.category !== "directory")} />
-
-      <p>I've also created several successful directory websites:</p>
-
-      <ProjectList projects={projects.filter(({ data }) => data.category === "directory")} />
-
-      <p>
-        If you're interested in a coffee chat or want to discuss potential projects, I'd love to
-        hear from you.
-      </p>
-    </Prose>
+    <ProjectList projects={projects} />
   </Intro>
 
   <Intro id="posts">
-    <h2 slot="title">Latest Posts</h2>
+    <h2 slot="title">Writing</h2>
 
-    <Prose>
-      <PostList posts={posts} class="flex-1 truncate" />
-    </Prose>
+    <PostList posts={posts} />
   </Intro>
 
   <Intro id="contact">
-    <h2 slot="title">Get in touch</h2>
+    <h2 slot="title">Elsewhere</h2>
 
-    <Prose>
-      <ul>
-        <Item>
-          <a href="mailto:piotr@kulpinski.pl" target="_blank" rel="nofollow noreferrer">
-            <span class="text-muted">piotr(at)</span>kulpinski.pl
-          </a>
+    <HoverList>
+      {contacts.map((c, i) => (
+        <Item index={i} href={c.href} target="_blank" rel="nofollow noreferrer">
+          <span class="font-medium">
+            <span class="text-muted">{c.label}</span>{c.value}
+          </span>
         </Item>
-
-        <Item>
-          <a href="https://x.com/piotrkulpinski" target="_blank" rel="nofollow noreferrer">
-            <span class="text-muted">x.com/</span>piotrkulpinski
-          </a>
-        </Item>
-
-        <Item>
-          <a
-            href="https://bsky.app/profile/kulpinski.dev"
-            target="_blank"
-            rel="nofollow noreferrer"
-          >
-            <span class="text-muted">bsky.app/profile/</span>kulpinski.dev
-          </a>
-        </Item>
-
-        <Item>
-          <a href="https://github.com/piotrkulpinski" target="_blank" rel="nofollow noreferrer">
-            <span class="text-muted">github.com/</span>piotrkulpinski
-          </a>
-        </Item>
-      </ul>
-    </Prose>
+      ))}
+    </HoverList>
   </Intro>
 </BaseLayout>

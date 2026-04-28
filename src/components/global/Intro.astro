@@ -1,20 +1,18 @@
 ---
 import type { HTMLAttributes } from "astro/types"
-import Prose from "~/components/global/Prose.astro"
 
-type Props = HTMLAttributes<"div">
+type Props = HTMLAttributes<"section">
 
 const { class: className, ...props } = Astro.props
 
 const slots = Astro.slots
 const hasTitle = slots.has("title")
-const hasDescription = slots.has("description")
 ---
 
-<section class:list={[className, "flex flex-col gap-2 md:gap-3"]} {...props}>
+<section class:list={[className, "flex flex-col gap-3"]} {...props}>
   {
     hasTitle && (
-      <div class="font-medium text-muted">
+      <div class="text-sm font-medium text-muted [&_h1]:text-sm [&_h1]:font-medium [&_h2]:text-sm [&_h2]:font-medium">
         <slot name="title" />
       </div>
     )

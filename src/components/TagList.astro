@@ -1,4 +1,5 @@
 ---
+import HoverList from "~/components/global/HoverList.astro"
 import Item from "~/components/global/Item.astro"
 
 type Props = {
@@ -10,17 +11,17 @@ const { tags } = Astro.props
 
 {
   !!tags.length ? (
-    <ul>
-      {tags.map((tag) => (
-        <Item>
-          <a href={`/tags/${tag.tag}/`}>{tag.tag}</a>
+    <HoverList>
+      {tags.map((tag, i) => (
+        <Item index={i} href={`/tags/${tag.tag}/`}>
+          <span class="font-medium">#{tag.tag}</span>
 
           <Fragment slot="aside">
             {tag.count}&nbsp;{tag.count === 1 ? "post" : "posts"}
           </Fragment>
         </Item>
       ))}
-    </ul>
+    </HoverList>
   ) : (
     <p>No tags found</p>
   )

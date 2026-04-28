@@ -1,31 +1,29 @@
 ---
 import type { CollectionEntry } from "astro:content"
-import type { HTMLAttributes } from "astro/types"
+import HoverList from "~/components/global/HoverList.astro"
 import Item from "~/components/global/Item.astro"
 import { formatDate } from "~/utils"
 
-type Props = HTMLAttributes<"a"> & {
+type Props = {
   posts: CollectionEntry<"posts">[]
 }
 
-const { posts, ...props } = Astro.props
+const { posts } = Astro.props
 ---
 
 {
   !!posts.length ? (
-    <ul>
-      {posts.map(({ data, slug }) => (
-        <Item>
-          <a href={`/posts/${slug}`} title={data.title} {...props}>
-            {data.title}
-          </a>
+    <HoverList>
+      {posts.map(({ data, slug }, i) => (
+        <Item index={i} href={`/posts/${slug}`} linkTitle={data.title}>
+          <span class="font-medium">{data.title}</span>
 
           <time datetime={data.pubDate.toISOString()} slot="aside">
             {formatDate(data.pubDate)}
           </time>
         </Item>
       ))}
-    </ul>
+    </HoverList>
   ) : (
     <p>No posts found</p>
   )

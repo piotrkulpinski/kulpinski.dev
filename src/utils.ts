@@ -10,10 +10,6 @@ const getDateFormatter = (locale: string, dateStyle: DateStyle) => {
 
 /**
  * Formats a date according to the specified options.
- * @param timestamp - The timestamp to format.
- * @param dateStyle - The date formatting style to use. Defaults to 'medium'.
- * @param locale - The locale to use for formatting. Defaults to 'en'.
- * @returns The formatted date string.
  */
 export const formatDate = (
   timestamp: Timestamp,
@@ -21,4 +17,13 @@ export const formatDate = (
   locale = "en-US",
 ) => {
   return getDateFormatter(locale, dateStyle).format(new Date(timestamp))
+}
+
+/**
+ * Short month + day, used when the year is shown separately as a group label.
+ */
+export const formatMonthDay = (timestamp: Timestamp, locale = "en-US") => {
+  return new Intl.DateTimeFormat(locale, { month: "short", day: "numeric" }).format(
+    new Date(timestamp),
+  )
 }

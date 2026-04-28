@@ -1,9 +1,57 @@
-<li class="relative flex flex-wrap items-center gap-x-2 list-none">
-  <span class="absolute right-full top-1 text-muted">﹂</span>
+---
+import type { HTMLAttributes } from "astro/types"
 
-  <slot />
+type Props = HTMLAttributes<"li"> & {
+  index?: number
+  href?: string
+  target?: string
+  rel?: string
+  linkTitle?: string
+}
 
-  <span class="shrink-0 text-sm text-muted whitespace-nowrap">
-    <slot name="aside" />
-  </span>
+const {
+  index = 0,
+  class: className,
+  style,
+  href,
+  target,
+  rel,
+  linkTitle,
+  ...props
+} = Astro.props
+
+const inlineStyle = `--i: ${index};${style ? ` ${style}` : ""}`
+
+const linkAttrs = href ? { href, target, rel, title: linkTitle } : null
+---
+
+<li
+  class:list={[
+    className,
+    "reveal relative list-none rounded-md -mx-2",
+  ]}
+  style={inlineStyle}
+  data-hover-item
+  {...props}
+>
+  {
+    linkAttrs ? (
+      <a
+        class="flex flex-wrap items-center gap-x-2 px-2 py-1 text-foreground"
+        {...linkAttrs}
+      >
+        <slot />
+        <span class="ml-auto inline-flex shrink-0 items-center gap-1 text-sm text-muted whitespace-nowrap tabular-nums">
+          <slot name="aside" />
+        </span>
+      </a>
+    ) : (
+      <div class="flex flex-wrap items-center gap-x-2 px-2 py-1">
+        <slot />
+        <span class="ml-auto inline-flex shrink-0 items-center gap-1 text-sm text-muted whitespace-nowrap tabular-nums">
+          <slot name="aside" />
+        </span>
+      </div>
+    )
+  }
 </li>

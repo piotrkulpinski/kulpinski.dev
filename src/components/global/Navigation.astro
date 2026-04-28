@@ -2,11 +2,22 @@
 import Link from "~/components/global/Link.astro"
 ---
 
-<div class="flex items-center justify-between">
-  <a href="/" class="shrink-0 font-medium text-primary"> Piotr Kulpinski </a>
+<header class="flex items-center justify-between gap-4">
+  <a
+    href="/"
+    class="group flex items-center gap-2.5 text-foreground"
+    aria-label="Piotr Kulpinski — home"
+  >
+    <span
+      class="relative inline-flex size-2 shrink-0 rounded-full bg-success/80 text-success/80 pulse-dot"
+      aria-hidden="true"
+    ></span>
+    <span class="font-medium tracking-tight">Piotr Kulpinski</span>
+  </a>
 
-  <nav class="flex flex-wrap items-center gap-3 md:gap-4">
-    <Link href="/">/home</Link>
-    <Link href="/posts">/posts</Link>
+  <nav class="flex items-center gap-1 text-sm">
+    <Link href="/">Home</Link>
+    <span class="text-border" aria-hidden="true">·</span>
+    <Link href="/posts">Writing</Link>
   </nav>
-</div>
+</header>

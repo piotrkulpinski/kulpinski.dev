@@ -22,5 +22,5 @@ export default defineConfig({
     },
   },
   site: process.env.SITE_URL || "http://localhost:4321",
-  integrations: [tailwind({ applyBaseStyles: false }), sitemap(), mdx(), preact()],
+  integrations: [tailwind({ applyBaseStyles: false }), sitemap(), mdx(), preact({ compat: true })],
 })

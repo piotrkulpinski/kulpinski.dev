@@ -4,16 +4,28 @@ import type { HTMLAttributes } from "astro/types"
 type Props = HTMLAttributes<"a">
 
 const { pathname } = new URL(Astro.request.url)
-const { href, ...props } = Astro.props as Props
+const { href, class: className, ...props } = Astro.props as Props
+
+const isActive = href === pathname || (href !== "/" && pathname.startsWith(href as string))
 ---
 
 {
-  href === pathname || (href !== "/" && pathname.startsWith(href as string)) ? (
-    <span class="font-medium text-muted" {...props}>
+  isActive ? (
+    <span
+      class:list={[className, "rounded-md px-2 py-1 font-medium text-foreground"]}
+      {...props}
+    >
       <slot />
     </span>
   ) : (
-    <a href={href} {...props}>
+    <a
+      href={href}
+      class:list={[
+        className,
+        "rounded-md px-2 py-1 font-medium text-muted hover:text-foreground hover:bg-foreground/5",
+      ]}
+      {...props}
+    >
       <slot />
     </a>
   )

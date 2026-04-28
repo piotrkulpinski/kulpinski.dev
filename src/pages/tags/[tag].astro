@@ -1,7 +1,6 @@
 ---
 import { getCollection } from "astro:content"
 import PostList from "~/components/PostList.astro"
-import Intro from "~/components/global/Intro.astro"
 import Prose from "~/components/global/Prose.astro"
 import BaseLayout from "~/layouts/BaseLayout.astro"
 
@@ -10,9 +9,7 @@ export async function getStaticPaths() {
   const uniqueTags = [...new Set(posts.flatMap((post) => post.data.tags))]
 
   return uniqueTags.map((tag) => {
-    // Filter posts by tag
     const filteredPosts = posts.filter((post) => post.data.tags.includes(tag))
-    // Sort filtered posts by date in descending order
     const sortedPosts = filteredPosts.sort(
       (a, b) => new Date(b.data.pubDate).valueOf() - new Date(a.data.pubDate).valueOf()
     )
@@ -26,15 +23,16 @@ export async function getStaticPaths() {
 
 const { tag } = Astro.params
 const { posts } = Astro.props
-const title = `Posts tagged "${tag}"`
+const title = `#${tag}`
 ---
 
-<BaseLayout>
-  <Intro>
-    <h2 slot="title">{title}</h2>
+<BaseLayout title={`Posts tagged "${tag}"`}>
+  <header class="reveal flex flex-col gap-2" style="--i: 0">
+    <h1 class="text-3xl font-semibold tracking-tight text-foreground md:text-4xl">{title}</h1>
+    <p class="text-secondary">{posts.length} post{posts.length === 1 ? "" : "s"} tagged.</p>
+  </header>
 
-    <Prose>
-      <PostList posts={posts} />
-    </Prose>
-  </Intro>
+  <Prose>
+    <PostList posts={posts} />
+  </Prose>
 </BaseLayout>

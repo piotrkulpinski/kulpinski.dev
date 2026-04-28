@@ -1,42 +1,50 @@
 [
   {
-    "slug": "devsuite",
-    "title": "DevSuite",
-    "description": "Find the perfect developer tools for your next project.",
-    "order": 5,
-    "url": "https://devsuite.co",
-    "category": "directory"
-  },
-  {
-    "slug": "openalternative",
-    "title": "OpenAlternative",
-    "description": "Discover open source alternatives to popular software.",
-    "order": 1,
-    "url": "https://openalternative.co",
+    "slug": "terminaldock",
+    "title": "TerminalDock",
+    "description": "Best terminal apps and tools.",
+    "year": 2026,
+    "url": "https://terminaldock.com",
     "category": "directory"
   },
   {
     "slug": "openads",
     "title": "OpenAds",
-    "description": "A platform to automate ad spot management.",
-    "order": 3,
+    "description": "Ad spot management platform.",
+    "year": 2026,
     "url": "https://openads.co",
     "category": "saas"
   },
   {
     "slug": "euroalternative",
     "title": "EuroAlternative",
-    "description": "Discover European alternatives to big tech companies.",
-    "order": 4,
+    "description": "European alternatives to big tech.",
+    "year": 2025,
     "url": "https://euroalternative.co",
+    "category": "directory"
+  },
+  {
+    "slug": "devsuite",
+    "title": "DevSuite",
+    "description": "Developer tools directory.",
+    "year": 2025,
+    "url": "https://devsuite.co",
     "category": "directory"
   },
   {
     "slug": "dirstarter",
     "title": "Dirstarter",
-    "description": "Next.js boilerplate for building profitable directory websites",
-    "order": 2,
+    "description": "Boilerplate for directory sites.",
+    "year": 2025,
     "url": "https://dirstarter.com",
     "category": "boilerplate"
+  },
+  {
+    "slug": "openalternative",
+    "title": "OpenAlternative",
+    "description": "Open source software alternatives.",
+    "year": 2024,
+    "url": "https://openalternative.co",
+    "category": "directory"
   }
 ]

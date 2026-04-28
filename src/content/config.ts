@@ -19,7 +19,7 @@ const projectsCollection = defineCollection({
   loader: file("src/content/projects.json"),
   schema: z.object({
     title: z.string(),
-    order: z.number(),
+    year: z.number(),
     url: z.string().url().optional(),
     description: z.string().optional(),
     category: z.enum(["saas", "boilerplate", "directory"]),

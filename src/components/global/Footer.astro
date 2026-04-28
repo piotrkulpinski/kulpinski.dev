@@ -2,9 +2,12 @@
 const year = new Date().getFullYear()
 ---
 
-<footer class="mt-auto">
-  <p class="text-sm text-muted">
-    © {year} &middot;
-    <a href="/tags" class="text-[inherit]">Tags</a>
-  </p>
+<footer class="mt-auto border-t border-border pt-6">
+  <div class="flex flex-wrap items-center justify-between gap-3 text-sm text-muted">
+    <p>© {year} Piotr Kulpinski</p>
+    <nav class="flex items-center gap-4">
+      <a href="/tags" class="hover:text-foreground">Tags</a>
+      <a href="/rss.xml" class="hover:text-foreground">RSS</a>
+    </nav>
+  </div>
 </footer>

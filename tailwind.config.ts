@@ -6,6 +6,8 @@ export default {
   content: ["./src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}"],
   theme: {
     colors: {
+      transparent: "transparent",
+      current: "currentColor",
       primary: "hsl(var(--color-primary) / <alpha-value>)",
       background: "hsl(var(--color-background) / <alpha-value>)",
       muted: "hsl(var(--color-muted) / <alpha-value>)",
@@ -18,7 +20,12 @@ export default {
     extend: {
       fontFamily: {
         serif: ["STIX Two Text", ...defaultTheme.fontFamily.serif],
-        sans: ["Inter", ...defaultTheme.fontFamily.sans],
+        sans: [
+          "InterVariable",
+          "Inter var",
+          "Inter",
+          ...defaultTheme.fontFamily.sans,
+        ],
       },
     },
   },
