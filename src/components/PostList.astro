@@ -14,8 +14,8 @@ const { posts } = Astro.props
 {
   !!posts.length ? (
     <HoverList>
-      {posts.map(({ data, slug }, i) => (
-        <Item index={i} href={`/posts/${slug}`} linkTitle={data.title}>
+      {posts.map(({ data, id }, i) => (
+        <Item index={i} href={`/posts/${id}`} linkTitle={data.title}>
           <span class="font-medium">{data.title}</span>
 
           <time datetime={data.pubDate.toISOString()} slot="aside">

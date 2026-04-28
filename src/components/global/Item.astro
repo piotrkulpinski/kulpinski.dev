@@ -9,16 +9,7 @@ type Props = HTMLAttributes<"li"> & {
   linkTitle?: string
 }
 
-const {
-  index = 0,
-  class: className,
-  style,
-  href,
-  target,
-  rel,
-  linkTitle,
-  ...props
-} = Astro.props
+const { index = 0, class: className, style, href, target, rel, linkTitle, ...props } = Astro.props
 
 const inlineStyle = `--i: ${index};${style ? ` ${style}` : ""}`
 

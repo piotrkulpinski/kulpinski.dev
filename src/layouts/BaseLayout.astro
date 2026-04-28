@@ -1,23 +1,23 @@
 ---
-import { SEO, type SEOProps } from "astro-seo";
-import { PLAUSIBLE_DOMAIN, PLAUSIBLE_URL } from "astro:env/client";
-import { ClientRouter } from "astro:transitions";
-import merge from "deepmerge";
-import Footer from "~/components/global/Footer.astro";
-import Navigation from "~/components/global/Navigation.astro";
+import { PLAUSIBLE_DOMAIN, PLAUSIBLE_URL } from "astro:env/client"
+import { ClientRouter } from "astro:transitions"
+import { SEO, type SEOProps } from "astro-seo"
+import merge from "deepmerge"
+import Footer from "~/components/global/Footer.astro"
+import Navigation from "~/components/global/Navigation.astro"
 
-import "~/styles.css";
+import "~/styles.css"
 
-type Props = SEOProps;
+type Props = SEOProps
 
-const { title, description, ...seoProps } = Astro.props;
+const { title, description, ...seoProps } = Astro.props
 
-const globalTitle = "Piotr Kulpinski's Blog";
+const globalTitle = "Piotr Kulpinski's Blog"
 const globalDescription =
-  "I work as an independent software engineer and designer. I'm passionate about creating beautiful, accessible, and performant web. I write about things I learn and find interesting.";
-const metaUrl = Astro.request.url;
-const metaTitle = `${title ? `${title} - ` : ""}${globalTitle}`;
-const metaDescription = description || globalDescription;
+  "I work as an independent software engineer and designer. I'm passionate about creating beautiful, accessible, and performant web. I write about things I learn and find interesting."
+const metaUrl = Astro.request.url
+const metaTitle = `${title ? `${title} - ` : ""}${globalTitle}`
+const metaDescription = description || globalDescription
 
 const baseSeo = {
   title: metaTitle,
@@ -35,11 +35,11 @@ const baseSeo = {
     creator: "@piotrkulpinski",
     card: "summary_large_image",
   },
-} satisfies SEOProps;
+} satisfies SEOProps
 
 const seo = merge(baseSeo, seoProps, {
   arrayMerge: (_, sourceArray) => sourceArray,
-});
+})
 ---
 
 <html lang="en" style="font-size: 93.75%;">

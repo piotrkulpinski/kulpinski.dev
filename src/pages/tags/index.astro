@@ -1,7 +1,7 @@
 ---
 import { getCollection } from "astro:content"
-import TagList from "~/components/TagList.astro"
 import Prose from "~/components/global/Prose.astro"
+import TagList from "~/components/TagList.astro"
 import BaseLayout from "~/layouts/BaseLayout.astro"
 
 const posts = await getCollection("posts", ({ data }) => !data.isDraft)
@@ -15,7 +15,7 @@ for (const post of posts) {
 }
 
 const tags = Array.from(tagCountMap, ([tag, count]) => ({ tag, count })).sort((a, b) =>
-  a.tag.localeCompare(b.tag)
+  a.tag.localeCompare(b.tag),
 )
 
 const title = "Tags"

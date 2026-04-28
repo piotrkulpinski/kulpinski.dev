@@ -1,5 +1,5 @@
 ---
-import { getCollection } from "astro:content"
+import { getCollection, render } from "astro:content"
 import type { SEOProps } from "astro-seo"
 import BaseLayout from "~/layouts/BaseLayout.astro"
 import MarkdownPostLayout from "~/layouts/MarkdownPostLayout.astro"
@@ -7,14 +7,14 @@ import MarkdownPostLayout from "~/layouts/MarkdownPostLayout.astro"
 export async function getStaticPaths() {
   const blogEntries = await getCollection("posts", ({ data }) => !data.isDraft)
 
-  return blogEntries.map((entry) => ({
-    params: { post: entry.slug },
+  return blogEntries.map(entry => ({
+    params: { post: entry.id },
     props: { entry },
   }))
 }
 
 const { entry } = Astro.props
-const { Content } = await entry.render()
+const { Content } = await render(entry)
 const post = entry.data
 
 const seo = {

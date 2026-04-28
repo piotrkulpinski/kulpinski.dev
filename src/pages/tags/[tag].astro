@@ -1,17 +1,17 @@
 ---
 import { getCollection } from "astro:content"
-import PostList from "~/components/PostList.astro"
 import Prose from "~/components/global/Prose.astro"
+import PostList from "~/components/PostList.astro"
 import BaseLayout from "~/layouts/BaseLayout.astro"
 
 export async function getStaticPaths() {
   const posts = await getCollection("posts", ({ data }) => !data.isDraft)
-  const uniqueTags = [...new Set(posts.flatMap((post) => post.data.tags))]
+  const uniqueTags = [...new Set(posts.flatMap(post => post.data.tags))]
 
-  return uniqueTags.map((tag) => {
-    const filteredPosts = posts.filter((post) => post.data.tags.includes(tag))
+  return uniqueTags.map(tag => {
+    const filteredPosts = posts.filter(post => post.data.tags.includes(tag))
     const sortedPosts = filteredPosts.sort(
-      (a, b) => new Date(b.data.pubDate).valueOf() - new Date(a.data.pubDate).valueOf()
+      (a, b) => new Date(b.data.pubDate).valueOf() - new Date(a.data.pubDate).valueOf(),
     )
 
     return {

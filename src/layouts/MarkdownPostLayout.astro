@@ -1,13 +1,13 @@
 ---
-import { Image } from "astro:assets";
-import type { InferEntrySchema } from "astro:content";
-import Link from "~/components/global/Link.astro";
-import Prose from "~/components/global/Prose.astro";
-import { formatDate } from "~/utils";
+import { Image } from "astro:assets"
+import type { InferEntrySchema } from "astro:content"
+import Link from "~/components/global/Link.astro"
+import Prose from "~/components/global/Prose.astro"
+import { formatDate } from "~/utils"
 
-type Props = InferEntrySchema<"posts">;
+type Props = InferEntrySchema<"posts">
 
-const { title, image, tags, pubDate } = Astro.props;
+const { title, image, tags, pubDate } = Astro.props
 ---
 
 <section class="flex flex-col items-start gap-12">

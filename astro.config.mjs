@@ -3,7 +3,7 @@ import cloudflare from "@astrojs/cloudflare"
 import mdx from "@astrojs/mdx"
 import preact from "@astrojs/preact"
 import sitemap from "@astrojs/sitemap"
-import tailwind from "@astrojs/tailwind"
+import tailwindcss from "@tailwindcss/vite"
 import { defineConfig, envField } from "astro/config"
 import rehypeExternalLinks from "rehype-external-links"
 
@@ -22,5 +22,6 @@ export default defineConfig({
     },
   },
   site: process.env.SITE_URL || "http://localhost:4321",
-  integrations: [tailwind({ applyBaseStyles: false }), sitemap(), mdx(), preact({ compat: true })],
+  integrations: [sitemap(), mdx(), preact({ compat: true })],
+  vite: { plugins: [tailwindcss()] },
 })

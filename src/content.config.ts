@@ -1,7 +1,8 @@
 import { defineCollection, z } from "astro:content"
-import { file } from "astro/loaders"
+import { file, glob } from "astro/loaders"
 
 const postsCollection = defineCollection({
+  loader: glob({ pattern: "**/*.{md,mdx}", base: "./src/content/posts" }),
   schema: ({ image }) =>
     z.object({
       isDraft: z.boolean().optional(),
