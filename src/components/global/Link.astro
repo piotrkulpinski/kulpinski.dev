@@ -9,24 +9,15 @@ const { href, class: className, ...props } = Astro.props as Props
 const isActive = href === pathname || (href !== "/" && pathname.startsWith(href as string))
 ---
 
-{
-  isActive ? (
-    <span
-      class:list={[className, "rounded-md px-2 py-1 font-medium text-foreground"]}
-      {...props}
-    >
-      <slot />
-    </span>
-  ) : (
-    <a
-      href={href}
-      class:list={[
-        className,
-        "rounded-md px-2 py-1 font-medium text-muted hover:text-foreground hover:bg-foreground/5",
-      ]}
-      {...props}
-    >
-      <slot />
-    </a>
-  )
-}
+<a
+  href={href}
+  aria-current={isActive ? "page" : undefined}
+  class:list={[
+    className,
+    "rounded-md px-2 py-1 font-medium hover:bg-foreground/5",
+    isActive ? "bg-foreground/5 text-foreground" : "text-muted hover:text-foreground",
+  ]}
+  {...props}
+>
+  <slot />
+</a>
