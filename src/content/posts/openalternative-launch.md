@@ -55,7 +55,7 @@ It's too early to tell if this will have a big impact on SEO, but I think it's a
 
 Since Astro is a static site generator, I could host the site for free on [Cloudflare](https://cloudflare.com). I've never used Cloudflare before, but they've been pretty popular lately due to their free hosting and CDN. I was impressed with how easy it was to set up, and the performance was great.
 
-I then picked the simplest name I could find and registered [openalternative.co](https://openalternative.co) for $6.99.
+I then picked the simplest name I could find and registered [openalternative.co](https://openalternative.co) for $6.99. (These days I'd just run the idea through [DomainRapid](https://domainrapid.com) to surface an available name in seconds.)
 
 ## Launch(es)
 
