@@ -1,5 +1,13 @@
 [
   {
+    "slug": "domainrapid",
+    "title": "DomainRapid",
+    "description": "AI domain name generator that only shows available names.",
+    "year": 2026,
+    "url": "https://domainrapid.com",
+    "category": "saas"
+  },
+  {
     "slug": "terminaldock",
     "title": "TerminalDock",
     "description": "Best terminal apps and tools.",
