@@ -59,7 +59,7 @@ The best part is hearing from customers who launched their own directories using
 Beyond these two flagships, I continued expanding my portfolio:
 
 - [DevSuite](https://devsuite.co) – helping developers find the right tools for their projects
-- [EuroAlternative](https://euroalternative.co) – discovering European alternatives to big tech
+- [EuroAlternative](https://euroalternative.eu) – discovering European alternatives to big tech
 - [OpenAds](https://openads.co) – automating ad spot management for content creators
 
 Each project taught me something new. DevSuite helped me understand the developer tools market. EuroAlternative proved there's demand for region-specific alternatives. OpenAds pushed me to build more complex SaaS features.
