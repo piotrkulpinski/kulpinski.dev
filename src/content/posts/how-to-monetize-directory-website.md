@@ -29,4 +29,8 @@ Currently, the site generates approximately **$100 per month** from affiliate li
 
 ## 2. Sponsorship
 
-Since the frustration was caused by the fact that I was listing free, open-source software, but trying to make money from it, I figured I could add a separate "sponsored" listing on the homepage. That would not
+Since the frustration was caused by the fact that I was listing free, open-source software, but trying to make money from it, I figured I could add a separate "sponsored" listing on the homepage. That would not upset the community, since a single, clearly-labeled sponsor sits apart from the free listings — and it gave me a predictable monthly baseline on top of the affiliate income.
+
+## 3. Display Advertising
+
+Once the traffic became consistent, I started selling display ad spots on the highest-traffic pages. Manually chasing advertisers, swapping creatives, and reconciling impressions quickly became more work than it was worth, so I now use [Revinel](https://revinel.com) to automate ad spot management. It handles selling the slots, rotating the creatives, and tracking impressions and clicks for me, which turns advertising into a mostly hands-off revenue stream.
