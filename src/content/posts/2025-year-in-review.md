@@ -60,9 +60,9 @@ Beyond these two flagships, I continued expanding my portfolio:
 
 - [DevSuite](https://devsuite.co) – helping developers find the right tools for their projects
 - [EuroAlternative](https://euroalternative.eu) – discovering European alternatives to big tech
-- [OpenAds](https://openads.co) – automating ad spot management for content creators
+- [Revinel](https://revinel.com) – automating ad spot management for content creators
 
-Each project taught me something new. DevSuite helped me understand the developer tools market. EuroAlternative proved there's demand for region-specific alternatives. OpenAds pushed me to build more complex SaaS features.
+Each project taught me something new. DevSuite helped me understand the developer tools market. EuroAlternative proved there's demand for region-specific alternatives. Revinel pushed me to build more complex SaaS features.
 
 The directory website niche has been good to me. There's something satisfying about curating useful resources and watching people find value in them.
 
