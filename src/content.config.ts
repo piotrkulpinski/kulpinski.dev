@@ -21,6 +21,7 @@ const projectsCollection = defineCollection({
   schema: z.object({
     title: z.string(),
     year: z.number(),
+    month: z.number().int().min(1).max(12).optional(),
     url: z.string().url().optional(),
     description: z.string().optional(),
     category: z.enum(["saas", "boilerplate", "directory"]),

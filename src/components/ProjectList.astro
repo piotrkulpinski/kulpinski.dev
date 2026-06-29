@@ -30,7 +30,7 @@ const { projects } = Astro.props
           )}
 
           <span slot="aside" class="text-muted tabular-nums">
-            {data.year}
+            {data.month ? `${String(data.month).padStart(2, "0")}.${data.year}` : data.year}
           </span>
         </Item>
       ))}
