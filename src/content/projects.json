@@ -4,6 +4,7 @@
     "title": "DomainRapid",
     "description": "AI domain name generator that only shows available names.",
     "year": 2026,
+    "month": 5,
     "url": "https://domainrapid.com",
     "category": "saas"
   },
@@ -12,6 +13,7 @@
     "title": "TerminalDock",
     "description": "Best terminal apps and tools.",
     "year": 2026,
+    "month": 4,
     "url": "https://terminaldock.com",
     "category": "directory"
   },
@@ -20,6 +22,7 @@
     "title": "Revinel",
     "description": "Ad spot management platform.",
     "year": 2026,
+    "month": 6,
     "url": "https://revinel.com",
     "category": "saas"
   },
@@ -28,6 +31,7 @@
     "title": "EuroAlternative",
     "description": "European alternatives to big tech.",
     "year": 2025,
+    "month": 6,
     "url": "https://euroalternative.eu",
     "category": "directory"
   },
@@ -35,7 +39,8 @@
     "slug": "devsuite",
     "title": "DevSuite",
     "description": "Developer tools directory.",
-    "year": 2025,
+    "year": 2024,
+    "month": 11,
     "url": "https://devsuite.co",
     "category": "directory"
   },
@@ -44,6 +49,7 @@
     "title": "Dirstarter",
     "description": "Boilerplate for directory sites.",
     "year": 2025,
+    "month": 3,
     "url": "https://dirstarter.com",
     "category": "boilerplate"
   },
@@ -52,6 +58,7 @@
     "title": "OpenAlternative",
     "description": "Open source software alternatives.",
     "year": 2024,
+    "month": 2,
     "url": "https://openalternative.co",
     "category": "directory"
   }
