@@ -17,8 +17,11 @@ export default defineConfig({
   },
   env: {
     schema: {
-      PLAUSIBLE_DOMAIN: envField.string({ context: "client", access: "public" }),
-      PLAUSIBLE_URL: envField.string({ context: "client", access: "public" }),
+      // Analytics, served through the `analytics-proxy` Cloudflare Worker on this
+      // zone (*kulpinski.dev/e/* -> https://data.kulp.in), so the script and its
+      // events are same-origin and survive ad-blockers.
+      ANALYTICS_URL: envField.string({ context: "client", access: "public" }),
+      ANALYTICS_TOKEN: envField.string({ context: "client", access: "public" }),
     },
   },
   site: process.env.SITE_URL || "http://localhost:4321",

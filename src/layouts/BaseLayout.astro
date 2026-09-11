@@ -1,5 +1,5 @@
 ---
-import { PLAUSIBLE_DOMAIN, PLAUSIBLE_URL } from "astro:env/client"
+import { ANALYTICS_TOKEN, ANALYTICS_URL } from "astro:env/client"
 import { ClientRouter } from "astro:transitions"
 import { SEO, type SEOProps } from "astro-seo"
 import merge from "deepmerge"
@@ -55,12 +55,14 @@ const seo = merge(baseSeo, seoProps, {
     <link rel="icon" href="/favicon.ico" />
     <link rel="preconnect" href="https://rsms.me/" />
 
-    <!-- Plausible Analytics -->
+    <!-- Analytics. `data-api-url` is required: the tracker otherwise derives the
+      ingest origin from its own src and drops the /e path. -->
     <script
       is:inline
       defer
-      data-domain={PLAUSIBLE_DOMAIN}
-      src={`${PLAUSIBLE_URL}/js/script.js`}></script>
+      src={`${ANALYTICS_URL}/script.js`}
+      data-token={ANALYTICS_TOKEN}
+      data-api-url={ANALYTICS_URL}></script>
 
     <ClientRouter />
   </head>

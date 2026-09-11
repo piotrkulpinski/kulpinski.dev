@@ -14,4 +14,18 @@ import BaseLayout from "~/layouts/BaseLayout.astro"
       </p>
     </Prose>
   </Intro>
+
+  <!--
+    Reports a soft navigation into this page — the client router swaps documents,
+    so there is no request whose status the tracker could read. A hard landing
+    needs nothing here (the tracker reads the 404 off the navigation entry) and
+    it de-duplicates the two, so firing on both paths is safe.
+    `once` matters: the document survives view transitions, so a listener left
+    behind would report a 404 on every page the visitor opened afterwards.
+  -->
+  <script is:inline>
+    document.addEventListener("astro:page-load", () => window.analytics?.track("404"), {
+      once: true,
+    })
+  </script>
 </BaseLayout>
