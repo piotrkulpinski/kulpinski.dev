@@ -1,5 +1,5 @@
 ---
-import { ANALYTICS_TOKEN, ANALYTICS_URL } from "astro:env/client"
+import { ANALYTICS_SITE, ANALYTICS_URL } from "astro:env/client"
 import { ClientRouter } from "astro:transitions"
 import { SEO, type SEOProps } from "astro-seo"
 import merge from "deepmerge"
@@ -61,7 +61,7 @@ const seo = merge(baseSeo, seoProps, {
       is:inline
       defer
       src={`${ANALYTICS_URL}/script.js`}
-      data-token={ANALYTICS_TOKEN}
+      data-site={ANALYTICS_SITE}
       data-api-url={ANALYTICS_URL}></script>
 
     <ClientRouter />
