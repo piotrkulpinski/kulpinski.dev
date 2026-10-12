@@ -36,6 +36,15 @@
     "category": "directory"
   },
   {
+    "slug": "hostingchecker",
+    "title": "Hosting Checker",
+    "description": "Find out who is hosting any website.",
+    "year": 2025,
+    "month": 6,
+    "url": "https://hostingchecker.online",
+    "category": "saas"
+  },
+  {
     "slug": "devsuite",
     "title": "DevSuite",
     "description": "Developer tools directory.",
