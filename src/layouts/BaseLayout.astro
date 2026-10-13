@@ -1,5 +1,5 @@
 ---
-import { ANALYTICS_SITE, ANALYTICS_URL } from "astro:env/client"
+import { HIGHSEAT_PATH, HIGHSEAT_SITE } from "astro:env/client"
 import { ClientRouter } from "astro:transitions"
 import { SEO, type SEOProps } from "astro-seo"
 import merge from "deepmerge"
@@ -55,14 +55,10 @@ const seo = merge(baseSeo, seoProps, {
     <link rel="icon" href="/favicon.ico" />
     <link rel="preconnect" href="https://rsms.me/" />
 
-    <!-- Analytics. `data-api-url` is required: the tracker otherwise derives the
-      ingest origin from its own src and drops the /e path. -->
-    <script
-      is:inline
-      defer
-      src={`${ANALYTICS_URL}/script.js`}
-      data-site={ANALYTICS_SITE}
-      data-api-url={ANALYTICS_URL}></script>
+    <!-- Highseat. A real `defer` tag rather than inject(): the tracker starts before any page
+      script, so its first pageview precedes every track() call, and the tag survives the
+      ClientRouter's page swaps. -->
+    <script is:inline defer src={HIGHSEAT_PATH} data-site={HIGHSEAT_SITE}></script>
 
     <ClientRouter />
   </head>
