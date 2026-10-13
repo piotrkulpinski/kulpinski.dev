@@ -24,7 +24,7 @@
     "astro": "^5.18.1",
     "astro-seo": "^1.1.0",
     "deepmerge": "^4.3.1",
-    "highseat": "0.1.0-alpha.1",
+    "highseat": "0.1.0-alpha.2",
     "motion": "^12.38.0",
     "preact": "^10.29.1",
     "tailwindcss": "^4.2.4"
