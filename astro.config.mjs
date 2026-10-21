@@ -43,7 +43,9 @@ export default defineConfig({
       HIGHSEAT_PATH: envField.string({ context: "client", access: "public", startsWith: "/" }),
     },
   },
-  site: process.env.SITE_URL || "http://localhost:4321",
+  site: process.env.SITE_URL || "http://localhost:6573",
+  // The dev server reads PORT, so `devport run` can pick the port for each checkout.
+  server: { port: Number(process.env.PORT ?? 6573) },
   integrations: [sitemap(), mdx(), preact({ compat: true }), highseatRoutes()],
   vite: { plugins: [tailwindcss()] },
 })
