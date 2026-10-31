@@ -1,5 +1,14 @@
 [
   {
+    "slug": "highseat",
+    "title": "Highseat",
+    "description": "Cookieless web analytics, with revenue by source.",
+    "year": 2026,
+    "month": 10,
+    "url": "https://highseat.com?utm_source=kulpinski.dev&utm_medium=referral",
+    "category": "saas"
+  },
+  {
     "slug": "domainrapid",
     "title": "DomainRapid",
     "description": "AI domain name generator that only shows available names.",
