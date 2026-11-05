@@ -1,0 +1,91 @@
+---
+pubDate: 2026-11-05
+isDraft: true
+title: Why I built Highseat
+description: "How Highseat went from replacing Plausible on my own sites to showing revenue by source, what three decisions cost, and what I still don't know."
+tags: ["side-projects", "analytics", "highseat"]
+image: ./images/why-i-built-highseat.webp
+---
+
+import { Image } from "astro:assets"
+import ThemedImage from "~/components/ThemedImage.astro"
+import revenue from "./images/why-i-built-highseat-revenue.webp"
+import bots from "./images/why-i-built-highseat-bots.webp"
+import commitsLight from "./images/why-i-built-highseat-commits-light.webp"
+import commitsDark from "./images/why-i-built-highseat-commits-dark.webp"
+import saltLight from "./images/why-i-built-highseat-salt-light.webp"
+import saltDark from "./images/why-i-built-highseat-salt-dark.webp"
+
+I run several sites that make money. [OpenAlternative](https://openalternative.co) alone brought in **$57,361** in [2025](/posts/2025-year-in-review). Plausible told me where the visitors came from, and Stripe told me what people paid. I wanted to see both on one screen.
+
+[[Piotr: is this the question that started it? The docs only prove you were moving off Plausible and wanted one tool across your projects. Revenue is missing from the November 2025 plan and first appears in your 1 September 2026 notes. What was the actual moment you decided to build it?]]
+
+[Highseat](https://highseat.com/?utm_source=kulpinski.dev&utm_medium=blog&utm_campaign=why-i-built-highseat) is what came out of that. Signups opened on 28 October, and the headline says what it's for: see which traffic makes money.
+
+## What was missing
+
+I'm not the first person to have this idea. [Plausible](https://plausible.io) has funnels and revenue attribution on its Business plan, which stops at ten sites. [DataFast](https://datafa.st) has revenue by source on every plan, and it connects to seven payment providers against my two. If you sell through Paddle or Shopify, it's the better fit today.
+
+My bet is narrower: revenue on every breakdown, every feature on every plan, and one price however many sites you add.
+
+[[Piotr: what actually annoyed you about the tools you used? One real example beats anything I could write here.]]
+
+## What I built
+
+You connect Stripe or Polar with a webhook, and each sale lands next to the visit that made it. A refund comes off the sale it belongs to. Every page, source, country and device then shows what it earned, net of refunds. Credit goes to the last click by default, and you can switch to first click or linear at any time.
+
+<Image src={revenue} alt="Highseat's homepage illustration of the Sources card: $31,240 gross, $1,946 in refunds and $29,294 net, with revenue and visitors for Direct, Google, DuckDuckGo, ChatGPT, Bing and Brave." />
+
+The Bots report is the part I'd look at first. Plausible and Fathom filter data center traffic too, so the filtering isn't new. The report is the new part: it lists what Highseat kept out of your stats and the check that caught it, so you can see what was excluded instead of trusting a number.
+
+On OpenAlternative's public dashboard, the last 7 days show 180.6k views and **151.4k bot hits kept out** (checked on 5 November). Crawlers are matched by user agent, not verified by IP, so that check has limits.
+
+<Image src={bots} alt="The Bots report on OpenAlternative's public Highseat dashboard: 115,634 crawler hits, 20,087 fingerprint burst, 15,009 datacenter, 414 browser automation, 277 spoofed or ancient user agents and 22 proxy misconfigured." />
+
+## How it got built
+
+The first commit is from 21 November 2025, and it's a planning document. After that, not much happened for a long time.
+
+<ThemedImage light={commitsLight} dark={commitsDark} alt="Bar chart of commits per month on main: 6 in November 2025, almost none until 26 in July 2026, then 403 in September, 896 in October and 102 in the first five days of November." />
+
+A proof of concept landed in March. A review in July found it couldn't take events from a real site, and two of its five headline metrics were wrong or made up.
+
+On 1 September I came back with a list of 15 features, ending with "probably some more I didn't think about". Revenue tracking was fifth. **1,401 of the 1,438 commits** on main came after that list, in 66 days. Three weeks before signups opened, the marketing brief still said `{{PRODUCT}}` where the name should go.
+
+[[Piotr: why did it sit for most of a year, and why restart on 1 September? Did the bot surge on OpenAlternative in August play a part? And how much of those 1,401 commits came from AI agents? Your name is on nearly all of them, and readers will ask.]]
+
+## Three decisions and what they cost
+
+### Deleting the salt
+
+The Highseat tracker sets no cookies, and most sites that use it can drop the cookie banner. To count unique visitors without a cookie, it hashes a daily salt with the site, the IP and the user agent. The IP and user agent are never stored.
+
+The first version derived the salt from a secret and the date. That meant any past day's salt could be recomputed, so every stored id stayed open to a brute force for as long as the secret lived. Now each day's salt is 32 random bytes, and it gets deleted 3.5 days after its day starts.
+
+<ThemedImage light={saltLight} dark={saltDark} alt="Timeline of one salt's life: its day ends in the last time zone at 1.5 days, a session past midnight can use it until 2.5 days, a late event until 3.5 days, when the salt is deleted. Backups keep it up to 14 more days." />
+
+It cost me two things. The daily database dump can't skip one table, so a deleted salt lives on in backups for up to 14 more days. An id becomes unlinkable within about 18 days, not 4. And a bot flood older than its salt can't be reclassified later by recomputing ids.
+
+### One price axis, no free plan
+
+A plan is one number: monthly events. Every plan has every feature, unlimited sites and unlimited seats, from $9 a month for 10k events to $549 for 50M. There's no overage fee, and a month only counts as over above 110% of the allowance. Instead of a free plan, there's a 14-day trial with no card.
+
+Below 100k events a cheaper tool exists, and someone with ten small sites can fit them all on one small plan. A no-card trial also means a new account gets a new trial.
+
+### Dropping first-party collection as the lead
+
+On 1 September, the big bet was first-party collection: the script and events travel on your own domain. It led everything I wrote for seven weeks.
+
+On 21 October I rewrote the brief. PostHog and Vercel give first-party delivery away, so it can't be the reason anyone pays. It's still in the product as a feature. But I threw out seven weeks of positioning, and I launched on a lead DataFast already claims.
+
+## Where it stands
+
+I don't know who Highseat is for yet. I tested four possible audiences on paper before launch and none passed. In each one, the typical account pays $9 to $29 a month, and a cheaper rival exists. The first 20 to 30 paying customers will settle it.
+
+It also has clear gaps. Revenue comes from Stripe and Polar only. Anonymous visitors can't be linked across days, so credit for a sale on a later day needs `identify()`. Imports cover Plausible and DataFast, and DataFast's revenue stays in DataFast. There's no Google Analytics import, no Search Console integration and no self-hosted edition.
+
+[[Piotr: launch results from Product Hunt and Show HN, 3 to 5 November, only the numbers you want public. Then one line on what you'd do differently.]]
+
+## Try it
+
+OpenAlternative runs on Highseat, and its dashboard is public, so you don't need an account to look around: [open the live demo](https://highseat.com/demo?utm_source=kulpinski.dev&utm_medium=blog&utm_campaign=why-i-built-highseat). If you want the same view of your own traffic, it's all on [highseat.com](https://highseat.com/?utm_source=kulpinski.dev&utm_medium=blog&utm_campaign=why-i-built-highseat).
