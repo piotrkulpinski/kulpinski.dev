@@ -26,7 +26,7 @@ I also like trying analytics products, and I've always wanted to build one for m
 
 I've tried most of the analytics tools out there, and each one was missing something I needed: revenue attribution, deeper reports, better breakdowns or funnels.
 
-I'm not the first person to have this idea, though. [Plausible](https://plausible.io) has funnels and revenue attribution on its Business plan, which stops at ten sites. [DataFast](https://datafa.st) has revenue by source on every plan, and it connects to seven payment providers against my two. If you sell through Paddle or Shopify, it's the better fit today.
+I'm not the first person to have this idea, though. [Plausible](https://plausible.io) has funnels and revenue attribution on its Business plan, which stops at ten sites. [DataFast](https://datafa.st) has revenue by source on every plan, and it connects to seven payment providers against my two. If you sell through Paddle or Shopify, DataFast is the better fit today.
 
 My bet is narrower: revenue on every breakdown, every feature on every plan, and one price however many sites you add.
 
@@ -44,21 +44,21 @@ On OpenAlternative's public dashboard, the last 7 days show 180.6k views and **1
 
 ## How it got built
 
-The first commit is from 21 November 2025, and it's a planning document. That early work was only meant to prove I could get a first version running quickly, and to set up a base for the real product. Then other projects needed more of my time, and I had to move to them.
+The first commit is from 21 November 2025, and it's a planning document. A proof of concept landed in March. That early work was only meant to prove I could get a first version running quickly, and to set up a base for the real product.
+
+Then other projects needed more of my time, and I moved to them. A review in July found the proof of concept couldn't take events from a real site, and two of its five headline metrics were wrong or made up.
 
 <ThemedImage light={commitsLight} dark={commitsDark} alt="Bar chart of commits per month on main: 6 in November 2025, almost none until 26 in July 2026, then 403 in September, 896 in October and 102 in the first five days of November." />
 
-A proof of concept landed in March. A review in July found it couldn't take events from a real site, and two of its five headline metrics were wrong or made up.
-
 I only had time to come back in September. On the 1st I started again with a list of 15 features, ending with "probably some more I didn't think about". Revenue tracking was fifth. **1,401 of the 1,438 commits** on main came after that list, in 66 days. They carry my name, but AI agents did the coding.
 
-Three weeks before signups opened, the marketing brief still said `{{PRODUCT}}` where the name should go. I was still looking for a good name and a good domain. Then I found highseat.com and liked it, but it was a premium domain. I negotiated it down to **$1,600**, which I think is a good deal for a domain like this.
+Three weeks before signups opened, the marketing brief still said `{{PRODUCT}}` where the name should go. I was still looking for a good name and domain. Then I found highseat.com and liked it, but it was a premium domain. I negotiated it down to **$1,600**, which I think is a good deal for a domain like this.
 
 ## Three decisions and what they cost
 
 ### Deleting the salt
 
-The Highseat tracker sets no cookies, and most sites that use it can drop the cookie banner. To count unique visitors without a cookie, it hashes a daily salt with the site, the IP and the user agent. The IP and user agent are never stored.
+The Highseat tracker sets no cookies, and most sites that use it can drop the cookie banner. To count unique visitors without a cookie, it hashes a daily salt with the site, the IP and the user agent into a visitor id. The IP and user agent are never stored.
 
 The first version derived the salt from a secret and the date. That meant any past day's salt could be recomputed, so every stored id stayed open to a brute force for as long as the secret lived. Now each day's salt is 32 random bytes, and it gets deleted 3.5 days after its day starts.
 
@@ -70,17 +70,17 @@ It cost me two things. The daily database dump can't skip one table, so a delete
 
 A plan is one number: monthly events. Every plan has every feature, unlimited sites and unlimited seats, from $9 a month for 10k events to $549 for 50M. There's no overage fee, and a month only counts as over above 110% of the allowance. Instead of a free plan, there's a 14-day trial with no card.
 
-Below 100k events a cheaper tool exists, and someone with ten small sites can fit them all on one small plan. A no-card trial also means a new account gets a new trial.
+The cost is that a cheaper tool exists below 100k events, and someone with ten small sites can fit them all on one small plan. A no-card trial also means a new account gets a new trial.
 
 ### Dropping first-party collection as the lead
 
 On 1 September, the big bet was first-party collection: the script and events travel on your own domain. It led everything I wrote for seven weeks.
 
-On 21 October I rewrote the brief. PostHog and Vercel give first-party delivery away, so it can't be the reason anyone pays. It's still in the product as a feature. But I threw out seven weeks of positioning, and I launched on a lead DataFast already claims.
+On 21 October I rewrote the brief. PostHog and Vercel give first-party delivery away, so it can't be the reason anyone pays. It's still in the product as a feature. But I threw out seven weeks of positioning, and I opened signups on a lead DataFast already claims.
 
 ## Where it stands
 
-I don't know who Highseat is for yet. I tested four possible audiences on paper before launch and none passed. In each one, the typical account pays $9 to $29 a month, and a cheaper rival exists. The first 20 to 30 paying customers will settle it.
+I don't know who Highseat is for yet. I tested four possible audiences on paper before opening signups, and none passed. In each one, the typical account pays $9 to $29 a month, and a cheaper rival exists. The first 20 to 30 paying customers will settle it.
 
 It also has clear gaps. Revenue comes from Stripe and Polar only. Anonymous visitors can't be linked across days, so credit for a sale on a later day needs `identify()`. Imports cover Plausible and DataFast, and DataFast's revenue stays in DataFast. There's no Google Analytics import, no Search Console integration and no self-hosted edition.
 
