@@ -16,19 +16,19 @@ import commitsDark from "./images/why-i-built-highseat-commits-dark.webp"
 import saltLight from "./images/why-i-built-highseat-salt-light.webp"
 import saltDark from "./images/why-i-built-highseat-salt-dark.webp"
 
-I run several sites that make money. [OpenAlternative](https://openalternative.co) alone brought in **$57,361** in [2025](/posts/2025-year-in-review). Plausible told me where the visitors came from, and Stripe told me what people paid. I wanted to see both on one screen.
+I run several sites that make money. [OpenAlternative](https://openalternative.co) alone brought in **$57,361** in [2025](/posts/2025-year-in-review). I used Plausible for a long time, and Stripe told me what people paid, but connecting revenue to its sources was always hard. I wanted to see both on one screen.
 
-[[Piotr: is this the question that started it? The docs only prove you were moving off Plausible and wanted one tool across your projects. Revenue is missing from the November 2025 plan and first appears in your 1 September 2026 notes. What was the actual moment you decided to build it?]]
+I also like trying analytics products, and I've always wanted to build one for myself.
 
 [Highseat](https://highseat.com/?utm_source=kulpinski.dev&utm_medium=blog&utm_campaign=why-i-built-highseat) is what came out of that. Signups opened on 28 October, and the headline says what it's for: see which traffic makes money.
 
 ## What was missing
 
-I'm not the first person to have this idea. [Plausible](https://plausible.io) has funnels and revenue attribution on its Business plan, which stops at ten sites. [DataFast](https://datafa.st) has revenue by source on every plan, and it connects to seven payment providers against my two. If you sell through Paddle or Shopify, it's the better fit today.
+I've tried most of the analytics tools out there, and each one was missing something I needed: revenue attribution, deeper reports, better breakdowns or funnels.
+
+I'm not the first person to have this idea, though. [Plausible](https://plausible.io) has funnels and revenue attribution on its Business plan, which stops at ten sites. [DataFast](https://datafa.st) has revenue by source on every plan, and it connects to seven payment providers against my two. If you sell through Paddle or Shopify, it's the better fit today.
 
 My bet is narrower: revenue on every breakdown, every feature on every plan, and one price however many sites you add.
-
-[[Piotr: what actually annoyed you about the tools you used? One real example beats anything I could write here.]]
 
 ## What I built
 
@@ -44,15 +44,15 @@ On OpenAlternative's public dashboard, the last 7 days show 180.6k views and **1
 
 ## How it got built
 
-The first commit is from 21 November 2025, and it's a planning document. After that, not much happened for a long time.
+The first commit is from 21 November 2025, and it's a planning document. That early work was only meant to prove I could get a first version running quickly, and to set up a base for the real product. Then other projects needed more of my time, and I had to move to them.
 
 <ThemedImage light={commitsLight} dark={commitsDark} alt="Bar chart of commits per month on main: 6 in November 2025, almost none until 26 in July 2026, then 403 in September, 896 in October and 102 in the first five days of November." />
 
 A proof of concept landed in March. A review in July found it couldn't take events from a real site, and two of its five headline metrics were wrong or made up.
 
-On 1 September I came back with a list of 15 features, ending with "probably some more I didn't think about". Revenue tracking was fifth. **1,401 of the 1,438 commits** on main came after that list, in 66 days. Three weeks before signups opened, the marketing brief still said `{{PRODUCT}}` where the name should go.
+I only had time to come back in September. On the 1st I started again with a list of 15 features, ending with "probably some more I didn't think about". Revenue tracking was fifth. **1,401 of the 1,438 commits** on main came after that list, in 66 days. They carry my name, but AI agents did the coding.
 
-[[Piotr: why did it sit for most of a year, and why restart on 1 September? Did the bot surge on OpenAlternative in August play a part? And how much of those 1,401 commits came from AI agents? Your name is on nearly all of them, and readers will ask.]]
+Three weeks before signups opened, the marketing brief still said `{{PRODUCT}}` where the name should go. I was still looking for a good name and a good domain. Then I found highseat.com and liked it, but it was a premium domain. I negotiated it down to **$1,600**, which I think is a good deal for a domain like this.
 
 ## Three decisions and what they cost
 
@@ -84,7 +84,7 @@ I don't know who Highseat is for yet. I tested four possible audiences on paper 
 
 It also has clear gaps. Revenue comes from Stripe and Polar only. Anonymous visitors can't be linked across days, so credit for a sale on a later day needs `identify()`. Imports cover Plausible and DataFast, and DataFast's revenue stays in DataFast. There's no Google Analytics import, no Search Console integration and no self-hosted edition.
 
-[[Piotr: launch results from Product Hunt and Show HN, 3 to 5 November, only the numbers you want public. Then one line on what you'd do differently.]]
+Signups are open, but I haven't done an official launch yet, so I don't have much data. It's too early to say what I'd do differently.
 
 ## Try it
 
