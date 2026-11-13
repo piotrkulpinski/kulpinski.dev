@@ -1,25 +1,15 @@
 ---
 import type { HTMLAttributes } from "astro/types"
 
-export type Accent = "orange" | "teal" | "green" | "pink"
-
 type Props = HTMLAttributes<"section"> & {
   label?: string
-  accent?: Accent
   index?: number
   heading?: "h1" | "h2"
 }
 
-const {
-  label,
-  accent = "orange",
-  index = 0,
-  heading: Heading = "h2",
-  class: className,
-  ...props
-} = Astro.props
+const { label, index = 0, heading: Heading = "h2", class: className, ...props } = Astro.props
 
-const style = `--i: ${index}; --section: var(--color-${accent}); --section-soft: var(--color-${accent}-soft); --section-text: var(--color-${accent}-text)`
+const style = `--i: ${index}`
 ---
 
 <section

@@ -22,7 +22,7 @@ const projects = allProjects.sort(
 <BaseLayout>
   <section
     class="reveal grid gap-x-8 gap-y-6 sm:grid-cols-[8rem_minmax(0,1fr)]"
-    style="--i: 0; --section: var(--color-pink); --section-soft: var(--color-pink-soft); --section-text: var(--color-pink-text)"
+    style="--i: 0"
   >
     <dither-portrait class="size-28 sm:size-32">
       <img
@@ -55,7 +55,7 @@ const projects = allProjects.sort(
     </div>
   </section>
 
-  <Section label="Now" accent="orange" index={1}>
+  <Section label="Now" index={1}>
     <div class="space-y-4 text-dim text-pretty">
       <p>
         Most of my time goes into
@@ -72,11 +72,11 @@ const projects = allProjects.sort(
     </div>
   </Section>
 
-  <Section label="Products" accent="teal" index={2}>
+  <Section label="Products" index={2}>
     <ProjectList projects={projects} />
   </Section>
 
-  <Section label="Writing" accent="green" index={3}>
+  <Section label="Writing" index={3}>
     <PostList posts={posts} />
 
     <a
