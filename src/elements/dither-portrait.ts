@@ -5,17 +5,20 @@ import {
   cellSize,
   fitCanvas,
   onThemeChange,
+  prefersReducedMotion,
   type Rgb,
   readColor,
 } from "~/elements/dither"
 
-const LENS_RADIUS = 22
-const LENS_ZOOM = 0.5
+const RIPPLE_DURATION = 1100
+const RIPPLE_WIDTH = 6
+
+type Ripple = { x: number; y: number; start: number }
 
 /**
  * Renders the `<img>` inside it as a two-tone Bayer dither. Dark areas dither in ink, saturated
- * areas in the pink accent. The image prints in when it first shows, and a magnifying lens
- * follows the cursor.
+ * areas in the pink accent. The image prints in when it first shows. Hovering or clicking sends a
+ * dithered pink ripple out from the cursor.
  */
 class DitherPortrait extends HTMLElement {
   private canvas = document.createElement("canvas")
@@ -27,8 +30,8 @@ class DitherPortrait extends HTMLElement {
   private inkColor: Rgb = [0, 0, 0]
   private tintColor: Rgb = [0, 0, 0]
   private progress = 0
-  private pointer = { x: -1, y: -1, strength: 0, target: 0 }
-  private hoverFrame = 0
+  private ripples: Ripple[] = []
+  private rippleFrame = 0
   private cleanup: (() => void)[] = []
 
   connectedCallback() {
@@ -65,13 +68,15 @@ class DitherPortrait extends HTMLElement {
       }),
     )
 
-    if (canHover()) this.bindPointer()
+    this.bindPointer()
   }
 
   disconnectedCallback() {
     for (const fn of this.cleanup) fn()
     this.cleanup = []
-    cancelAnimationFrame(this.hoverFrame)
+    cancelAnimationFrame(this.rippleFrame)
+    this.rippleFrame = 0
+    this.ripples = []
     this.canvas.remove()
   }
 
@@ -122,59 +127,59 @@ class DitherPortrait extends HTMLElement {
   }
 
   private bindPointer() {
-    const move = (event: PointerEvent) => {
+    const ripple = (event: PointerEvent) => {
+      if (prefersReducedMotion() || this.progress < 1) return
+
       const rect = this.getBoundingClientRect()
-      this.pointer.x = ((event.clientX - rect.left) / rect.width) * this.columns
-      this.pointer.y = ((event.clientY - rect.top) / rect.height) * this.rows
-      this.pointer.target = 1
+      this.ripples.push({
+        x: ((event.clientX - rect.left) / rect.width) * this.columns,
+        y: ((event.clientY - rect.top) / rect.height) * this.rows,
+        start: performance.now(),
+      })
       this.loop()
     }
 
-    const leave = () => {
-      this.pointer.target = 0
-      this.loop()
+    const enter = (event: PointerEvent) => {
+      if (canHover()) ripple(event)
     }
 
-    this.addEventListener("pointermove", move)
-    this.addEventListener("pointerleave", leave)
+    this.addEventListener("pointerenter", enter)
+    this.addEventListener("pointerdown", ripple)
     this.cleanup.push(() => {
-      this.removeEventListener("pointermove", move)
-      this.removeEventListener("pointerleave", leave)
+      this.removeEventListener("pointerenter", enter)
+      this.removeEventListener("pointerdown", ripple)
     })
   }
 
   /**
-   * Eases the hover strength toward its target, redrawing until it settles.
+   * Redraws while any ripple is running, then stops.
    */
   private loop() {
-    if (this.hoverFrame) return
+    if (this.rippleFrame) return
 
-    const tick = () => {
-      const pointer = this.pointer
-      pointer.strength += (pointer.target - pointer.strength) * 0.18
-      this.draw()
-
-      // Stops once settled, so a still pointer costs nothing. The next move restarts it.
-      if (Math.abs(pointer.target - pointer.strength) > 0.01) {
-        this.hoverFrame = requestAnimationFrame(tick)
-      } else {
-        pointer.strength = pointer.target
-        this.hoverFrame = 0
-      }
+    const tick = (now: number) => {
+      this.ripples = this.ripples.filter(r => now - r.start < RIPPLE_DURATION)
+      this.draw(now)
+      this.rippleFrame = this.ripples.length ? requestAnimationFrame(tick) : 0
     }
 
-    this.hoverFrame = requestAnimationFrame(tick)
+    this.rippleFrame = requestAnimationFrame(tick)
   }
 
-  private draw() {
+  private draw(now = performance.now()) {
     const { ctx, columns, rows } = this
     if (!ctx || !columns || !this.ink.length) return
 
     const image = ctx.createImageData(columns, rows)
     const out = image.data
-    const { x: px, y: py, strength } = this.pointer
     const [ir, ig, ib] = this.inkColor
     const [tr, tg, tb] = this.tintColor
+    const reach = Math.hypot(columns, rows)
+
+    const waves = this.ripples.map(r => {
+      const t = Math.min(1, (now - r.start) / RIPPLE_DURATION)
+      return { x: r.x, y: r.y, radius: t * reach, strength: 1 - t * t }
+    })
 
     for (let y = 0; y < rows; y++) {
       for (let x = 0; x < columns; x++) {
@@ -183,32 +188,25 @@ class DitherPortrait extends HTMLElement {
         // Prints top to bottom with a dithered edge.
         if (this.progress < 1 && this.progress < 0.55 * threshold + 0.45 * (y / rows)) continue
 
-        // Inside the lens, each cell samples a point pulled toward the cursor, which magnifies
-        // the image there. The pull fades to zero at the rim, so the lens has no hard edge.
-        let i = y * columns + x
-        let tinted = false
-        if (strength > 0) {
-          const dx = x - px
-          const dy = y - py
-          const falloff = 1 - (dx * dx + dy * dy) / (LENS_RADIUS * LENS_RADIUS)
-
-          if (falloff > 0) {
-            const scale = 1 - LENS_ZOOM * strength * falloff
-            const sx = Math.round(px + dx * scale)
-            const sy = Math.round(py + dy * scale)
-            if (sx >= 0 && sx < columns && sy >= 0 && sy < rows) i = sy * columns + sx
-
-            // Ink near the center of the lens dithers into the accent.
-            tinted = threshold < falloff * falloff * strength
-          }
+        // A ring of pink cells travels outward from each ripple's origin and fades as it goes.
+        let wave = 0
+        for (const w of waves) {
+          const band = 1 - Math.abs(Math.hypot(x - w.x, y - w.y) - w.radius) / RIPPLE_WIDTH
+          if (band > 0) wave = Math.max(wave, band * w.strength)
         }
 
-        const o = (y * columns + x) * 4
+        const i = y * columns + x
+        const o = i * 4
 
-        if (threshold < this.ink[i]) {
-          out[o] = tinted ? tr : ir
-          out[o + 1] = tinted ? tg : ig
-          out[o + 2] = tinted ? tb : ib
+        if (threshold < wave * 0.85) {
+          out[o] = tr
+          out[o + 1] = tg
+          out[o + 2] = tb
+          out[o + 3] = 255
+        } else if (threshold < this.ink[i]) {
+          out[o] = ir
+          out[o + 1] = ig
+          out[o + 2] = ib
           out[o + 3] = 255
         } else if (threshold < this.tint[i]) {
           out[o] = tr
