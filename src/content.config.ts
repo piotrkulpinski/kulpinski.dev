@@ -26,7 +26,7 @@ const projectsCollection = defineCollection({
     month: z.number().int().min(1).max(12).optional(),
     url: z.string().url().optional(),
     description: z.string().optional(),
-    category: z.enum(["saas", "boilerplate", "directory"]),
+    category: z.enum(["saas", "directory", "tool"]),
   }),
 })
 

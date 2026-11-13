@@ -140,17 +140,18 @@
     outline: 2px solid var(--section, var(--color-ink));
     outline-offset: 2px;
   }
-}
 
-a {
-  color: inherit;
-  transition: color 150ms ease-out;
-}
+  /* Element defaults stay in the base layer, so utility classes on links can override them. */
+  a {
+    color: inherit;
+    transition: color 150ms ease-out;
+  }
 
-a,
-button,
-label[for] {
-  @apply cursor-pointer;
+  a,
+  button,
+  label[for] {
+    cursor: pointer;
+  }
 }
 
 ::selection {

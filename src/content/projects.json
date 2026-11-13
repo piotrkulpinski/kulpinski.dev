@@ -15,7 +15,7 @@
     "year": 2026,
     "month": 5,
     "url": "https://domainrapid.com",
-    "category": "saas"
+    "category": "tool"
   },
   {
     "slug": "terminaldock",
@@ -51,7 +51,7 @@
     "year": 2025,
     "month": 6,
     "url": "https://hostingchecker.online",
-    "category": "saas"
+    "category": "tool"
   },
   {
     "slug": "devsuite",
@@ -69,7 +69,7 @@
     "year": 2025,
     "month": 3,
     "url": "https://dirstarter.com",
-    "category": "boilerplate"
+    "category": "tool"
   },
   {
     "slug": "openalternative",

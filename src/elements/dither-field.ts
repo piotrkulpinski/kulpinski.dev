@@ -9,31 +9,28 @@ import {
 } from "~/elements/dither"
 
 const FRAME_INTERVAL = 60
-const SCALE = 0.045
-const SPEED = 0.00006
-
-const hash = (x: number, y: number) => {
-  const h = Math.sin(x * 127.1 + y * 311.7) * 43758.5453
-  return h - Math.floor(h)
-}
-
-const smooth = (t: number) => t * t * (3 - 2 * t)
+const SPEED = 0.00012
 
 /**
- * Smooth 2D value noise between 0 and 1.
+ * Two rolling hill lines, as heights from the top in rows. The near hill rises toward the left,
+ * so the bottom left stays solid.
  */
-const noise = (x: number, y: number) => {
-  const ix = Math.floor(x)
-  const iy = Math.floor(y)
-  const fx = smooth(x - ix)
-  const fy = smooth(y - iy)
-  const top = hash(ix, iy) + (hash(ix + 1, iy) - hash(ix, iy)) * fx
-  const bottom = hash(ix, iy + 1) + (hash(ix + 1, iy + 1) - hash(ix, iy + 1)) * fx
-  return top + (bottom - top) * fy
+const hills = (x: number, columns: number, rows: number, t: number) => {
+  const u = x / columns
+  const near =
+    rows * (0.3 + 0.38 * u) +
+    rows * 0.06 * Math.sin(x * 0.045 - t * 0.8) +
+    rows * 0.03 * Math.sin(x * 0.11 + t)
+  const far =
+    rows * (0.12 + 0.3 * u) +
+    rows * 0.08 * Math.sin(x * 0.028 + t * 0.5 + 1.7) +
+    rows * 0.03 * Math.sin(x * 0.07 - t)
+  return { near, far }
 }
 
 /**
- * A slowly drifting noise field, dithered in the section accent. It renders at a low frame rate,
+ * A slowly drifting landscape of dithered hills in the section accent: a sparse sky, a mid-tone
+ * far hill and a near hill that turns solid toward the bottom. It renders at a low frame rate,
  * pauses off screen, and draws one still frame under reduced motion.
  */
 class DitherField extends HTMLElement {
@@ -111,15 +108,14 @@ class DitherField extends HTMLElement {
     const [r, g, b] = this.color
     const t = this.time
 
-    for (let y = 0; y < rows; y++) {
-      for (let x = 0; x < columns; x++) {
-        const n =
-          0.65 * noise(x * SCALE + t, y * SCALE - t * 0.6) +
-          0.35 * noise(x * SCALE * 2.3 - t * 1.4, y * SCALE * 2.3 + t)
+    for (let x = 0; x < columns; x++) {
+      const { near, far } = hills(x, columns, rows, t)
 
-        // Densest at the bottom left, behind the chips, and fading toward the top right.
-        const weight = 0.2 + 0.55 * (1 - x / columns) + 0.45 * (y / rows)
-        const amount = Math.max(0, (n - 0.35) * 1.6) * weight
+      for (let y = 0; y < rows; y++) {
+        let amount: number
+        if (y >= near) amount = 0.7 + 0.6 * ((y - near) / Math.max(1, rows - near))
+        else if (y >= far) amount = 0.28 + 0.2 * ((y - far) / Math.max(1, near - far))
+        else amount = 0.12 * (y / Math.max(1, far))
 
         if (bayer(x, y) >= amount) continue
 
