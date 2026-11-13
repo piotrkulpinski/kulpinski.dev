@@ -41,9 +41,9 @@
   --pink-text: #d6246a;
 
   /* The single accent, used by labels, highlights, links and the dithered elements. */
-  --section: var(--color-pink);
-  --section-soft: var(--color-pink-soft);
-  --section-text: var(--color-pink-text);
+  --accent: var(--color-pink);
+  --accent-soft: var(--color-pink-soft);
+  --accent-text: var(--color-pink-text);
 
   --astro-code-foreground: #24292e;
   --astro-code-token-constant: #0550ae;
@@ -124,7 +124,7 @@
   }
 
   :focus-visible {
-    outline: 2px solid var(--section, var(--color-ink));
+    outline: 2px solid var(--accent);
     outline-offset: 2px;
   }
 
@@ -142,23 +142,14 @@
 }
 
 ::selection {
-  background: var(--section, var(--color-pink-soft));
+  background: var(--accent);
   color: var(--color-on-mark);
 }
 
-/* Dithered elements. Without JavaScript the portrait stays a plain image. */
-dither-portrait {
-  position: relative;
-  display: block;
-}
-
-.js dither-portrait img {
-  opacity: 0;
-}
-
+/* Dithered elements. */
 dither-mark {
-  --mark-from: var(--section);
-  --mark-to: var(--section-soft);
+  --mark-from: var(--accent);
+  --mark-to: var(--accent-soft);
   position: relative;
   isolation: isolate;
   display: inline-block;
@@ -185,11 +176,10 @@ dither-field {
   color: var(--color-ink);
 }
 
-/* Inline text links: medium weight in the accent. Only hovering the link itself
-   underlines it. */
+/* Inline text links in the accent. Only hovering the link itself underlines it. */
 .text-link {
   font-weight: 500;
-  color: var(--section-text, var(--color-ink));
+  color: var(--accent-text);
   text-decoration-line: underline;
   text-decoration-color: transparent;
   text-decoration-thickness: 1.5px;

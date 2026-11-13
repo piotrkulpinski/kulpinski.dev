@@ -65,17 +65,23 @@ const seo = merge(baseSeo, seoProps, {
     <script is:inline>
       ;(() => {
         const media = window.matchMedia("(prefers-color-scheme: dark)")
-        const apply = () => {
+
+        function apply() {
           let stored = null
           try {
             stored = localStorage.getItem("theme")
           } catch {}
-          const dark = stored ? stored === "dark" : media.matches
-          document.documentElement.dataset.theme = dark ? "dark" : "light"
+          const isDark = stored ? stored === "dark" : media.matches
+          document.documentElement.dataset.theme = isDark ? "dark" : "light"
           document.documentElement.classList.add("js")
         }
+
         apply()
-        if (window.__themeBound) return
+
+        if (window.__themeBound) {
+          return
+        }
+
         window.__themeBound = true
         document.addEventListener("astro:after-swap", apply)
         media.addEventListener("change", apply)
@@ -97,7 +103,6 @@ const seo = merge(baseSeo, seoProps, {
     </div>
 
     <script>
-      import "~/elements/dither-portrait"
       import "~/elements/dither-mark"
       import "~/elements/dither-field"
       import "~/elements/theme-clock"

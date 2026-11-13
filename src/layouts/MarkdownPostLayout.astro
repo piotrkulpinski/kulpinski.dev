@@ -10,9 +10,7 @@ type Props = InferEntrySchema<"posts">
 const { title, image, tags, pubDate } = Astro.props
 ---
 
-<article
-  class="reveal flex flex-col items-start gap-10"
->
+<article class="reveal flex flex-col items-start gap-10">
   <a
     href="/posts"
     class="group/arrow inline-flex items-center gap-1.5 font-mono text-[11px] text-faint uppercase tracking-widest hover:text-ink"
