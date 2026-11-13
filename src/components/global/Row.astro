@@ -14,31 +14,21 @@ const linkProps = external ? { target: "_blank", rel: "noopener noreferrer" } : 
 ---
 
 <li>
-  <a
-    href={href}
-    class="group/arrow flex items-baseline gap-3 py-1 outline-offset-4"
-    {...linkProps}
-  >
-    <span class="flex min-w-0 items-baseline gap-2">
-      <span
-        class:list={[
-          "inline-flex items-center gap-1.5 font-medium",
-          description ? "shrink-0" : "min-w-0 text-pretty",
-        ]}
-      >
-        {title}
-        {external && <Arrow />}
+  <a href={href} class="group/arrow block py-1.5 outline-offset-4" {...linkProps}>
+    <span class="flex items-baseline gap-4">
+      <span class="min-w-0 font-medium text-pretty group-hover/arrow:text-dim">
+        {title}{external && <Arrow class="ml-1.5" />}
       </span>
 
-      {description && <span class="hidden truncate text-dim sm:inline">{description}</span>}
+      {
+        aside && (
+          <span class="ml-auto shrink-0 font-mono text-[11px] text-faint uppercase tracking-[0.08em] tabular-nums">
+            {aside}
+          </span>
+        )
+      }
     </span>
 
-    {
-      aside && (
-        <span class="ml-auto shrink-0 font-mono text-[11px] text-faint uppercase tracking-[0.08em] tabular-nums">
-          {aside}
-        </span>
-      )
-    }
+    {description && <span class="block text-dim">{description}</span>}
   </a>
 </li>

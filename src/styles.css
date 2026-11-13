@@ -175,8 +175,25 @@ dither-field {
 }
 
 .chip {
+  border: 1px solid color-mix(in srgb, var(--color-ink) 14%, transparent);
   background: var(--color-background);
   color: var(--color-ink);
+}
+
+/* Inline text links: medium weight, with an underline in the section accent. Only hovering the
+   link itself changes it. */
+.text-link {
+  font-weight: 500;
+  color: var(--color-ink);
+  text-decoration-line: underline;
+  text-decoration-color: var(--section, var(--color-line));
+  text-decoration-thickness: 1.5px;
+  text-underline-offset: 3px;
+  transition: text-decoration-color 150ms ease-out;
+}
+
+.text-link:hover {
+  text-decoration-color: var(--color-ink);
 }
 
 @keyframes fade-up {

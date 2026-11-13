@@ -17,12 +17,12 @@ const contacts = [
 >
   <dither-field class="min-h-44">
     <div class="relative flex min-h-44 flex-col items-start justify-end gap-1.5 p-3 sm:p-4">
-      <h2 class="chip flex items-center gap-2.5 px-2 py-1 font-mono text-[11px] text-dim uppercase tracking-widest">
+      <h2 class="chip flex items-center gap-2.5 px-2 py-1 font-mono text-[11px] uppercase tracking-widest">
         <span aria-hidden="true" class="size-2 shrink-0 bg-pink"></span>
         Contact
       </h2>
 
-      <p class="chip px-2 py-1 font-medium">Say hello.</p>
+      <p class="chip px-2.5 py-1.5 text-lg font-medium">Say hello.</p>
 
       <ul class="flex flex-wrap gap-1.5 font-mono text-[12px] uppercase tracking-[0.08em]">
         {
@@ -32,7 +32,7 @@ const contacts = [
                 href={href}
                 target={href.startsWith("http") ? "_blank" : undefined}
                 rel="me noreferrer"
-                class="chip group/arrow inline-flex items-center gap-1.5 px-2 py-1"
+                class="chip group/arrow inline-flex items-center gap-1.5 px-2.5 py-1.5 transition-colors hover:border-ink"
               >
                 {label}
                 <Arrow />

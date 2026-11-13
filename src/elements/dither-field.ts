@@ -117,8 +117,8 @@ class DitherField extends HTMLElement {
           0.65 * noise(x * SCALE + t, y * SCALE - t * 0.6) +
           0.35 * noise(x * SCALE * 2.3 - t * 1.4, y * SCALE * 2.3 + t)
 
-        // Denser toward the right and bottom, so the chips on the left stay calm.
-        const weight = 0.25 + 0.5 * (x / columns) + 0.25 * (y / rows)
+        // Densest at the top right and sparse at the bottom left, so the chips stay readable.
+        const weight = 0.1 + 0.6 * (x / columns) + 0.3 * (1 - y / rows)
         const amount = Math.max(0, (n - 0.35) * 1.6) * weight
 
         if (bayer(x, y) >= amount) continue

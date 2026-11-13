@@ -26,7 +26,7 @@ const { posts } = Astro.props
   <Section label={`#${tag}`} accent="green" heading="h1">
     <p class="mb-4 text-dim">
       {posts.length} post{posts.length === 1 ? "" : "s"} tagged.
-      <a href="/tags" class="text-ink underline decoration-line underline-offset-[3px]">All tags</a>
+      <a href="/tags" class="text-link">All tags</a>
     </p>
     <PostList posts={posts} />
   </Section>

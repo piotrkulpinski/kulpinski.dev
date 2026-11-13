@@ -9,13 +9,13 @@ import {
   readColor,
 } from "~/elements/dither"
 
-const HOVER_RADIUS = 16
-const HOVER_BOOST = 0.3
+const LENS_RADIUS = 22
+const LENS_ZOOM = 0.5
 
 /**
  * Renders the `<img>` inside it as a two-tone Bayer dither. Dark areas dither in ink, saturated
- * areas in the pink accent. The image prints in when it first shows, and cells near the cursor
- * shift one density level.
+ * areas in the pink accent. The image prints in when it first shows, and a magnifying lens
+ * follows the cursor.
  */
 class DitherPortrait extends HTMLElement {
   private canvas = document.createElement("canvas")
@@ -183,22 +183,34 @@ class DitherPortrait extends HTMLElement {
         // Prints top to bottom with a dithered edge.
         if (this.progress < 1 && this.progress < 0.55 * threshold + 0.45 * (y / rows)) continue
 
-        let boost = 0
+        // Inside the lens, each cell samples a point pulled toward the cursor, which magnifies
+        // the image there. The pull fades to zero at the rim, so the lens has no hard edge.
+        let i = y * columns + x
+        let tinted = false
         if (strength > 0) {
-          const distance = Math.hypot(x - px, y - py)
-          if (distance < HOVER_RADIUS)
-            boost = (1 - distance / HOVER_RADIUS) * HOVER_BOOST * strength
+          const dx = x - px
+          const dy = y - py
+          const falloff = 1 - (dx * dx + dy * dy) / (LENS_RADIUS * LENS_RADIUS)
+
+          if (falloff > 0) {
+            const scale = 1 - LENS_ZOOM * strength * falloff
+            const sx = Math.round(px + dx * scale)
+            const sy = Math.round(py + dy * scale)
+            if (sx >= 0 && sx < columns && sy >= 0 && sy < rows) i = sy * columns + sx
+
+            // Ink near the center of the lens dithers into the accent.
+            tinted = threshold < falloff * falloff * strength
+          }
         }
 
-        const i = y * columns + x
-        const o = i * 4
+        const o = (y * columns + x) * 4
 
-        if (threshold < this.ink[i] + boost) {
-          out[o] = ir
-          out[o + 1] = ig
-          out[o + 2] = ib
+        if (threshold < this.ink[i]) {
+          out[o] = tinted ? tr : ir
+          out[o + 1] = tinted ? tg : ig
+          out[o + 2] = tinted ? tb : ib
           out[o + 3] = 255
-        } else if (threshold < this.tint[i] + boost * this.tint[i]) {
+        } else if (threshold < this.tint[i]) {
           out[o] = tr
           out[o + 1] = tg
           out[o + 2] = tb
