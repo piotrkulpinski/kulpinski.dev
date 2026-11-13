@@ -19,7 +19,7 @@ const formatAside = (date: Date) => {
   posts.length ? (
     <ul class="flex flex-col">
       {posts.map(({ data, id }) => (
-        <Row href={`/posts/${id}`} title={data.title} aside={formatAside(data.pubDate)} />
+        <Row href={`/posts/${id}`} title={data.shortTitle ?? data.title} aside={formatAside(data.pubDate)} />
       ))}
     </ul>
   ) : (

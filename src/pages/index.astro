@@ -1,8 +1,8 @@
 ---
 import { getCollection } from "astro:content"
 import ProfilePicture from "~/assets/piotrkulpinski.webp"
-import Arrow from "~/components/global/Arrow.astro"
 import Section from "~/components/global/Section.astro"
+import TextLink from "~/components/global/TextLink.astro"
 import PostList from "~/components/PostList.astro"
 import ProjectList from "~/components/ProjectList.astro"
 import BaseLayout from "~/layouts/BaseLayout.astro"
@@ -17,8 +17,6 @@ const posts = allPosts
 const projects = allProjects.sort(
   (a, b) => b.data.year - a.data.year || (b.data.month ?? 0) - (a.data.month ?? 0),
 )
-
-const linkProps = { target: "_blank", rel: "noopener noreferrer" }
 ---
 
 <BaseLayout>
@@ -61,13 +59,13 @@ const linkProps = { target: "_blank", rel: "noopener noreferrer" }
     <div class="space-y-4 text-dim text-pretty">
       <p>
         Most of my time goes into
-        <a href="https://highseat.com?utm_source=kulpinski.dev&utm_medium=referral" {...linkProps} class="group/arrow inline-flex items-center gap-1 text-ink">Highseat<Arrow /></a>,
+        <TextLink href="https://highseat.com?utm_source=kulpinski.dev&utm_medium=referral">Highseat</TextLink>,
         cookieless web analytics that ties revenue to the source that brought it.
       </p>
       <p>
-        <a href="https://openalternative.co" {...linkProps} class="group/arrow inline-flex items-center gap-1 text-ink">OpenAlternative<Arrow /></a>
+        <TextLink href="https://openalternative.co">OpenAlternative</TextLink>
         and
-        <a href="https://dirstarter.com" {...linkProps} class="group/arrow inline-flex items-center gap-1 text-ink">Dirstarter<Arrow /></a>
+        <TextLink href="https://dirstarter.com">Dirstarter</TextLink>
         keep running alongside it. One is the largest directory of open source software, the
         other is the Next.js boilerplate behind a growing number of indie directories.
       </p>

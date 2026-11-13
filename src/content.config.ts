@@ -7,6 +7,8 @@ const postsCollection = defineCollection({
     z.object({
       isDraft: z.boolean().optional(),
       title: z.string(),
+      // Shown in post lists when the full title is too long for one line.
+      shortTitle: z.string().optional(),
       pubDate: z.date(),
       description: z.string().optional(),
       author: z.string().optional(),
