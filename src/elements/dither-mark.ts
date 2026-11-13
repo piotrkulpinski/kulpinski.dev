@@ -3,6 +3,7 @@ import {
   bayer,
   cellSize,
   fitCanvas,
+  mix,
   onThemeChange,
   paint,
   type Rgb,
@@ -17,8 +18,8 @@ interface LineBox {
 }
 
 /**
- * Highlights its text with a left-to-right Bayer gradient from the accent into its soft variant.
- * The highlight reveals once the phrase is 40% in view.
+ * Highlights its text with a left-to-right Bayer gradient that fades a light wash of the accent
+ * into the background. The highlight reveals once the phrase is 40% in view.
  */
 class DitherMark extends HTMLElement {
   private canvas = document.createElement("canvas")
@@ -51,7 +52,6 @@ class DitherMark extends HTMLElement {
         this.cleanup.push(
           animateProgress(700, progress => {
             this.progress = progress
-            this.toggleAttribute("data-lit", progress > 0.25)
             this.draw()
           }),
         )
@@ -80,8 +80,12 @@ class DitherMark extends HTMLElement {
   }
 
   private readColors() {
-    this.from = readColor(this, "--mark-from")
-    this.to = readColor(this, "--mark-to")
+    const accent = readColor(this, "--accent")
+    const background = readColor(this, "--bg")
+
+    // A light wash of the accent, so the text keeps its own color and stays readable.
+    this.from = mix(background, accent, 0.36)
+    this.to = mix(background, accent, 0.12)
   }
 
   private draw() {

@@ -52,6 +52,13 @@ export function readColor(element: Element, property: string): Rgb {
 }
 
 /**
+ * Blends two colors, where an amount of 0 returns the first and 1 returns the second.
+ */
+export function mix(from: Rgb, to: Rgb, amount: number): Rgb {
+  return [0, 1, 2].map(index => Math.round(from[index] + (to[index] - from[index]) * amount)) as Rgb
+}
+
+/**
  * Calls back when the theme changes, either from the toggle or from the system setting. Returns
  * a function that stops listening.
  */
