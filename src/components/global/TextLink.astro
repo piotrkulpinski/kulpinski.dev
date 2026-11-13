@@ -13,4 +13,4 @@ const linkProps = isExternal ? { target: "_blank", rel: "noopener noreferrer" } 
 // The markup stays on one line: a line break inside the link renders as an underlined space.
 ---
 
-<a class:list={[className, "text-link group/arrow"]} {...linkProps} {...props}><slot />{isExternal && <Arrow class="ml-1" />}</a>
+<a class:list={[className, "text-link group/arrow"]} {...linkProps} {...props}><slot />{isExternal && <Arrow class="ml-1 !text-current" />}</a>
