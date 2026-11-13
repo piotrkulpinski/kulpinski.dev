@@ -1,26 +1,24 @@
 ---
 import type { HTMLAttributes } from "astro/types"
 
-type Props = HTMLAttributes<"section"> & {
+interface Props extends HTMLAttributes<"section"> {
   label?: string
   index?: number
   heading?: "h1" | "h2"
 }
 
 const { label, index = 0, heading: Heading = "h2", class: className, ...props } = Astro.props
-
-const style = `--i: ${index}`
 ---
 
 <section
   class:list={[className, "reveal grid gap-x-8 gap-y-4 sm:grid-cols-[8rem_minmax(0,1fr)]"]}
-  style={style}
+  style={`--i: ${index}`}
   {...props}
 >
   {
     label ? (
       <Heading class="flex h-6 items-center gap-2.5 font-mono text-[11px] text-dim uppercase tracking-widest">
-        <span aria-hidden="true" class="size-2 shrink-0 bg-(--section)" />
+        <span aria-hidden="true" class="size-2 shrink-0 bg-(--accent)" />
         {label}
       </Heading>
     ) : (

@@ -2,12 +2,10 @@
 import type { HTMLAttributes } from "astro/types"
 import Arrow from "~/components/global/Arrow.astro"
 
-type Props = HTMLAttributes<"a"> & {
-  external?: boolean
-}
+type Props = HTMLAttributes<"a">
 
-const { external, class: className, ...props } = Astro.props
-const isExternal = external ?? String(props.href ?? "").startsWith("http")
+const { class: className, ...props } = Astro.props
+const isExternal = String(props.href ?? "").startsWith("http")
 const linkProps = isExternal ? { target: "_blank", rel: "noopener noreferrer" } : {}
 
 // The markup stays on one line: a line break inside the link renders as an underlined space.

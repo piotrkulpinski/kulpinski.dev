@@ -3,14 +3,14 @@ import type { CollectionEntry } from "astro:content"
 import Row from "~/components/global/Row.astro"
 import { formatDate, formatMonthDay } from "~/utils"
 
-type Props = {
+interface Props {
   posts: CollectionEntry<"posts">[]
   dateStyle?: "full" | "monthDay"
 }
 
 const { posts, dateStyle = "full" } = Astro.props
 
-const formatAside = (date: Date) => {
+function formatAside(date: Date) {
   return dateStyle === "monthDay" ? formatMonthDay(date) : formatDate(date)
 }
 ---

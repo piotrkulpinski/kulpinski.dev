@@ -4,24 +4,34 @@ import {
   cellSize,
   fitCanvas,
   onThemeChange,
+  paint,
   type Rgb,
   readColor,
 } from "~/elements/dither"
 
+interface LineBox {
+  left: number
+  right: number
+  top: number
+  bottom: number
+}
+
 /**
- * Highlights its text with a left-to-right Bayer gradient from the section accent into its soft
- * variant. The highlight reveals once the phrase is 40% in view.
+ * Highlights its text with a left-to-right Bayer gradient from the accent into its soft variant.
+ * The highlight reveals once the phrase is 40% in view.
  */
 class DitherMark extends HTMLElement {
   private canvas = document.createElement("canvas")
-  private ctx = this.canvas.getContext("2d")
+  private context = this.canvas.getContext("2d")
   private from: Rgb = [0, 0, 0]
   private to: Rgb = [0, 0, 0]
   private progress = 0
   private cleanup: (() => void)[] = []
 
   connectedCallback() {
-    if (!this.ctx) return
+    if (!this.context) {
+      return
+    }
 
     this.canvas.setAttribute("aria-hidden", "true")
     this.canvas.className = "absolute inset-0 -z-10 size-full [image-rendering:pixelated]"
@@ -33,7 +43,10 @@ class DitherMark extends HTMLElement {
 
     const visible = new IntersectionObserver(
       ([entry]) => {
-        if (!entry.isIntersecting) return
+        if (!entry.isIntersecting) {
+          return
+        }
+
         visible.disconnect()
         this.cleanup.push(
           animateProgress(700, progress => {
@@ -58,7 +71,10 @@ class DitherMark extends HTMLElement {
   }
 
   disconnectedCallback() {
-    for (const fn of this.cleanup) fn()
+    for (const stop of this.cleanup) {
+      stop()
+    }
+
     this.cleanup = []
     this.canvas.remove()
   }
@@ -69,42 +85,46 @@ class DitherMark extends HTMLElement {
   }
 
   private draw() {
-    const { ctx } = this
-    if (!ctx) return
+    const context = this.context
+    if (!context) {
+      return
+    }
 
     const cell = cellSize()
     const { columns, rows } = fitCanvas(this.canvas, this, cell)
-    const image = ctx.createImageData(columns, rows)
-    const out = image.data
-    const lines = this.lineBoxes(cell)
+    const image = context.createImageData(columns, rows)
+    const lines = this.getLineBoxes(cell)
 
     for (let y = 0; y < rows; y++) {
       for (let x = 0; x < columns; x++) {
-        if (!lines.some(l => x >= l.left && x < l.right && y >= l.top && y < l.bottom)) continue
+        const isInText = lines.some(
+          line => x >= line.left && x < line.right && y >= line.top && y < line.bottom,
+        )
+        if (!isInText) {
+          continue
+        }
 
         const threshold = bayer(x, y)
         const position = x / Math.max(1, columns - 1)
 
         // Reveals left to right with a dithered edge.
-        if (this.progress < 1 && this.progress < 0.5 * position + 0.5 * threshold) continue
+        if (this.progress < 1 && this.progress < 0.5 * position + 0.5 * threshold) {
+          continue
+        }
 
         const color = threshold < Math.max(0, (position - 0.1) / 0.9) ? this.to : this.from
-        const o = (y * columns + x) * 4
-        out[o] = color[0]
-        out[o + 1] = color[1]
-        out[o + 2] = color[2]
-        out[o + 3] = 255
+        paint(image.data, (y * columns + x) * 4, color)
       }
     }
 
-    ctx.putImageData(image, 0, 0)
+    context.putImageData(image, 0, 0)
   }
 
   /**
    * Returns one box per rendered line of text, in cells, padded like an inline highlight. A
    * wrapped phrase then gets a ragged highlight that follows its lines.
    */
-  private lineBoxes(cell: number) {
+  private getLineBoxes(cell: number): LineBox[] {
     const range = document.createRange()
     range.selectNodeContents(this)
     range.setStartAfter(this.canvas)

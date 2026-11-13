@@ -1,7 +1,7 @@
 ---
 import Arrow from "~/components/global/Arrow.astro"
 
-type Props = {
+interface Props {
   href: string
   title: string
   description?: string
@@ -29,6 +29,6 @@ const linkProps = external ? { target: "_blank", rel: "noopener noreferrer" } : 
       }
     </span>
 
-    {description && <span class="block text-dim">{description}</span>}
+    {description && <span class="block text-faint">{description}</span>}
   </a>
 </li>

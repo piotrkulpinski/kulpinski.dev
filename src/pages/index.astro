@@ -1,6 +1,7 @@
 ---
+import { Image } from "astro:assets"
 import { getCollection } from "astro:content"
-import ProfilePicture from "~/assets/piotrkulpinski.webp"
+import avatar from "~/assets/piotr-kulpinski-avatar.svg"
 import Section from "~/components/global/Section.astro"
 import TextLink from "~/components/global/TextLink.astro"
 import PostList from "~/components/PostList.astro"
@@ -24,16 +25,14 @@ const projects = allProjects.sort(
     class="reveal grid gap-x-8 gap-y-6 sm:grid-cols-[8rem_minmax(0,1fr)]"
     style="--i: 0"
   >
-    <dither-portrait class="size-28 sm:size-32">
-      <img
-        src={ProfilePicture.src}
-        width={ProfilePicture.width}
-        height={ProfilePicture.height}
-        alt="Illustrated portrait of Piotr Kulpinski"
-        class="size-full"
-        decoding="async"
-      />
-    </dither-portrait>
+    <Image
+      src={avatar}
+      alt="Illustrated portrait of Piotr Kulpinski"
+      width={256}
+      height={256}
+      loading="eager"
+      class="size-28 sm:size-32"
+    />
 
     <div class="flex flex-col gap-4">
       <p class="font-medium text-balance">

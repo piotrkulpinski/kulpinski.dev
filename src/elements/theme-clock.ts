@@ -20,7 +20,10 @@ class ThemeClock extends HTMLElement {
     const button = this.querySelector("button")
 
     const tick = () => {
-      if (time) time.textContent = formatter.format(new Date())
+      if (time) {
+        time.textContent = formatter.format(new Date())
+      }
+
       this.timer = window.setTimeout(tick, 1000 - (Date.now() % 1000))
     }
 
