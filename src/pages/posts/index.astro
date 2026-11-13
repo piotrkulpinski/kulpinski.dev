@@ -1,27 +1,27 @@
 ---
 import { getCollection } from "astro:content"
-import Prose from "~/components/global/Prose.astro"
+import Section from "~/components/global/Section.astro"
 import PostList from "~/components/PostList.astro"
 import BaseLayout from "~/layouts/BaseLayout.astro"
 
 const allPosts = await getCollection("posts", ({ data }) => !data.isDraft)
+const posts = allPosts.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
 
-const posts = allPosts.sort(
-  (a, b) => new Date(b.data.pubDate).valueOf() - new Date(a.data.pubDate).valueOf(),
-)
-
-const title = "Writing"
+const years = Map.groupBy(posts, post => post.data.pubDate.getFullYear())
 ---
 
-<BaseLayout title={title}>
-  <header class="reveal flex flex-col gap-2" style="--i: 0">
-    <h1 class="text-3xl font-semibold tracking-tight text-foreground md:text-4xl">{title}</h1>
-    <p class="text-secondary">
-      Notes on software, SEO, open source, and the craft of shipping small things.
+<BaseLayout title="Writing">
+  <Section label="Writing" accent="green" heading="h1">
+    <p class="text-dim text-pretty">
+      Notes on software, SEO, open source, and shipping small things.
     </p>
-  </header>
+  </Section>
 
-  <Prose>
-    <PostList posts={posts} />
-  </Prose>
+  {
+    [...years].map(([year, items], i) => (
+      <Section label={String(year)} accent="green" index={i + 1}>
+        <PostList posts={items} dateStyle="monthDay" />
+      </Section>
+    ))
+  }
 </BaseLayout>

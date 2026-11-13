@@ -50,7 +50,7 @@ export default function NumberInput() {
   return (
     <input
       type="number"
-      className="py-1 px-3 border-2 rounded border-primary w-full [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
+      className="py-1 px-3 border-2 rounded border-ink w-full [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
       placeholder="Try me"
       min="0"
       max="100"

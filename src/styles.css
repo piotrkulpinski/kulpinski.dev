@@ -1,39 +1,46 @@
 @import url("https://rsms.me/inter/inter.css");
+@import "@fontsource-variable/geist-mono";
 @import "tailwindcss";
 
 @plugin "@tailwindcss/typography";
 
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
+
 @custom-variant prose-inline-code (&.prose
   :where(:not(pre) > code):not(:where([class~="not-prose"] *)));
 
-@theme {
+@theme static {
   --color-*: initial;
   --color-transparent: transparent;
   --color-current: currentColor;
-  --color-primary: hsl(var(--theme-primary));
-  --color-background: hsl(var(--theme-background));
-  --color-muted: hsl(var(--theme-muted));
-  --color-secondary: hsl(var(--theme-secondary));
-  --color-foreground: hsl(var(--theme-foreground));
-  --color-border: hsl(var(--theme-border));
-  --color-success: hsl(var(--theme-success));
-  --color-error: hsl(var(--theme-error));
+  --color-background: var(--bg);
+  --color-ink: var(--ink);
+  --color-dim: var(--dim);
+  --color-faint: var(--faint);
+  --color-line: var(--line);
+  --color-on-mark: #0a0a0a;
 
-  --font-serif: "STIX Two Text", ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
+  --color-orange: #ff6b35;
+  --color-orange-soft: #ffa47a;
+  --color-teal: #22c3b4;
+  --color-teal-soft: #86e3d9;
+  --color-green: #1fbf5f;
+  --color-green-soft: #8fe3ae;
+  --color-pink: #ff5c93;
+  --color-pink-soft: #ffb0c8;
+
   --font-sans:
     "InterVariable", "Inter var", "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI",
     Roboto, sans-serif;
+  --font-mono: "Geist Mono Variable", ui-monospace, SFMono-Regular, Menlo, monospace;
 }
 
 :root {
-  --theme-primary: 209 100% 51%;
-  --theme-background: 0 0% 100%;
-  --theme-muted: 0 0% 55%;
-  --theme-secondary: 0 0% 35%;
-  --theme-foreground: 0 0% 7%;
-  --theme-border: 0 0% 90%;
-  --theme-success: 142 76% 36%;
-  --theme-error: 0 76% 57%;
+  --bg: #ffffff;
+  --ink: #0a0a0a;
+  --dim: #5c5c61;
+  --faint: #737378;
+  --line: #e4e4e7;
 
   --astro-code-foreground: #24292e;
   --astro-code-token-constant: #0550ae;
@@ -46,7 +53,8 @@
   --astro-code-token-punctuation: #24292e;
   --astro-code-token-link: #0969da;
 
-  font-family: "InterVariable", "Inter", ui-sans-serif, system-ui, -apple-system, sans-serif;
+  color-scheme: light;
+  font-family: var(--font-sans);
   font-feature-settings:
     "liga" 1,
     "calt" 1,
@@ -69,31 +77,36 @@
   text-rendering: optimizeLegibility;
 }
 
+/* Dark values. The media query covers visitors without JavaScript, the attribute covers the toggle. */
 @media (prefers-color-scheme: dark) {
-  :root {
-    --theme-background: 0 0% 7%;
-    --theme-muted: 0 0% 48%;
-    --theme-secondary: 0 0% 68%;
-    --theme-foreground: 0 0% 92%;
-    --theme-border: 0 0% 16%;
-
-    --astro-code-foreground: #c9d1d9;
-    --astro-code-token-constant: #79c0ff;
-    --astro-code-token-string: #a5d6ff;
-    --astro-code-token-comment: #8b949e;
-    --astro-code-token-keyword: #ff7b72;
-    --astro-code-token-parameter: #c9d1d9;
-    --astro-code-token-function: #d2a8ff;
-    --astro-code-token-string-expression: #a5d6ff;
-    --astro-code-token-punctuation: #c9d1d9;
-    --astro-code-token-link: #58a6ff;
+  :root:not([data-theme]) {
+    --bg: #0b0b0c;
+    --ink: #f2f2f3;
+    --dim: #a6a6ab;
+    --faint: #85858a;
+    --line: #26262a;
+    color-scheme: dark;
   }
 }
 
-@supports (font-variation-settings: normal) {
-  :root {
-    font-family: "InterVariable", "Inter var", ui-sans-serif, system-ui, sans-serif;
-  }
+:root[data-theme="dark"] {
+  --bg: #0b0b0c;
+  --ink: #f2f2f3;
+  --dim: #a6a6ab;
+  --faint: #85858a;
+  --line: #26262a;
+  color-scheme: dark;
+
+  --astro-code-foreground: #c9d1d9;
+  --astro-code-token-constant: #79c0ff;
+  --astro-code-token-string: #a5d6ff;
+  --astro-code-token-comment: #8b949e;
+  --astro-code-token-keyword: #ff7b72;
+  --astro-code-token-parameter: #c9d1d9;
+  --astro-code-token-function: #d2a8ff;
+  --astro-code-token-string-expression: #a5d6ff;
+  --astro-code-token-punctuation: #c9d1d9;
+  --astro-code-token-link: #58a6ff;
 }
 
 @layer base {
@@ -102,26 +115,68 @@
   ::before,
   ::backdrop,
   ::file-selector-button {
-    border-color: var(--color-border);
+    border-color: var(--color-line);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--section, var(--color-ink));
+    outline-offset: 2px;
   }
 }
 
 a {
-  @apply text-foreground decoration-transparent;
-  transition:
-    color 120ms ease-out,
-    opacity 120ms ease-out,
-    background-color 120ms ease-out;
-}
-
-a:hover {
-  @apply text-foreground/70;
+  color: inherit;
+  transition: color 150ms ease-out;
 }
 
 a,
 button,
 label[for] {
   @apply cursor-pointer;
+}
+
+::selection {
+  background: var(--section, var(--color-pink-soft));
+  color: var(--color-on-mark);
+}
+
+/* Dithered elements. Without JavaScript the portrait stays a plain image. */
+dither-portrait {
+  position: relative;
+  display: block;
+}
+
+.js dither-portrait img {
+  opacity: 0;
+}
+
+dither-mark {
+  --mark-from: var(--section);
+  --mark-to: var(--section-soft);
+  position: relative;
+  isolation: isolate;
+  display: inline-block;
+  transition: color 200ms ease-out;
+}
+
+dither-mark[data-lit],
+html:not(.js) dither-mark {
+  color: var(--color-on-mark);
+}
+
+html:not(.js) dither-mark {
+  background: var(--mark-to);
+}
+
+dither-field {
+  position: relative;
+  display: block;
+  overflow: hidden;
+}
+
+.chip {
+  background: var(--color-background);
+  color: var(--color-ink);
 }
 
 @keyframes fade-up {
@@ -138,7 +193,7 @@ label[for] {
 .reveal {
   opacity: 0;
   animation: fade-up 360ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
-  animation-delay: calc(var(--i, 0) * 30ms + 40ms);
+  animation-delay: calc(var(--i, 0) * 60ms + 40ms);
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -146,25 +201,4 @@ label[for] {
     animation: none;
     opacity: 1;
   }
-}
-
-@keyframes ping-soft {
-  0% {
-    transform: scale(1);
-    opacity: 0.6;
-  }
-  80%,
-  100% {
-    transform: scale(2.4);
-    opacity: 0;
-  }
-}
-
-.pulse-dot::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  border-radius: 9999px;
-  background: currentColor;
-  animation: ping-soft 1.8s cubic-bezier(0, 0, 0.2, 1) infinite;
 }

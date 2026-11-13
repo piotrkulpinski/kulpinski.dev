@@ -1,41 +1,43 @@
 ---
 import type { CollectionEntry } from "astro:content"
-import HoverList from "~/components/global/HoverList.astro"
-import Item from "~/components/global/Item.astro"
+import Row from "~/components/global/Row.astro"
 
 type Props = {
   projects: CollectionEntry<"projects">[]
 }
 
 const { projects } = Astro.props
+
+const groups = [
+  { category: "saas", label: "SaaS" },
+  { category: "directory", label: "Directories" },
+  { category: "boilerplate", label: "Boilerplate" },
+] as const
 ---
 
-{
-  !!projects.length ? (
-    <HoverList>
-      {projects.map(({ data }, i) => (
-        <Item
-          index={i}
-          href={data.url}
-          target="_blank"
-          rel="noopener noreferrer"
-          linkTitle={data.description}
-        >
-          <span class="font-medium">{data.title}</span>
+<div class="flex flex-col gap-6">
+  {
+    groups.map(({ category, label }) => {
+      const items = projects.filter(({ data }) => data.category === category)
+      if (!items.length) return null
 
-          {data.description && (
-            <span class="hidden text-muted text-sm sm:inline">
-              — {data.description}
-            </span>
-          )}
+      return (
+        <div>
+          <h3 class="mb-1 font-mono text-[11px] text-faint uppercase tracking-widest">{label}</h3>
 
-          <span slot="aside" class="text-muted tabular-nums">
-            {data.month ? `${String(data.month).padStart(2, "0")}.${data.year}` : data.year}
-          </span>
-        </Item>
-      ))}
-    </HoverList>
-  ) : (
-    <p>No projects found</p>
-  )
-}
+          <ul class="flex flex-col">
+            {items.map(({ data }) => (
+              <Row
+                href={data.url ?? "#"}
+                title={data.title}
+                description={data.description}
+                aside={String(data.year)}
+                external
+              />
+            ))}
+          </ul>
+        </div>
+      )
+    })
+  }
+</div>

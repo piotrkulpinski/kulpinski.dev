@@ -47,7 +47,7 @@ const seo = merge(baseSeo, seoProps, {
     <SEO {...seo} />
 
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="author" content="Piotr Kulpinski" />
     <meta name="generator" content={Astro.generator} />
     <link rel="sitemap" href="/sitemap-index.xml" />
@@ -60,14 +60,47 @@ const seo = merge(baseSeo, seoProps, {
       ClientRouter's page swaps. -->
     <script is:inline defer src={HIGHSEAT_PATH} data-site={HIGHSEAT_SITE}></script>
 
+    <!-- Applies the stored or system theme before first paint, and again after each client
+      router swap, because the swap replaces the attributes on <html>. -->
+    <script is:inline>
+      ;(() => {
+        const media = window.matchMedia("(prefers-color-scheme: dark)")
+        const apply = () => {
+          let stored = null
+          try {
+            stored = localStorage.getItem("theme")
+          } catch {}
+          const dark = stored ? stored === "dark" : media.matches
+          document.documentElement.dataset.theme = dark ? "dark" : "light"
+          document.documentElement.classList.add("js")
+        }
+        apply()
+        if (window.__themeBound) return
+        window.__themeBound = true
+        document.addEventListener("astro:after-swap", apply)
+        media.addEventListener("change", apply)
+      })()
+    </script>
+
     <ClientRouter />
   </head>
 
-  <body
-    class="mx-auto flex min-h-screen max-w-[42.5rem] flex-col gap-12 bg-background text-foreground p-6 md:py-8 lg:py-10"
-  >
-    <Navigation />
-    <slot />
-    <Footer />
+  <body class="bg-background text-ink">
+    <div class="mx-auto flex min-h-screen w-full max-w-160 flex-col px-5 pt-12 pb-6 sm:pt-16">
+      <Navigation />
+
+      <main class="mt-14 flex flex-col gap-16 sm:mt-16">
+        <slot />
+      </main>
+
+      <Footer />
+    </div>
+
+    <script>
+      import "~/elements/dither-portrait"
+      import "~/elements/dither-mark"
+      import "~/elements/dither-field"
+      import "~/elements/theme-clock"
+    </script>
   </body>
 </html>

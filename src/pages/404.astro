@@ -1,19 +1,16 @@
 ---
-import Intro from "~/components/global/Intro.astro"
-import Prose from "~/components/global/Prose.astro"
+import Section from "~/components/global/Section.astro"
 import BaseLayout from "~/layouts/BaseLayout.astro"
 ---
 
 <BaseLayout>
-  <Intro>
-    <h1 slot="title">Page not found</h1>
-
-    <Prose>
-      <p>
-        The page you are looking for does not exist.<br /><a href="/">Go back to the home page</a>.
-      </p>
-    </Prose>
-  </Intro>
+  <Section label="404" accent="orange" heading="h1">
+    <dither-field class="mb-4 h-16"></dither-field>
+    <p class="text-dim">
+      This page doesn't exist.
+      <a href="/" class="text-ink underline decoration-line underline-offset-[3px]">Go to the home page</a>.
+    </p>
+  </Section>
 
   <!--
     Reports a soft navigation into this page: the ClientRouter swaps documents, so there is no

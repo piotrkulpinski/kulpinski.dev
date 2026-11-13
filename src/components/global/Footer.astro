@@ -1,13 +1,51 @@
 ---
+import Arrow from "~/components/global/Arrow.astro"
+
 const year = new Date().getFullYear()
+
+const contacts = [
+  { label: "Email", href: "mailto:piotr@kulpinski.pl" },
+  { label: "X", href: "https://x.com/piotrkulpinski" },
+  { label: "Bluesky", href: "https://bsky.app/profile/kulpinski.dev" },
+  { label: "GitHub", href: "https://github.com/piotrkulpinski" },
+]
 ---
 
-<footer class="mt-auto border-t border-border pt-6">
-  <div class="flex flex-wrap items-center justify-between gap-3 text-sm text-muted">
+<footer
+  class="mt-24"
+  style="--section: var(--color-pink); --section-soft: var(--color-pink-soft)"
+>
+  <dither-field class="min-h-44">
+    <div class="relative flex min-h-44 flex-col items-start justify-end gap-1.5 p-3 sm:p-4">
+      <h2 class="chip flex items-center gap-2.5 px-2 py-1 font-mono text-[11px] text-dim uppercase tracking-widest">
+        <span aria-hidden="true" class="size-2 shrink-0 bg-pink"></span>
+        Contact
+      </h2>
+
+      <p class="chip px-2 py-1 font-medium">Say hello.</p>
+
+      <ul class="flex flex-wrap gap-1.5 font-mono text-[12px] uppercase tracking-[0.08em]">
+        {
+          contacts.map(({ label, href }) => (
+            <li>
+              <a
+                href={href}
+                target={href.startsWith("http") ? "_blank" : undefined}
+                rel="me noreferrer"
+                class="chip group/arrow inline-flex items-center gap-1.5 px-2 py-1"
+              >
+                {label}
+                <Arrow />
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </dither-field>
+
+  <div class="mt-4 flex flex-wrap justify-between gap-3 font-mono text-[11px] text-faint uppercase tracking-widest">
     <p>© {year} Piotr Kulpinski</p>
-    <nav class="flex items-center gap-4">
-      <a href="/tags" class="hover:text-foreground">Tags</a>
-      <a href="/rss.xml" class="hover:text-foreground">RSS</a>
-    </nav>
+    <a href="/tags" class="hover:text-ink">Tags</a>
   </div>
 </footer>

@@ -1,23 +1,31 @@
 ---
-import Link from "~/components/global/Link.astro"
+const { pathname } = Astro.url
+const isHome = pathname === "/"
+const NameTag = isHome ? "h1" : "a"
 ---
 
-<header class="flex items-center justify-between gap-4">
-  <a
-    href="/"
-    class="group flex items-center gap-2.5 text-foreground"
-    aria-label="Piotr Kulpinski — home"
-  >
-    <span
-      class="relative inline-flex size-2 shrink-0 rounded-full bg-success/80 text-success/80 pulse-dot"
-      aria-hidden="true"
-    ></span>
-    <span class="font-medium tracking-tight">Piotr Kulpinski</span>
-  </a>
+<header class="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-1">
+  <div>
+    <NameTag {...(isHome ? {} : { href: "/" })} class="font-medium hover:text-dim">
+      Piotr Kulpinski
+    </NameTag>
+    <p class="text-dim">Solo founder · Software engineer</p>
+  </div>
 
-  <nav class="flex items-center gap-1 text-sm">
-    <Link href="/">Home</Link>
-    <span class="text-border" aria-hidden="true">·</span>
-    <Link href="/posts">Writing</Link>
-  </nav>
+  <theme-clock class="flex flex-col items-start gap-1 sm:items-end">
+    <button
+      type="button"
+      class="cursor-pointer font-mono text-[11px] text-faint uppercase tracking-widest tabular-nums transition-colors duration-200 hover:text-dim"
+    >
+      Kraków · <span data-time>--:--:--</span>
+      <span class="sr-only">, switch theme</span>
+    </button>
+
+    <nav class="flex gap-3 font-mono text-[11px] text-faint uppercase tracking-widest">
+      <a href="/posts" class="hover:text-ink" aria-current={pathname.startsWith("/posts") ? "page" : undefined}>
+        Writing
+      </a>
+      <a href="/rss.xml" class="hover:text-ink">RSS</a>
+    </nav>
+  </theme-clock>
 </header>

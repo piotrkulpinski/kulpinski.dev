@@ -1,0 +1,39 @@
+---
+type Props = {
+  direction?: "out" | "left"
+}
+
+const { direction = "out" } = Astro.props
+---
+
+{
+  direction === "out" ? (
+    <svg
+      aria-hidden="true"
+      viewBox="0 0 10 10"
+      class="size-2.5 shrink-0 text-faint transition-[translate,color] duration-200 ease-out group-hover/arrow:translate-x-px group-hover/arrow:-translate-y-px group-hover/arrow:text-(--section)"
+    >
+      <path
+        d="M2.5 7.5 7.5 2.5M3.5 2.5h4v4"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="1.25"
+        stroke-linecap="square"
+      />
+    </svg>
+  ) : (
+    <svg
+      aria-hidden="true"
+      viewBox="0 0 10 10"
+      class="size-2.5 shrink-0 text-faint transition-[translate,color] duration-200 ease-out group-hover/arrow:-translate-x-px group-hover/arrow:text-(--section)"
+    >
+      <path
+        d="M8.5 5h-7M4.5 2 1.5 5l3 3"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="1.25"
+        stroke-linecap="square"
+      />
+    </svg>
+  )
+}
