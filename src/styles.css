@@ -148,21 +148,13 @@
 
 /* Dithered elements. */
 dither-mark {
-  --mark-from: var(--accent);
-  --mark-to: var(--accent-soft);
   position: relative;
   isolation: isolate;
   display: inline-block;
-  transition: color 200ms ease-out;
-}
-
-dither-mark[data-lit],
-html:not(.js) dither-mark {
-  color: var(--color-on-mark);
 }
 
 html:not(.js) dither-mark {
-  background: var(--mark-to);
+  background: color-mix(in srgb, var(--accent) 20%, var(--bg));
 }
 
 dither-field {
