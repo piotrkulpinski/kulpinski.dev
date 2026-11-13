@@ -4,22 +4,21 @@ import {
   canHover,
   cellSize,
   fitCanvas,
+  Magnet,
   onThemeChange,
   prefersReducedMotion,
   type Rgb,
   readColor,
+  toCell,
 } from "~/elements/dither"
 
-const MAGNET_RADIUS = 26
+const MAGNET_RADIUS = 16
 const MAGNET_PULL = 0.7
-const SPRING = 0.12
-const DAMPING = 0.74
 
 /**
  * Renders the `<img>` inside it as a two-tone Bayer dither. Dark areas dither in ink, saturated
  * areas in the pink accent. The image prints in when it first shows. The cursor works like a
- * magnet: the image underneath warps toward it, while every cell keeps its own Bayer threshold, so
- * the dither pattern stays regular. The magnet point and its strength move on springs.
+ * magnet that warps the image toward it (see `Magnet`).
  */
 class DitherPortrait extends HTMLElement {
   private canvas = document.createElement("canvas")
@@ -31,9 +30,7 @@ class DitherPortrait extends HTMLElement {
   private inkColor: Rgb = [0, 0, 0]
   private tintColor: Rgb = [0, 0, 0]
   private progress = 0
-  // The magnet trails the cursor on a spring, and its strength eases in and out the same way.
-  private magnet = { x: 0, y: 0, vx: 0, vy: 0, strength: 0, velocity: 0 }
-  private pointer: { x: number; y: number } | null = null
+  private magnet = new Magnet(MAGNET_RADIUS, MAGNET_PULL)
   private magnetFrame = 0
   private cleanup: (() => void)[] = []
 
@@ -79,7 +76,7 @@ class DitherPortrait extends HTMLElement {
     this.cleanup = []
     cancelAnimationFrame(this.magnetFrame)
     this.magnetFrame = 0
-    this.pointer = null
+    this.magnet.release()
     this.canvas.remove()
   }
 
@@ -133,23 +130,12 @@ class DitherPortrait extends HTMLElement {
     const move = (event: PointerEvent) => {
       if (prefersReducedMotion() || this.progress < 1) return
 
-      const rect = this.getBoundingClientRect()
-      const x = ((event.clientX - rect.left) / rect.width) * this.columns
-      const y = ((event.clientY - rect.top) / rect.height) * this.rows
-
-      // A fresh magnet starts under the cursor rather than flying in from its old spot.
-      if (!this.pointer && this.magnet.strength < 0.05) {
-        this.magnet.x = x
-        this.magnet.y = y
-      }
-
-      this.pointer = { x, y }
+      const { x, y } = toCell(this, event, this.columns, this.rows)
+      this.magnet.aim(x, y)
       this.loop()
     }
 
-    const leave = () => {
-      this.pointer = null
-    }
+    const leave = () => this.magnet.release()
 
     this.addEventListener("pointermove", move)
     this.addEventListener("pointerleave", leave)
@@ -160,37 +146,15 @@ class DitherPortrait extends HTMLElement {
   }
 
   /**
-   * Steps the magnet's springs each frame. The loop stops once the pointer has left and the
-   * strength has settled at zero.
+   * Redraws while the magnet is active, then stops.
    */
   private loop() {
     if (this.magnetFrame) return
 
     const tick = () => {
-      const m = this.magnet
-      const pointer = this.pointer
-
-      if (pointer) {
-        m.vx = (m.vx + (pointer.x - m.x) * SPRING) * DAMPING
-        m.vy = (m.vy + (pointer.y - m.y) * SPRING) * DAMPING
-        m.x += m.vx
-        m.y += m.vy
-      }
-
-      m.velocity = (m.velocity + ((pointer ? 1 : 0) - m.strength) * SPRING) * DAMPING
-      m.strength += m.velocity
-
+      const active = this.magnet.step()
       this.draw()
-
-      const settled = !pointer && Math.abs(m.strength) < 0.005 && Math.abs(m.velocity) < 0.005
-      if (settled) {
-        m.strength = 0
-        m.velocity = 0
-        this.magnetFrame = 0
-        this.draw()
-      } else {
-        this.magnetFrame = requestAnimationFrame(tick)
-      }
+      this.magnetFrame = active ? requestAnimationFrame(tick) : 0
     }
 
     this.magnetFrame = requestAnimationFrame(tick)
@@ -222,7 +186,7 @@ class DitherPortrait extends HTMLElement {
     const out = image.data
     const [ir, ig, ib] = this.inkColor
     const [tr, tg, tb] = this.tintColor
-    const { x: mx, y: my, strength } = this.magnet
+    const { x: mx, y: my } = this.magnet
 
     for (let y = 0; y < rows; y++) {
       for (let x = 0; x < columns; x++) {
@@ -231,22 +195,16 @@ class DitherPortrait extends HTMLElement {
         // Prints top to bottom with a dithered edge.
         if (progress < 1 && progress < 0.55 * threshold + 0.45 * (y / rows)) continue
 
-        // Each cell samples the image from a point pushed away from the magnet, which pulls the
-        // picture toward it. The push fades to zero at the edge of the radius.
         let i = y * columns + x
         let ink = this.ink[i]
         let tint = this.tint[i]
 
-        if (strength > 0.001) {
-          const dx = x - mx
-          const dy = y - my
-          const distance = Math.hypot(dx, dy)
-
-          if (distance < MAGNET_RADIUS) {
-            const push = 1 + MAGNET_PULL * strength * (1 - distance / MAGNET_RADIUS) ** 2
-            ink = this.sampleAt(this.ink, mx + dx * push, my + dy * push)
-            tint = this.sampleAt(this.tint, mx + dx * push, my + dy * push)
-          }
+        const push = this.magnet.push(x, y)
+        if (push !== 1) {
+          const sx = mx + (x - mx) * push
+          const sy = my + (y - my) * push
+          ink = this.sampleAt(this.ink, sx, sy)
+          tint = this.sampleAt(this.tint, sx, sy)
         }
 
         i *= 4
