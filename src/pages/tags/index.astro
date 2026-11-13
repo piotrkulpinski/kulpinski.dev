@@ -19,7 +19,7 @@ const tags = Array.from(tagCountMap, ([tag, count]) => ({ tag, count })).sort((a
 ---
 
 <BaseLayout title="Tags">
-  <Section label="Tags" accent="green" heading="h1">
+  <Section label="Tags" heading="h1">
     <p class="mb-4 text-dim">Browse posts by topic.</p>
     <TagList tags={tags} />
   </Section>

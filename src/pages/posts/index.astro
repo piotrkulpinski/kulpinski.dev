@@ -11,7 +11,7 @@ const years = Map.groupBy(posts, post => post.data.pubDate.getFullYear())
 ---
 
 <BaseLayout title="Writing">
-  <Section label="Writing" accent="green" heading="h1">
+  <Section label="Writing" heading="h1">
     <p class="text-dim text-pretty">
       Notes on software, SEO, open source, and shipping small things.
     </p>
@@ -19,7 +19,7 @@ const years = Map.groupBy(posts, post => post.data.pubDate.getFullYear())
 
   {
     [...years].map(([year, items], i) => (
-      <Section label={String(year)} accent="green" index={i + 1}>
+      <Section label={String(year)} index={i + 1}>
         <PostList posts={items} dateStyle="monthDay" />
       </Section>
     ))

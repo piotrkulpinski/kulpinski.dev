@@ -23,7 +23,7 @@ const { posts } = Astro.props
 ---
 
 <BaseLayout title={`Posts tagged "${tag}"`}>
-  <Section label={`#${tag}`} accent="green" heading="h1">
+  <Section label={`#${tag}`} heading="h1">
     <p class="mb-4 text-dim">
       {posts.length} post{posts.length === 1 ? "" : "s"} tagged.
       <a href="/tags" class="text-link">All tags</a>

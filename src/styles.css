@@ -20,19 +20,10 @@
   --color-line: var(--line);
   --color-on-mark: #0a0a0a;
 
-  --color-orange: #ff6b35;
-  --color-orange-soft: #ffa47a;
-  --color-teal: #22c3b4;
-  --color-teal-soft: #86e3d9;
-  --color-green: #1fbf5f;
-  --color-green-soft: #8fe3ae;
   --color-pink: #ff5c93;
   --color-pink-soft: #ffb0c8;
 
-  /* Accent shades for text, darker in light mode so they pass 4.5:1 contrast. */
-  --color-orange-text: var(--orange-text);
-  --color-teal-text: var(--teal-text);
-  --color-green-text: var(--green-text);
+  /* The accent shade for text, darker in light mode so it passes 4.5:1 contrast. */
   --color-pink-text: var(--pink-text);
 
   --font-sans:
@@ -47,10 +38,12 @@
   --dim: #5c5c61;
   --faint: #737378;
   --line: #e4e4e7;
-  --orange-text: #d4430c;
-  --teal-text: #087a70;
-  --green-text: #15803d;
   --pink-text: #d6246a;
+
+  /* The single accent, used by labels, highlights, links and the dithered elements. */
+  --section: var(--color-pink);
+  --section-soft: var(--color-pink-soft);
+  --section-text: var(--color-pink-text);
 
   --astro-code-foreground: #24292e;
   --astro-code-token-constant: #0550ae;
@@ -95,9 +88,6 @@
     --dim: #a6a6ab;
     --faint: #85858a;
     --line: #26262a;
-    --orange-text: #ff8a5c;
-    --teal-text: #4fd6c9;
-    --green-text: #4ade80;
     --pink-text: #ff7aa8;
     color-scheme: dark;
   }
@@ -109,9 +99,6 @@
   --dim: #a6a6ab;
   --faint: #85858a;
   --line: #26262a;
-  --orange-text: #ff8a5c;
-  --teal-text: #4fd6c9;
-  --green-text: #4ade80;
   --pink-text: #ff7aa8;
   color-scheme: dark;
 
@@ -198,7 +185,7 @@ dither-field {
   color: var(--color-ink);
 }
 
-/* Inline text links: medium weight in the section's accent. Only hovering the link itself
+/* Inline text links: medium weight in the accent. Only hovering the link itself
    underlines it. */
 .text-link {
   font-weight: 500;

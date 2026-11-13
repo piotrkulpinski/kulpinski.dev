@@ -1,20 +1,15 @@
 import {
   bayer,
-  canHover,
   cellSize,
   fitCanvas,
-  Magnet,
   onThemeChange,
   prefersReducedMotion,
   type Rgb,
   readColor,
-  toCell,
 } from "~/elements/dither"
 
 const FRAME_INTERVAL = 60
 const SPEED = 0.00012
-const MAGNET_RADIUS = 18
-const MAGNET_PULL = 0.9
 
 /**
  * Two rolling hill lines, as heights from the top in rows. The near hill rises toward the left,
@@ -45,9 +40,8 @@ const density = (y: number, rows: number, near: number, far: number) => {
 }
 
 /**
- * A slowly drifting landscape of dithered hills in the section accent. The cursor warps it like a
- * magnet (see `Magnet`). The drift renders at a low frame rate and the magnet at full rate. The
- * field pauses off screen and draws one still frame under reduced motion.
+ * A slowly drifting landscape of dithered hills in the accent. It renders at a low frame rate,
+ * pauses off screen, and draws one still frame under reduced motion.
  */
 class DitherField extends HTMLElement {
   private canvas = document.createElement("canvas")
@@ -56,10 +50,6 @@ class DitherField extends HTMLElement {
   private frame = 0
   private last = 0
   private time = 0
-  private columns = 0
-  private rows = 0
-  private magnet = new Magnet(MAGNET_RADIUS, MAGNET_PULL)
-  private magnetActive = false
   private cleanup: (() => void)[] = []
 
   connectedCallback() {
@@ -88,25 +78,6 @@ class DitherField extends HTMLElement {
         this.draw()
       }),
     )
-
-    if (canHover() && !prefersReducedMotion()) this.bindPointer()
-  }
-
-  private bindPointer() {
-    const move = (event: PointerEvent) => {
-      const { x, y } = toCell(this, event, this.columns, this.rows)
-      this.magnet.aim(x, y)
-      this.magnetActive = true
-    }
-
-    const leave = () => this.magnet.release()
-
-    this.addEventListener("pointermove", move)
-    this.addEventListener("pointerleave", leave)
-    this.cleanup.push(() => {
-      this.removeEventListener("pointermove", move)
-      this.removeEventListener("pointerleave", leave)
-    })
   }
 
   disconnectedCallback() {
@@ -120,9 +91,7 @@ class DitherField extends HTMLElement {
     if (this.frame) return
 
     const tick = (now: number) => {
-      if (this.magnetActive) this.magnetActive = this.magnet.step()
-
-      if (this.magnetActive || now - this.last >= FRAME_INTERVAL) {
+      if (now - this.last >= FRAME_INTERVAL) {
         this.time += (now - (this.last || now)) * SPEED
         this.last = now
         this.draw()
@@ -144,32 +113,16 @@ class DitherField extends HTMLElement {
     if (!ctx) return
 
     const { columns, rows } = fitCanvas(this.canvas, this, cellSize(2))
-    this.columns = columns
-    this.rows = rows
-
     const image = ctx.createImageData(columns, rows)
     const out = image.data
     const [r, g, b] = this.color
     const t = this.time
-    const { x: mx, y: my } = this.magnet
 
     for (let x = 0; x < columns; x++) {
       const { near, far } = hills(x, columns, rows, t)
 
       for (let y = 0; y < rows; y++) {
-        let amount: number
-        const push = this.magnet.push(x, y)
-
-        if (push === 1) {
-          amount = density(y, rows, near, far)
-        } else {
-          // Samples the landscape from a point pushed away from the magnet.
-          const sx = mx + (x - mx) * push
-          const sy = my + (y - my) * push
-          const warped = hills(sx, columns, rows, t)
-          amount = density(sy, rows, warped.near, warped.far)
-        }
-
+        const amount = density(y, rows, near, far)
         if (bayer(x, y) >= amount) continue
 
         const o = (y * columns + x) * 4
