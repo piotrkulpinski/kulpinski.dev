@@ -10,14 +10,16 @@ import {
   readColor,
 } from "~/elements/dither"
 
-const GLOW_RADIUS = 11
-const GLOW_PEAK = 0.75
-const GLOW_DECAY = 0.86
+const MAGNET_RADIUS = 22
+const MAGNET_PULL = 1.1
+const SPRING = 0.09
+const DAMPING = 0.78
 
 /**
  * Renders the `<img>` inside it as a two-tone Bayer dither. Dark areas dither in ink, saturated
- * areas in the pink accent. The image prints in when it first shows, and a pink dithered glow
- * follows the cursor, leaving a short fading trail.
+ * areas in the pink accent. The image prints in when it first shows. Each lit cell is a particle
+ * on a spring, and the cursor works like a magnet: it pulls nearby cells toward it, and they spring
+ * back home when it leaves.
  */
 class DitherPortrait extends HTMLElement {
   private canvas = document.createElement("canvas")
@@ -29,9 +31,20 @@ class DitherPortrait extends HTMLElement {
   private inkColor: Rgb = [0, 0, 0]
   private tintColor: Rgb = [0, 0, 0]
   private progress = 0
-  private heat = new Float32Array(0)
+  private particles = {
+    homeX: new Float32Array(0),
+    homeY: new Float32Array(0),
+    x: new Float32Array(0),
+    y: new Float32Array(0),
+    vx: new Float32Array(0),
+    vy: new Float32Array(0),
+    // 1 for ink, 2 for the pink tint.
+    kind: new Uint8Array(0),
+    // The print-in progress at which the cell appears.
+    gate: new Float32Array(0),
+  }
   private pointer: { x: number; y: number } | null = null
-  private glowFrame = 0
+  private magnetFrame = 0
   private cleanup: (() => void)[] = []
 
   connectedCallback() {
@@ -74,8 +87,8 @@ class DitherPortrait extends HTMLElement {
   disconnectedCallback() {
     for (const fn of this.cleanup) fn()
     this.cleanup = []
-    cancelAnimationFrame(this.glowFrame)
-    this.glowFrame = 0
+    cancelAnimationFrame(this.magnetFrame)
+    this.magnetFrame = 0
     this.pointer = null
     this.canvas.remove()
   }
@@ -98,7 +111,6 @@ class DitherPortrait extends HTMLElement {
     this.rows = rows
     this.ink = new Float32Array(columns * rows)
     this.tint = new Float32Array(columns * rows)
-    this.heat = new Float32Array(columns * rows)
 
     for (let i = 0; i < columns * rows; i++) {
       const r = data[i * 4] / 255
@@ -110,6 +122,44 @@ class DitherPortrait extends HTMLElement {
       // The flat light-grey backdrop and the white face drop out entirely.
       this.ink[i] = Math.min(1, Math.max(0, (1 - luminance - 0.08) / 0.84))
       this.tint[i] = Math.min(1, chroma * 2.6)
+    }
+
+    this.buildParticles()
+  }
+
+  /**
+   * Turns every lit cell of the dither into a particle resting at its home position.
+   */
+  private buildParticles() {
+    const { columns, rows } = this
+    const homeX: number[] = []
+    const homeY: number[] = []
+    const kind: number[] = []
+    const gate: number[] = []
+
+    for (let y = 0; y < rows; y++) {
+      for (let x = 0; x < columns; x++) {
+        const i = y * columns + x
+        const threshold = bayer(x, y)
+        const type = threshold < this.ink[i] ? 1 : threshold < this.tint[i] ? 2 : 0
+        if (!type) continue
+
+        homeX.push(x)
+        homeY.push(y)
+        kind.push(type)
+        gate.push(0.55 * threshold + 0.45 * (y / rows))
+      }
+    }
+
+    this.particles = {
+      homeX: Float32Array.from(homeX),
+      homeY: Float32Array.from(homeY),
+      x: Float32Array.from(homeX),
+      y: Float32Array.from(homeY),
+      vx: new Float32Array(homeX.length),
+      vy: new Float32Array(homeX.length),
+      kind: Uint8Array.from(kind),
+      gate: Float32Array.from(gate),
     }
   }
 
@@ -152,84 +202,86 @@ class DitherPortrait extends HTMLElement {
   }
 
   /**
-   * Each frame the heat decays and the cursor adds a soft disc of it. The loop stops once the
-   * pointer has left and the trail has faded.
+   * Steps the springs and the magnet each frame. The loop stops once the pointer has left and
+   * every cell is back home.
    */
   private loop() {
-    if (this.glowFrame) return
+    if (this.magnetFrame) return
 
     const tick = () => {
-      const { columns, rows } = this
-      const heat = this.heat
+      const { homeX, homeY, x, y, vx, vy } = this.particles
       const pointer = this.pointer
-      let peak = 0
+      let motion = 0
 
-      for (let i = 0; i < heat.length; i++) {
-        heat[i] *= GLOW_DECAY
-        if (heat[i] < 0.01) heat[i] = 0
-      }
+      for (let i = 0; i < x.length; i++) {
+        let ax = (homeX[i] - x[i]) * SPRING
+        let ay = (homeY[i] - y[i]) * SPRING
 
-      if (pointer) {
-        const x0 = Math.max(0, Math.floor(pointer.x - GLOW_RADIUS))
-        const x1 = Math.min(columns - 1, Math.ceil(pointer.x + GLOW_RADIUS))
-        const y0 = Math.max(0, Math.floor(pointer.y - GLOW_RADIUS))
-        const y1 = Math.min(rows - 1, Math.ceil(pointer.y + GLOW_RADIUS))
+        if (pointer) {
+          const dx = pointer.x - x[i]
+          const dy = pointer.y - y[i]
+          const distance = Math.hypot(dx, dy)
 
-        for (let y = y0; y <= y1; y++) {
-          for (let x = x0; x <= x1; x++) {
-            const d2 = ((x - pointer.x) ** 2 + (y - pointer.y) ** 2) / (GLOW_RADIUS * GLOW_RADIUS)
-            if (d2 >= 1) continue
-            const i = y * columns + x
-            heat[i] = Math.max(heat[i], GLOW_PEAK * (1 - d2) ** 2)
+          // Pull falls off with distance and never overshoots the cursor itself.
+          if (distance > 0.5 && distance < MAGNET_RADIUS) {
+            const pull = Math.min(
+              MAGNET_PULL * (1 - distance / MAGNET_RADIUS) ** 2,
+              distance * 0.25,
+            )
+            ax += (dx / distance) * pull
+            ay += (dy / distance) * pull
           }
         }
+
+        vx[i] = (vx[i] + ax) * DAMPING
+        vy[i] = (vy[i] + ay) * DAMPING
+        x[i] += vx[i]
+        y[i] += vy[i]
+        motion +=
+          Math.abs(vx[i]) + Math.abs(vy[i]) + Math.abs(homeX[i] - x[i]) + Math.abs(homeY[i] - y[i])
       }
 
-      for (let i = 0; i < heat.length; i++) peak = Math.max(peak, heat[i])
-
       this.draw()
-      this.glowFrame = pointer || peak > 0 ? requestAnimationFrame(tick) : 0
+
+      if (pointer || motion > 0.5) {
+        this.magnetFrame = requestAnimationFrame(tick)
+      } else {
+        x.set(homeX)
+        y.set(homeY)
+        this.magnetFrame = 0
+        this.draw()
+      }
     }
 
-    this.glowFrame = requestAnimationFrame(tick)
+    this.magnetFrame = requestAnimationFrame(tick)
   }
 
   private draw() {
-    const { ctx, columns, rows } = this
-    const heat = this.heat
-    if (!ctx || !columns || !this.ink.length) return
+    const { ctx, columns, rows, progress } = this
+    if (!ctx || !columns) return
 
+    const { x, y, kind, gate } = this.particles
     const image = ctx.createImageData(columns, rows)
     const out = image.data
     const [ir, ig, ib] = this.inkColor
     const [tr, tg, tb] = this.tintColor
 
-    for (let y = 0; y < rows; y++) {
-      for (let x = 0; x < columns; x++) {
-        const threshold = bayer(x, y)
+    // Pink first, then ink, so ink wins where cells overlap.
+    for (const pass of [2, 1]) {
+      const [r, g, b] = pass === 1 ? [ir, ig, ib] : [tr, tg, tb]
 
-        // Prints top to bottom with a dithered edge.
-        if (this.progress < 1 && this.progress < 0.55 * threshold + 0.45 * (y / rows)) continue
+      for (let i = 0; i < x.length; i++) {
+        if (kind[i] !== pass || (progress < 1 && progress < gate[i])) continue
 
-        const i = y * columns + x
-        const o = i * 4
+        const cx = Math.round(x[i])
+        const cy = Math.round(y[i])
+        if (cx < 0 || cx >= columns || cy < 0 || cy >= rows) continue
 
-        // The glow turns ink pink under the cursor and adds pink dots around it.
-        const glow = heat[i]
-        const isInk = threshold < this.ink[i]
-
-        if (isInk || threshold < glow) {
-          const pink = !isInk || threshold < glow * 1.3
-          out[o] = pink && glow > 0 ? tr : ir
-          out[o + 1] = pink && glow > 0 ? tg : ig
-          out[o + 2] = pink && glow > 0 ? tb : ib
-          out[o + 3] = 255
-        } else if (threshold < this.tint[i]) {
-          out[o] = tr
-          out[o + 1] = tg
-          out[o + 2] = tb
-          out[o + 3] = 255
-        }
+        const o = (cy * columns + cx) * 4
+        out[o] = r
+        out[o + 1] = g
+        out[o + 2] = b
+        out[o + 3] = 255
       }
     }
 
