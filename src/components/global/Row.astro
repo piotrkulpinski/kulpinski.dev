@@ -1,0 +1,44 @@
+---
+import Arrow from "~/components/global/Arrow.astro"
+
+type Props = {
+  href: string
+  title: string
+  description?: string
+  aside?: string
+  external?: boolean
+}
+
+const { href, title, description, aside, external = false } = Astro.props
+const linkProps = external ? { target: "_blank", rel: "noopener noreferrer" } : {}
+---
+
+<li>
+  <a
+    href={href}
+    class="group/arrow flex items-baseline gap-3 py-1 outline-offset-4"
+    {...linkProps}
+  >
+    <span class="flex min-w-0 items-baseline gap-2">
+      <span
+        class:list={[
+          "inline-flex items-center gap-1.5 font-medium",
+          description ? "shrink-0" : "min-w-0 text-pretty",
+        ]}
+      >
+        {title}
+        {external && <Arrow />}
+      </span>
+
+      {description && <span class="hidden truncate text-dim sm:inline">{description}</span>}
+    </span>
+
+    {
+      aside && (
+        <span class="ml-auto shrink-0 font-mono text-[11px] text-faint uppercase tracking-[0.08em] tabular-nums">
+          {aside}
+        </span>
+      )
+    }
+  </a>
+</li>

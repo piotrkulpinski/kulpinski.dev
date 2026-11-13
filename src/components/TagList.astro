@@ -1,6 +1,5 @@
 ---
-import HoverList from "~/components/global/HoverList.astro"
-import Item from "~/components/global/Item.astro"
+import Row from "~/components/global/Row.astro"
 
 type Props = {
   tags: { tag: string; count: number }[]
@@ -10,19 +9,13 @@ const { tags } = Astro.props
 ---
 
 {
-  !!tags.length ? (
-    <HoverList>
-      {tags.map((tag, i) => (
-        <Item index={i} href={`/tags/${tag.tag}/`}>
-          <span class="font-medium">#{tag.tag}</span>
-
-          <Fragment slot="aside">
-            {tag.count}&nbsp;{tag.count === 1 ? "post" : "posts"}
-          </Fragment>
-        </Item>
+  tags.length ? (
+    <ul class="flex flex-col">
+      {tags.map(({ tag, count }) => (
+        <Row href={`/tags/${tag}/`} title={`#${tag}`} aside={`${count} ${count === 1 ? "post" : "posts"}`} />
       ))}
-    </HoverList>
+    </ul>
   ) : (
-    <p>No tags found</p>
+    <p class="text-dim">No tags found.</p>
   )
 }

@@ -1,0 +1,44 @@
+---
+import type { HTMLAttributes } from "astro/types"
+
+export type Accent = "orange" | "teal" | "green" | "pink"
+
+type Props = HTMLAttributes<"section"> & {
+  label?: string
+  accent?: Accent
+  index?: number
+  heading?: "h1" | "h2"
+}
+
+const {
+  label,
+  accent = "orange",
+  index = 0,
+  heading: Heading = "h2",
+  class: className,
+  ...props
+} = Astro.props
+
+const style = `--i: ${index}; --section: var(--color-${accent}); --section-soft: var(--color-${accent}-soft)`
+---
+
+<section
+  class:list={[className, "reveal grid gap-x-8 gap-y-4 sm:grid-cols-[8rem_minmax(0,1fr)]"]}
+  style={style}
+  {...props}
+>
+  {
+    label ? (
+      <Heading class="flex h-6 items-center gap-2.5 font-mono text-[11px] text-dim uppercase tracking-widest">
+        <span aria-hidden="true" class="size-2 shrink-0 bg-(--section)" />
+        {label}
+      </Heading>
+    ) : (
+      <div aria-hidden="true" />
+    )
+  }
+
+  <div class="min-w-0">
+    <slot />
+  </div>
+</section>

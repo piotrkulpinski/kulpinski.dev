@@ -1,11 +1,8 @@
 ---
-import { Image } from "astro:assets"
 import { getCollection } from "astro:content"
 import ProfilePicture from "~/assets/piotrkulpinski.webp"
-import HoverList from "~/components/global/HoverList.astro"
-import Intro from "~/components/global/Intro.astro"
-import Item from "~/components/global/Item.astro"
-import Prose from "~/components/global/Prose.astro"
+import Arrow from "~/components/global/Arrow.astro"
+import Section from "~/components/global/Section.astro"
 import PostList from "~/components/PostList.astro"
 import ProjectList from "~/components/ProjectList.astro"
 import BaseLayout from "~/layouts/BaseLayout.astro"
@@ -13,94 +10,82 @@ import BaseLayout from "~/layouts/BaseLayout.astro"
 const allPosts = await getCollection("posts", ({ data }) => !data.isDraft)
 const allProjects = await getCollection("projects")
 
-const posts = allPosts.sort(
-  (a, b) => new Date(b.data.pubDate).valueOf() - new Date(a.data.pubDate).valueOf(),
-)
+const posts = allPosts
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
+  .slice(0, 5)
 
 const projects = allProjects.sort(
   (a, b) => b.data.year - a.data.year || (b.data.month ?? 0) - (a.data.month ?? 0),
 )
 
-const contacts = [
-  { label: "piotr(at)", value: "kulpinski.pl", href: "mailto:piotr@kulpinski.pl" },
-  { label: "x.com/", value: "piotrkulpinski", href: "https://x.com/piotrkulpinski" },
-  {
-    label: "bsky.app/profile/",
-    value: "kulpinski.dev",
-    href: "https://bsky.app/profile/kulpinski.dev",
-  },
-  { label: "github.com/", value: "piotrkulpinski", href: "https://github.com/piotrkulpinski" },
-]
+const linkProps = { target: "_blank", rel: "noopener noreferrer" }
 ---
 
 <BaseLayout>
-  <section class="reveal flex items-start gap-5" style="--i: 0">
-    <Image
-      src={ProfilePicture}
-      alt="Piotr Kulpinski"
-      width={256}
-      height={256}
-      class="size-16 rounded-full ring-1 ring-border md:size-20"
-    />
+  <section
+    class="reveal grid gap-x-8 gap-y-6 sm:grid-cols-[8rem_minmax(0,1fr)]"
+    style="--i: 0; --section: var(--color-pink); --section-soft: var(--color-pink-soft)"
+  >
+    <dither-portrait class="size-28 sm:size-32">
+      <img
+        src={ProfilePicture.src}
+        width={ProfilePicture.width}
+        height={ProfilePicture.height}
+        alt="Illustrated portrait of Piotr Kulpinski"
+        class="size-full"
+        decoding="async"
+      />
+    </dither-portrait>
 
-    <div class="flex flex-col gap-1.5">
-      <h1 class="text-lg font-semibold tracking-tight text-foreground md:text-xl">
-        Piotr Kulpinski
-      </h1>
-      <p class="text-secondary leading-relaxed">
-        Solopreneur building directory websites and SaaS from Kraków, PL. Writing about
-        software, SEO, and the joy of shipping small things.
+    <div class="flex flex-col gap-4">
+      <p class="font-medium text-balance">
+        <dither-mark class="-mx-1 px-1 py-px">I build small software products and run them myself.</dither-mark>
       </p>
+
+      <div class="space-y-4 text-dim text-pretty">
+        <p>
+          I've been writing software for 15+ years, first in agencies and product teams, and
+          now on my own from Kraków. Most of what I make is directories, SaaS tools, and the
+          boilerplate that powers both.
+        </p>
+        <p>
+          I like simple interfaces and short feedback loops. AI agents write a lot of my code
+          these days, so I ship more than one person probably should. I build in
+          public, and most of what I learn ends up in my writing.
+        </p>
+      </div>
     </div>
   </section>
 
-  <Intro id="about">
-    <h2 slot="title">About</h2>
-
-    <Prose>
+  <Section label="Now" accent="orange" index={1}>
+    <div class="space-y-4 text-dim text-pretty">
       <p>
-        I was born in the late 80s in Kraków, Poland, where I still live and work today. For
-        15+ years I've been building software — first inside agencies and product teams,
-        more recently as an independent solopreneur shipping projects under my own name.
+        Most of my time goes into
+        <a href="https://highseat.com?utm_source=kulpinski.dev&utm_medium=referral" {...linkProps} class="group/arrow inline-flex items-center gap-1 text-ink">Highseat<Arrow /></a>,
+        cookieless web analytics that ties revenue to the source that brought it.
       </p>
       <p>
-        I run <a href="https://openalternative.co" target="_blank" rel="noopener noreferrer">OpenAlternative</a>,
-        the largest directory of open source software, and <a href="https://dirstarter.com" target="_blank" rel="noopener noreferrer">Dirstarter</a>,
-        a Next.js boilerplate that powers a growing number of indie directories. My newest
-        product is <a href="https://highseat.com?utm_source=kulpinski.dev&utm_medium=referral" target="_blank" rel="noopener noreferrer">Highseat</a>,
-        cookieless web analytics that shows revenue by source. Alongside them I'm always
-        tinkering on smaller bets.
+        <a href="https://openalternative.co" {...linkProps} class="group/arrow inline-flex items-center gap-1 text-ink">OpenAlternative<Arrow /></a>
+        and
+        <a href="https://dirstarter.com" {...linkProps} class="group/arrow inline-flex items-center gap-1 text-ink">Dirstarter<Arrow /></a>
+        keep running alongside it. One is the largest directory of open source software, the
+        other is the Next.js boilerplate behind a growing number of indie directories.
       </p>
-      <p>
-        I care about minimalism, simplicity, and using AI to ship faster than I have any
-        right to. I build in public, and most of what I learn ends up here.
-      </p>
-    </Prose>
-  </Intro>
+    </div>
+  </Section>
 
-  <Intro id="projects">
-    <h2 slot="title">Projects</h2>
-
+  <Section label="Products" accent="teal" index={2}>
     <ProjectList projects={projects} />
-  </Intro>
+  </Section>
 
-  <Intro id="posts">
-    <h2 slot="title">Writing</h2>
-
+  <Section label="Writing" accent="green" index={3}>
     <PostList posts={posts} />
-  </Intro>
 
-  <Intro id="contact">
-    <h2 slot="title">Elsewhere</h2>
-
-    <HoverList>
-      {contacts.map((c, i) => (
-        <Item index={i} href={c.href} target="_blank" rel="nofollow noreferrer">
-          <span class="font-medium">
-            <span class="text-muted">{c.label}</span>{c.value}
-          </span>
-        </Item>
-      ))}
-    </HoverList>
-  </Intro>
+    <a
+      href="/posts"
+      class="mt-3 inline-flex font-mono text-[11px] text-faint uppercase tracking-widest hover:text-ink"
+    >
+      All posts →
+    </a>
+  </Section>
 </BaseLayout>

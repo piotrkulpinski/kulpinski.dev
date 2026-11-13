@@ -1,6 +1,6 @@
 ---
 import { getCollection } from "astro:content"
-import Prose from "~/components/global/Prose.astro"
+import Section from "~/components/global/Section.astro"
 import PostList from "~/components/PostList.astro"
 import BaseLayout from "~/layouts/BaseLayout.astro"
 
@@ -8,31 +8,26 @@ export async function getStaticPaths() {
   const posts = await getCollection("posts", ({ data }) => !data.isDraft)
   const uniqueTags = [...new Set(posts.flatMap(post => post.data.tags))]
 
-  return uniqueTags.map(tag => {
-    const filteredPosts = posts.filter(post => post.data.tags.includes(tag))
-    const sortedPosts = filteredPosts.sort(
-      (a, b) => new Date(b.data.pubDate).valueOf() - new Date(a.data.pubDate).valueOf(),
-    )
-
-    return {
-      params: { tag },
-      props: { posts: sortedPosts },
-    }
-  })
+  return uniqueTags.map(tag => ({
+    params: { tag },
+    props: {
+      posts: posts
+        .filter(post => post.data.tags.includes(tag))
+        .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()),
+    },
+  }))
 }
 
 const { tag } = Astro.params
 const { posts } = Astro.props
-const title = `#${tag}`
 ---
 
 <BaseLayout title={`Posts tagged "${tag}"`}>
-  <header class="reveal flex flex-col gap-2" style="--i: 0">
-    <h1 class="text-3xl font-semibold tracking-tight text-foreground md:text-4xl">{title}</h1>
-    <p class="text-secondary">{posts.length} post{posts.length === 1 ? "" : "s"} tagged.</p>
-  </header>
-
-  <Prose>
+  <Section label={`#${tag}`} accent="green" heading="h1">
+    <p class="mb-4 text-dim">
+      {posts.length} post{posts.length === 1 ? "" : "s"} tagged.
+      <a href="/tags" class="text-ink underline decoration-line underline-offset-[3px]">All tags</a>
+    </p>
     <PostList posts={posts} />
-  </Prose>
+  </Section>
 </BaseLayout>

@@ -16,7 +16,7 @@ Approved 2026-11-13. Inspired by piotrpasztor.com: dithered elements, mono label
 Plain TypeScript custom elements, so they survive the Astro client router without re-init code and ship no framework.
 
 - `<dither-portrait>`: draws the portrait onto a canvas with 1.5px cells snapped to device pixels. Each cell is ink or background based on brightness and a 4x4 Bayer threshold. Saturated pixels dither in the pink accent. Prints in by Bayer order over about 800ms. Cells near the cursor shift one density level on mouse devices. Redraws on theme change. Falls back to a plain `<img>` without JavaScript.
-- `<dither-mark>`: a left-to-right Bayer gradient from background into the section's soft accent, behind a phrase. Reveals at 40% visibility.
+- `<dither-mark>`: a left-to-right Bayer gradient from the section accent into its soft variant, behind a phrase, following each wrapped line. Text on it is always dark. Reveals at 40% visibility.
 - `<dither-field>`: a slowly drifting noise field in pink for the footer band. Pauses off screen. One static frame under reduced motion.
 
 ## Pages

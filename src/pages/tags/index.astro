@@ -1,6 +1,6 @@
 ---
 import { getCollection } from "astro:content"
-import Prose from "~/components/global/Prose.astro"
+import Section from "~/components/global/Section.astro"
 import TagList from "~/components/TagList.astro"
 import BaseLayout from "~/layouts/BaseLayout.astro"
 
@@ -9,25 +9,18 @@ const tagCountMap = new Map<string, number>()
 
 for (const post of posts) {
   for (const tag of post.data.tags) {
-    const count = tagCountMap.get(tag) || 0
-    tagCountMap.set(tag, count + 1)
+    tagCountMap.set(tag, (tagCountMap.get(tag) ?? 0) + 1)
   }
 }
 
 const tags = Array.from(tagCountMap, ([tag, count]) => ({ tag, count })).sort((a, b) =>
   a.tag.localeCompare(b.tag),
 )
-
-const title = "Tags"
 ---
 
-<BaseLayout title={title}>
-  <header class="reveal flex flex-col gap-2" style="--i: 0">
-    <h1 class="text-3xl font-semibold tracking-tight text-foreground md:text-4xl">{title}</h1>
-    <p class="text-secondary">Browse posts by topic.</p>
-  </header>
-
-  <Prose>
+<BaseLayout title="Tags">
+  <Section label="Tags" accent="green" heading="h1">
+    <p class="mb-4 text-dim">Browse posts by topic.</p>
     <TagList tags={tags} />
-  </Prose>
+  </Section>
 </BaseLayout>
