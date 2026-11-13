@@ -10,8 +10,8 @@ import {
   readColor,
 } from "~/elements/dither"
 
-const MAGNET_RADIUS = 22
-const MAGNET_PULL = 1.1
+const MAGNET_RADIUS = 24
+const MAGNET_PULL = 0.5
 const SPRING = 0.09
 const DAMPING = 0.78
 
@@ -214,24 +214,25 @@ class DitherPortrait extends HTMLElement {
       let motion = 0
 
       for (let i = 0; i < x.length; i++) {
-        let ax = (homeX[i] - x[i]) * SPRING
-        let ay = (homeY[i] - y[i]) * SPRING
+        // Each cell springs toward a target pulled part of the way from its home to the cursor.
+        // The fraction is never 1, so cells pinch toward the cursor without collapsing into it.
+        let targetX = homeX[i]
+        let targetY = homeY[i]
 
         if (pointer) {
-          const dx = pointer.x - x[i]
-          const dy = pointer.y - y[i]
+          const dx = pointer.x - homeX[i]
+          const dy = pointer.y - homeY[i]
           const distance = Math.hypot(dx, dy)
 
-          // Pull falls off with distance and never overshoots the cursor itself.
-          if (distance > 0.5 && distance < MAGNET_RADIUS) {
-            const pull = Math.min(
-              MAGNET_PULL * (1 - distance / MAGNET_RADIUS) ** 2,
-              distance * 0.25,
-            )
-            ax += (dx / distance) * pull
-            ay += (dy / distance) * pull
+          if (distance < MAGNET_RADIUS) {
+            const pull = MAGNET_PULL * (1 - distance / MAGNET_RADIUS) ** 2
+            targetX += dx * pull
+            targetY += dy * pull
           }
         }
+
+        const ax = (targetX - x[i]) * SPRING
+        const ay = (targetY - y[i]) * SPRING
 
         vx[i] = (vx[i] + ax) * DAMPING
         vy[i] = (vy[i] + ay) * DAMPING
