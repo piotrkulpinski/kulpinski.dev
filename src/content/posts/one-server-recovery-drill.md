@@ -1,6 +1,6 @@
 ---
 isDraft: true
-pubDate: 2026-11-27
+pubDate: 2026-11-30
 title: "All my sites run on one server. Here's what happens when it dies"
 shortTitle: "When my only server dies"
 description: "A dead disk made me ask what happens if my only server dies. So I rebuilt all 12 apps on a fresh one from backups. It took 36 minutes and found 4 gaps."
@@ -11,7 +11,7 @@ For a few weeks, one of the two disks in my only server was dead, and I had no i
 
 Nothing went down. The server has two disks that mirror each other, so it kept running on the one that was left. [[How you found out about the dead disk.]] Hetzner replaced the drive, the mirror was rebuilt, and that was it.
 
-But for those weeks, everything I run was one more failure away from gone. So on 26 November, I tested what happens when the whole server dies.
+But for those weeks, everything I run was one more failure away from gone. So last Thursday, I tested what happens when the whole server dies.
 
 ## Why one server
 
@@ -19,7 +19,7 @@ All 12 of my apps run on one dedicated server at Hetzner: [OpenAlternative](http
 
 It costs **€59 a month** for 64 GB of RAM, and my apps use under 10. It was a deal Hetzner no longer sells, so I can't even order a second one at that price.
 
-I like the simplicity. One bill, one place to look when something's slow. [Dokploy](https://dokploy.com), an open source, self-hosted alternative to Vercel or Heroku, deploys the apps and databases. [Cloudflare](https://cloudflare.com) sits in front of every site. A Mac mini at home watches the server, sends alerts to my phone and keeps a second copy of the backups, out of the server's reach.
+I like the simplicity. One bill, one place to look when something's slow. I wrote about [the whole setup](/posts/how-i-run-everything) on Saturday. The short version: [Dokploy](https://dokploy.com), an open source, self-hosted alternative to Vercel or Heroku, deploys the apps and databases. [Cloudflare](https://cloudflare.com) sits in front of every site. A Mac mini at home watches the server, sends alerts to my phone and keeps a second copy of the backups, out of the server's reach.
 
 The cost of that simplicity is obvious. When the server dies, everything dies with it, at the same time.
 
@@ -69,19 +69,9 @@ To check the result, I compared row counts with production. 84 of 109 tables mat
 
 I didn't write the backup scripts or the restore steps. An AI agent ([Claude Code](https://www.anthropic.com/claude-code)) did. It read the current setup, wrote the scripts, ran the test, fixed what broke and wrote the step-by-step guide for next time. My part was approving the steps that cost money or touched production.
 
-That's how I run the whole setup now. Before any server work, agents read a set of Markdown notes, called a skill. It describes what runs where, how to reach it and what not to touch.
+That's how I run the whole setup now. Before any server work, agents read a set of notes that describe what runs where and what not to touch. I wrote about [how that works](/posts/how-i-run-everything#agents-run-most-of-it) on Saturday.
 
-The notes only describe how things are today. When something changes, the old text gets replaced, and the history goes into git. A doc full of "update from March" notes makes agents follow instructions that stopped being true months ago.
-
-Every lesson becomes one rule with one reason. My database backups look like plain SQL files but aren't, so the usual tool reads them as garbage and still reports success. That's one line in the notes now, and no agent makes that mistake again.
-
-The notes also say what's risky in business terms. My main directories and my paid products need my approval for any change in production. For everything else, agents fix the problem and tell me afterwards. The list follows the money. DomainRapid, my most awkward database, is on the low-risk side.
-
-Agents never see the keys. They get credentials from a password manager they can only read, or through a service that makes the API call for them. Nothing gets pasted into a chat.
-
-And the notes check themselves. Every Saturday, a job on the Mac mini compares them with the live servers and opens a pull request when they disagree.
-
-The dead disk went through the same loop. There's an alert for a failed disk now, and a line in the notes about rebuilding the mirror. Every incident ends that way: an alert, and a rule an agent will read next time.
+The dead disk ended the way every incident does now. There's an alert for a failed disk, and a line in the notes about rebuilding the mirror, for the next agent to read.
 
 ## What people asked
 
