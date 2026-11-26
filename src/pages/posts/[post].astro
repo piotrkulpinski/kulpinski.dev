@@ -1,11 +1,12 @@
 ---
-import { getCollection, render } from "astro:content"
+import { render } from "astro:content"
 import type { SEOProps } from "astro-seo"
 import BaseLayout from "~/layouts/BaseLayout.astro"
 import MarkdownPostLayout from "~/layouts/MarkdownPostLayout.astro"
+import { getPosts } from "~/posts"
 
 export async function getStaticPaths() {
-  const blogEntries = await getCollection("posts", ({ data }) => !data.isDraft)
+  const blogEntries = await getPosts()
 
   return blogEntries.map(entry => ({
     params: { post: entry.id },

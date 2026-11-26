@@ -1,10 +1,10 @@
 ---
-import { getCollection } from "astro:content"
 import Section from "~/components/global/Section.astro"
 import PostList from "~/components/PostList.astro"
 import BaseLayout from "~/layouts/BaseLayout.astro"
+import { getPosts } from "~/posts"
 
-const allPosts = await getCollection("posts", ({ data }) => !data.isDraft)
+const allPosts = await getPosts()
 const posts = allPosts.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
 
 const years = Map.groupBy(posts, post => post.data.pubDate.getFullYear())

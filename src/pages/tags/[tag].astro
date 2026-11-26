@@ -1,11 +1,11 @@
 ---
-import { getCollection } from "astro:content"
 import Section from "~/components/global/Section.astro"
 import PostList from "~/components/PostList.astro"
 import BaseLayout from "~/layouts/BaseLayout.astro"
+import { getPosts } from "~/posts"
 
 export async function getStaticPaths() {
-  const posts = await getCollection("posts", ({ data }) => !data.isDraft)
+  const posts = await getPosts()
   const uniqueTags = [...new Set(posts.flatMap(post => post.data.tags))]
 
   return uniqueTags.map(tag => ({
