@@ -7,7 +7,7 @@ import { formatDate } from "~/utils"
 
 type Props = InferEntrySchema<"posts"> & { slug: string }
 
-const { title, image, ditherCover, slug, tags, pubDate } = Astro.props
+const { title, image, slug, tags, pubDate } = Astro.props
 ---
 
 <article class="reveal flex flex-col items-start gap-10">
@@ -32,7 +32,10 @@ const { title, image, ditherCover, slug, tags, pubDate } = Astro.props
     )
   }
 
-  {!image && ditherCover && <dither-field seed={slug} aria-hidden="true" class="aspect-[2/1] w-full" />}
+  {
+    // A post without an image gets its own dithered hills, seeded by the slug.
+    !image && <dither-field seed={slug} aria-hidden="true" class="aspect-[2/1] w-full" />
+  }
 
   <header>
     <h1 class="text-pretty text-2xl font-medium tracking-tight md:text-3xl">{title}</h1>
