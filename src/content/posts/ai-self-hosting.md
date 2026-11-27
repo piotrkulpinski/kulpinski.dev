@@ -66,4 +66,4 @@ Jan-Lukas finds it ironic that AI from big tech companies makes him less depende
 
 I'm more dependent than he is. Everything runs through one Claude subscription. If it went away tomorrow, the agents would stop. The notes and scripts would stay, though. They're Markdown and shell scripts in a git repo, and any other agent, or I, could pick them up.
 
-So I'm not a self-hosting hobbyist, and I don't expect to become one. But I now run more of my own stack than I ever have, with fewer moving parts than a year ago. I didn't expect that combination when I started handing this work to agents.
+So I'm not a self-hosting hobbyist, and I don't expect to become one. More of my stack is mine than a year ago, and it has fewer moving parts. I didn't expect both at once when I started handing this work to agents.
