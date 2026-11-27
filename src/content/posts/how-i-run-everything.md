@@ -45,7 +45,7 @@ The second machine is a Mac mini M4 with 16 GB of RAM, sitting at home. It doesn
 - runs the scheduled agent jobs I'll get to below
 - is my remote dev machine, so agents can work on my projects while my laptop is closed
 
-Running it at home has a cost. It depends on my home internet and power. A macOS update can leave it stuck on a setup screen where nothing starts, and in that state it can't tell me anything. I keep disk encryption off on it, on purpose, so it can log itself back in after a power cut. That's a trade-off I made knowingly: if someone walks out with the mini, they get its disk.
+Running it at home has a cost. It depends on my home internet and power. A macOS update can leave it stuck on a setup screen where nothing starts, and in that state it can't tell me anything.
 
 ## Knowing when something breaks
 
