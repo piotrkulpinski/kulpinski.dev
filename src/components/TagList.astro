@@ -10,7 +10,7 @@ const { tags } = Astro.props
 
 {
   tags.length ? (
-    <ul class="flex flex-col">
+    <ul class="-mt-1.5 flex flex-col">
       {tags.map(({ tag, count }) => (
         <Row href={`/tags/${tag}/`} title={`#${tag}`} aside={`${count} ${count === 1 ? "post" : "posts"}`} />
       ))}
