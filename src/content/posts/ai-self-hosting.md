@@ -1,8 +1,8 @@
 ---
 pubDate: 2026-12-03
-title: "AI made me a self-hoster, and the fun part is deleting things"
-shortTitle: "AI made me a self-hoster"
-description: "I build products and never enjoyed running servers. AI agents changed that, mostly by making it safe to remove things."
+title: "AI let me self-host without making it a hobby"
+shortTitle: "Self-hosting without the hobby"
+description: "I build products and never enjoyed running servers. Now I run more of my own stack than ever, and agents do the work."
 tags: ["engineering", "ai", "side-projects"]
 ---
 
@@ -10,7 +10,7 @@ Jan-Lukas Else wrote a post called [AI made self-hosting fun again](https://janl
 
 My story starts somewhere else. I never had the excitement to lose. I build products, and servers were the part I put up with so the products could run. I started on Vercel, then moved to Railway. Both still needed somewhere to run everything around the apps, like Postgres, ClickHouse and Redis. And I never knew what the bill would be. Once one of my sites got popular, I was paying over $100 a month.
 
-That changed this year, and the change surprised me. I didn't get excited about adding services. I got excited about removing them.
+That changed this year. I now run more of my own stack than ever, on a fixed bill, and I still don't spend my evenings on servers. Agents do the work. I decide what runs and what goes.
 
 ## The setup is a repo now
 
