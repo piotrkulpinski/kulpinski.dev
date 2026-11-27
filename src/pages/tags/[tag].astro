@@ -22,7 +22,7 @@ const { tag } = Astro.params
 const { posts } = Astro.props
 ---
 
-<BaseLayout title={`Posts tagged "${tag}"`}>
+<BaseLayout title={`Posts tagged "${tag}"`} ogImage={`/og/tags/${tag}.png`}>
   <Section label={`#${tag}`} heading="h1">
     <p class="mb-4 text-dim">
       {posts.length} post{posts.length === 1 ? "" : "s"} tagged.

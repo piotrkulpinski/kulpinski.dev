@@ -1,6 +1,5 @@
 ---
 import { render } from "astro:content"
-import type { SEOProps } from "astro-seo"
 import BaseLayout from "~/layouts/BaseLayout.astro"
 import MarkdownPostLayout from "~/layouts/MarkdownPostLayout.astro"
 import { getPosts } from "~/posts"
@@ -21,7 +20,8 @@ const post = entry.data
 const seo = {
   title: post.title,
   description: post.description,
-} as SEOProps
+  ogImage: `/og/posts/${entry.id}.png`,
+}
 ---
 
 <BaseLayout {...seo}>
