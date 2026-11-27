@@ -7,7 +7,13 @@ import { formatDate } from "~/utils"
 
 type Props = InferEntrySchema<"posts">
 
-const { title, image, tags, pubDate } = Astro.props
+const { title, image, imageDark, tags, pubDate } = Astro.props
+
+// A dithered cover is a two-color PNG drawn at twice the column width. It keeps its own size and
+// format, since resizing or lossy compression smears the dither dots.
+const isDithered = image?.format === "png"
+const coverProps = isDithered ? { format: "png" as const } : { width: 1280, height: 640 }
+const coverClass = isDithered ? "w-full [image-rendering:pixelated]" : "w-full"
 ---
 
 <article class="reveal flex flex-col items-start gap-10">
@@ -22,12 +28,23 @@ const { title, image, tags, pubDate } = Astro.props
   {
     image && (
       <Image
-        class="w-full"
         src={image}
         alt={title}
-        width={1280}
-        height={640}
         loading="eager"
+        {...coverProps}
+        class:list={[coverClass, imageDark && "dark:hidden"]}
+      />
+    )
+  }
+
+  {
+    imageDark && (
+      <Image
+        src={imageDark}
+        alt={title}
+        loading="eager"
+        {...coverProps}
+        class:list={[coverClass, "hidden dark:block"]}
       />
     )
   }

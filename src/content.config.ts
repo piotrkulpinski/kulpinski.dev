@@ -13,6 +13,8 @@ const postsCollection = defineCollection({
       description: z.string().optional(),
       author: z.string().optional(),
       image: image().optional(),
+      // The cover in dark mode. Dithered covers ship both, made with `scripts/cover.ts`.
+      imageDark: image().optional(),
       ogImage: image().optional(),
       tags: z.array(z.string()),
     }),

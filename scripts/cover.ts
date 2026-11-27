@@ -3,14 +3,16 @@
  * dither in the accent pink, on the light or dark background.
  *
  * Usage: bun scripts/cover.ts <input image> <output basename> [cell size in pixels]
- * Writes `<basename>.webp` (light) and `<basename>-dark.webp` at 1270x635.
+ * Writes `<basename>.png` (light) and `<basename>-dark.png` at 1304x652. An SVG input is drawn on
+ * the cell grid itself, so its own strokes are the outlines; a raster input gets traced outlines.
  */
 import sharp from "sharp"
 
 type Rgb = [number, number, number]
 
-const WIDTH = 1270
-const HEIGHT = 635
+// Twice the post column (652px), so each dither cell lands on whole pixels.
+const WIDTH = 1304
+const HEIGHT = 652
 
 // Mirrors `--color-pink` and `--bg` in `src/styles.css`.
 const ACCENT: Rgb = [0xff, 0x5c, 0x93]
@@ -31,7 +33,8 @@ if (!input || !output) {
   process.exit(1)
 }
 
-const cell = Number(cellArg ?? 3)
+const cell = Number(cellArg ?? 4)
+const isVector = input.endsWith(".svg")
 
 // How sharp a change in tone counts as an outline, on the Sobel scale of 0 to about 1,440.
 const EDGE_THRESHOLD = 140
@@ -51,7 +54,7 @@ const { data: gray } = await sharp(input)
  * against the background instead of fading into it.
  */
 function isEdge(x: number, y: number) {
-  if (x === 0 || y === 0 || x === columns - 1 || y === rows - 1) {
+  if (isVector || x === 0 || y === 0 || x === columns - 1 || y === rows - 1) {
     return false
   }
 
@@ -79,8 +82,8 @@ for (const { suffix, background } of THEMES) {
   await sharp(pixels, { raw: { width: columns, height: rows, channels: 3 } })
     .resize(columns * cell, rows * cell, { kernel: "nearest" })
     .extract({ left: 0, top: 0, width: WIDTH, height: HEIGHT })
-    .webp({ lossless: true })
-    .toFile(`${output}${suffix}.webp`)
+    .png({ palette: true, colors: 2 })
+    .toFile(`${output}${suffix}.png`)
 
-  console.log(`Wrote ${output}${suffix}.webp`)
+  console.log(`Wrote ${output}${suffix}.png`)
 }
