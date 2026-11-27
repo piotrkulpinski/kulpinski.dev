@@ -2,7 +2,7 @@
 isDraft: true
 pubDate: 2026-11-28
 title: "How I run 12 apps on one server, a Mac mini and a lot of agents"
-shortTitle: "How I run everything"
+shortTitle: "One server, a Mac mini and agents"
 description: "The whole setup behind my sites: one €59 Hetzner server, a Mac mini at home, Cloudflare in front, alerts on my phone, and AI agents doing most of the work."
 tags: ["engineering", "side-projects", "ai"]
 ---
@@ -19,7 +19,7 @@ All 12 of my apps run on one dedicated server at Hetzner. That's [OpenAlternativ
 
 It costs **€59 a month**. For that I get 64 GB of RAM, and my apps use under 10. It was a deal Hetzner doesn't offer anymore, so I treat this machine with care.
 
-It wasn't always like this. Until September, the apps were spread over smaller cloud servers. [[One or two sentences on why you moved everything onto one big server.]] Since then I've been moving the rest in too. The tool that deploys everything moved there this week, from the Mac mini.
+It wasn't always like this. Until September, the apps were spread over a handful of cheap cloud servers. I moved them all onto this one because I wanted a simpler setup: fewer machines to set up and look after, and one powerful server instead of several weak ones. Since then I've been moving everything else in too. The tool that deploys everything moved there this week, from the Mac mini.
 
 That tool is [Dokploy](https://dokploy.com), an open source, self-hosted alternative to Vercel or Heroku. I push to GitHub, and the app gets built and deployed. A few of the bigger apps are built on GitHub first, and the server only downloads the finished result. Each app runs in its own Docker container, next to its own Postgres database and, where needed, Redis or a search engine.
 
@@ -95,7 +95,7 @@ Until recently, some of this ran in n8n, some in paid tools, and some just didn'
 
 ## What it costs, and what's missing
 
-The core of it is **€59** for the server and **€3.20** for the photo backups, plus Cloudflare's Workers plan and email sending through AWS. [[Total monthly cost, if you want to share it.]] The agents run on my Claude subscription.
+The core of it is **€59** for the server and **€3.20** for the photo backups, plus Cloudflare's Workers plan and email sending through AWS. The agents run on my Claude subscription.
 
 It has real gaps. Everything runs on one server, so when it dies, everything dies with it. A second server in another data center would fix that, and double the bill. The mini sits on home internet and home power. There's no central place for logs, so when something breaks, an agent reads them on the server itself.
 
