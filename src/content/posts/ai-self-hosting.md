@@ -1,5 +1,4 @@
 ---
-isDraft: true
 pubDate: 2026-12-03
 title: "AI made me a self-hoster, and the fun part is deleting things"
 shortTitle: "AI made me a self-hoster"
@@ -9,7 +8,7 @@ tags: ["engineering", "ai", "side-projects"]
 
 Jan-Lukas Else wrote a post called [AI made self-hosting fun again](https://janlukas.blog/posts/ai-self-hosting). He has self-hosted for years, lost the excitement, and got it back once AI agents took the friction out of trying things.
 
-My story starts somewhere else. I never had the excitement to lose. I build products, and servers were the part I put up with so the products could run. [[One or two sentences on how you hosted before 2026 and how you felt about it.]]
+My story starts somewhere else. I never had the excitement to lose. I build products, and servers were the part I put up with so the products could run. I started on Vercel, then moved to Railway. Both still needed somewhere to run everything around the apps, like Postgres, ClickHouse and Redis. And I never knew what the bill would be. Once one of my sites got popular, I was paying over $100 a month.
 
 That changed this year, and the change surprised me. I didn't get excited about adding services. I got excited about removing them.
 
@@ -43,13 +42,13 @@ Not everything I added is mine. A friend built [SESPulse](https://github.com/ven
 
 The fun part came after it broke. After a restart, the dashboard could start returning errors. The cause was one setting: the app listened on whichever network its container name pointed to, and after a restart that could be an internal one. An agent found it and fixed it in my fork, and both that fix and a second one went back to him as [pull requests](https://github.com/venelinkochev/sespulse/pulls).
 
-[[A year ago I'd have read the error, decided it wasn't worth an evening, and gone back to a paid tool. Keep only if true.]]
+A year ago I'd have read the error, decided it wasn't worth an evening, and gone back to a paid tool.
 
 ## Projects I wouldn't have started
 
 The other change is that small, silly ideas now get built. The best example is [Isometric Kraków](https://isometrickrakow.com), an isometric map of my city.
 
-It's a fork of an open source project that turns open map data into isometric cities. The buildings get painted by an AI image model, one tile at a time, and the tiles are served from Cloudflare R2. I started it on November 16, and it's at 51 commits so far. Today's work was the Wawel Dragon statue.
+It's a fork of an open source project that turns open map data into isometric cities. The buildings get painted by an AI image model, one tile at a time, and the tiles are served from Cloudflare R2.
 
 Nothing about it makes money. It runs on the same setup as everything else, so it costs me close to nothing to keep online. That's the part that makes me start things like this.
 
