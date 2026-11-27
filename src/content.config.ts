@@ -13,6 +13,8 @@ const postsCollection = defineCollection({
       description: z.string().optional(),
       author: z.string().optional(),
       image: image().optional(),
+      // Draws a dithered field seeded by the slug as the cover, when the post has no image.
+      ditherCover: z.boolean().optional(),
       ogImage: image().optional(),
       tags: z.array(z.string()),
     }),

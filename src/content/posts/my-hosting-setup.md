@@ -5,6 +5,7 @@ title: "How I run 12 apps on one server, a Mac mini and a lot of agents"
 shortTitle: "One server, a Mac mini and agents"
 description: "The whole setup behind my sites: one €59 Hetzner server, a Mac mini at home, Cloudflare in front, alerts on my phone, and AI agents doing most of the work."
 tags: ["engineering", "side-projects", "ai"]
+ditherCover: true
 ---
 
 This week I [posted on X](https://x.com/piotrkulpinski/status/2125921575040168198) about testing what happens when my only server dies. The replies asked about Ansible, NixOS, Cloudflare and second servers, and I realized I'd never written down the whole setup.

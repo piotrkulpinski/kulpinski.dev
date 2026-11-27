@@ -25,7 +25,7 @@ const seo = {
 ---
 
 <BaseLayout {...seo}>
-  <MarkdownPostLayout {...post}>
+  <MarkdownPostLayout {...post} slug={entry.id}>
     <Content />
   </MarkdownPostLayout>
 </BaseLayout>

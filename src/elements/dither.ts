@@ -28,6 +28,19 @@ export function cellSize(base = 1.5) {
 }
 
 /**
+ * Turns a string into a stable number, so each page gets its own hills on every build and in the browser.
+ */
+export function getSeed(text: string) {
+  let hash = 0
+
+  for (const character of text) {
+    hash = (hash * 31 + character.charCodeAt(0)) | 0
+  }
+
+  return (Math.abs(hash) % 10_000) / 10
+}
+
+/**
  * Two rolling hill lines, as heights from the top in rows. The near hill rises toward the left,
  * so the bottom left stays densest.
  */

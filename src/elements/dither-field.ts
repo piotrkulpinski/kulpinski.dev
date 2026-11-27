@@ -3,6 +3,7 @@ import {
   cellSize,
   fitCanvas,
   getHills,
+  getSeed,
   onThemeChange,
   paint,
   prefersReducedMotion,
@@ -52,7 +53,9 @@ class DitherField extends HTMLElement {
     this.canvas.className = "absolute inset-0 size-full [image-rendering:pixelated]"
     this.prepend(this.canvas)
     this.color = readColor(this, "--accent")
-    this.time = Math.random() * 1000
+    // A seeded field draws the same hills on every visit, such as a post's cover.
+    const seed = this.getAttribute("seed")
+    this.time = seed ? getSeed(seed) : Math.random() * 1000
 
     const resize = new ResizeObserver(() => this.draw())
     resize.observe(this)
