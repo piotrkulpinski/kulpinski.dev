@@ -1,5 +1,5 @@
 ---
-isDraft: true
+isDraft: false
 pubDate: 2026-11-30
 title: "All my sites run on one server. Here's what happens when it dies"
 shortTitle: "When my only server dies"
@@ -7,11 +7,11 @@ description: "A dead disk made me ask what happens if my only server dies. So I 
 tags: ["engineering", "side-projects", "ai"]
 ---
 
-For a few weeks, one of the two disks in my only server was dead, and I had no idea.
+For 46 days, one of the two disks in my only server was dead, and I had no idea.
 
-Nothing went down. The server has two disks that mirror each other, so it kept running on the one that was left. [[How you found out about the dead disk.]] Hetzner replaced the drive, the mirror was rebuilt, and that was it.
+Nothing went down. The server has two disks that mirror each other, so it kept running on the one that was left. A Claude session working on the server finally spotted it. Hetzner replaced the drive, the mirror was rebuilt, and that was it.
 
-But for those weeks, everything I run was one more failure away from gone. So last Thursday, I tested what happens when the whole server dies.
+But for those 46 days, everything I run was one more failure away from gone. So last Thursday, I tested what happens when the whole server dies.
 
 ## Why one server
 
@@ -47,7 +47,7 @@ The databases took 9 minutes, and 8 of those were one database. DomainRapid has 
 
 **36 minutes** after the server was created, all 12 apps answered. That includes fixing four problems along the way. The server cost about **€0.11**.
 
-[[One or two sentences on how it felt watching the apps come back, or skip.]]
+Watching everything come back on its own felt a little magical. Mostly, it was reassuring.
 
 ## What broke
 
