@@ -4,9 +4,7 @@ import { join } from "node:path"
 import { type Card, createRenderer, type FontFile } from "ogier"
 import sharp from "sharp"
 import avatarSvg from "~/assets/piotr-kulpinski-avatar.svg?raw"
-import { bayer, getHills } from "~/elements/dither"
-
-type Rgb = [number, number, number]
+import { bayer, getHills, mix, type Rgb } from "~/elements/dither"
 
 /**
  * The site's dark theme. Every card is dark: an Open Graph image is one PNG for every viewer.
@@ -33,6 +31,9 @@ const HOME_LINE_HEIGHT = 1.12
 // The gap ogier puts between the title and the element passed as `extra`.
 const HEADLINE_GAP = 16
 
+// The avatar's box on the home card. The card's right edge cuts it, as in the design.
+const AVATAR = { left: 700, top: 70, size: 560 }
+
 // Resolves from the project root, which holds the same `node_modules` in dev and in the build.
 const require = createRequire(join(process.cwd(), "package.json"))
 
@@ -54,10 +55,6 @@ async function getFontFiles(family: string, weight: number): Promise<FontFile[]>
 
 function parseHex(hex: string): Rgb {
   return [1, 3, 5].map(index => Number.parseInt(hex.slice(index, index + 2), 16)) as Rgb
-}
-
-function mix(from: Rgb, to: Rgb, amount: number): Rgb {
-  return from.map((value, index) => Math.round(value + (to[index] - value) * amount)) as Rgb
 }
 
 /**
@@ -151,14 +148,13 @@ function renderWash(width: number, height: number) {
  */
 async function renderPortrait() {
   const avatar = await sharp(Buffer.from(avatarSvg), { density: 900 })
-    .resize(560, 560)
-    // The card cuts the avatar at its right edge, as the design does.
-    .extract({ left: 0, top: 0, width: WIDTH - 700, height: 560 })
+    .resize(AVATAR.size, AVATAR.size)
+    .extract({ left: 0, top: 0, width: WIDTH - AVATAR.left, height: AVATAR.size })
     .png()
     .toBuffer()
 
   return sharp({ create: { width: WIDTH, height: HEIGHT, channels: 3, background: colors.paper } })
-    .composite([{ input: avatar, left: 700, top: 70 }])
+    .composite([{ input: avatar, left: AVATAR.left, top: AVATAR.top }])
     .png()
     .toBuffer()
 }
@@ -244,7 +240,7 @@ async function getRenderers() {
 
 let renderers: ReturnType<typeof getRenderers> | undefined
 
-interface PageCardInput {
+export interface PageCardInput {
   seed: string
   eyebrow: string
   title: string
@@ -278,6 +274,7 @@ export async function renderHomeCard() {
   const { home } = await renderers
 
   const lineHeight = Math.round(HOME_TITLE_SIZE * HOME_LINE_HEIGHT)
+  // One wash wider than the longest line, so each line box clips it at its own width.
   const wash = await renderWash(720, lineHeight)
   const washUri = `data:image/png;base64,${wash.toString("base64")}`
 
@@ -300,6 +297,7 @@ export async function renderHomeCard() {
             padding: "0 10px",
             backgroundImage: `url(${washUri})`,
             backgroundRepeat: "no-repeat",
+            // ogier names fonts passed as files after their role.
             fontFamily: "title",
             fontSize: HOME_TITLE_SIZE,
             fontWeight: 500,

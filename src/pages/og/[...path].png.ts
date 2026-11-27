@@ -1,14 +1,10 @@
 import type { APIRoute, GetStaticPaths } from "astro"
-import { renderHomeCard, renderPageCard } from "~/og/card"
+import { type PageCardInput, renderHomeCard, renderPageCard } from "~/og/card"
 import { getPosts } from "~/posts"
 import { formatDate } from "~/utils"
 
-interface PageCard {
+interface PageCard extends PageCardInput {
   kind: "page"
-  seed: string
-  eyebrow: string
-  title: string
-  footer: string
 }
 
 interface HomeCard {
