@@ -5,9 +5,9 @@ import Arrow from "~/components/global/Arrow.astro"
 import Prose from "~/components/global/Prose.astro"
 import { formatDate } from "~/utils"
 
-type Props = InferEntrySchema<"posts">
+type Props = InferEntrySchema<"posts"> & { slug: string }
 
-const { title, image, tags, pubDate } = Astro.props
+const { title, image, slug, tags, pubDate } = Astro.props
 ---
 
 <article class="reveal flex flex-col items-start gap-10">
@@ -30,6 +30,11 @@ const { title, image, tags, pubDate } = Astro.props
         loading="eager"
       />
     )
+  }
+
+  {
+    // A post without an image gets its own dithered hills, seeded by the slug.
+    !image && <dither-field seed={slug} aria-hidden="true" class="aspect-[2/1] w-full" />
   }
 
   <header>

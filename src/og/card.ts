@@ -4,7 +4,7 @@ import { join } from "node:path"
 import { type Card, createRenderer, type FontFile } from "ogier"
 import sharp from "sharp"
 import avatarSvg from "~/assets/piotr-kulpinski-avatar.svg?raw"
-import { bayer, getHills, mix, type Rgb } from "~/elements/dither"
+import { bayer, getHills, getSeed, mix, type Rgb } from "~/elements/dither"
 
 /**
  * The site's dark theme. Every card is dark: an Open Graph image is one PNG for every viewer.
@@ -55,19 +55,6 @@ async function getFontFiles(family: string, weight: number): Promise<FontFile[]>
 
 function parseHex(hex: string): Rgb {
   return [1, 3, 5].map(index => Number.parseInt(hex.slice(index, index + 2), 16)) as Rgb
-}
-
-/**
- * Turns a string into a stable number, so each page gets its own hills on every build.
- */
-function getSeed(text: string) {
-  let hash = 0
-
-  for (const character of text) {
-    hash = (hash * 31 + character.charCodeAt(0)) | 0
-  }
-
-  return (Math.abs(hash) % 10_000) / 10
 }
 
 /**
