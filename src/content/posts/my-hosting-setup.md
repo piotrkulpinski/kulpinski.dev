@@ -1,5 +1,5 @@
 ---
-isDraft: true
+isDraft: false
 pubDate: 2026-11-28
 title: "How I run 12 apps on one server, a Mac mini and a lot of agents"
 shortTitle: "One server, a Mac mini and agents"
