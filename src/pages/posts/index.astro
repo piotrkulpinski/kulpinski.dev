@@ -10,7 +10,7 @@ const posts = allPosts.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.
 const years = Map.groupBy(posts, post => post.data.pubDate.getFullYear())
 ---
 
-<BaseLayout title="Writing">
+<BaseLayout title="Writing" ogImage="/og/posts.png">
   <Section label="Writing" heading="h1">
     <p class="text-dim text-pretty">
       Notes on software, SEO, open source, and shipping small things.

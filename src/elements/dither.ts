@@ -27,6 +27,24 @@ export function cellSize(base = 1.5) {
   return Math.max(1, Math.round(base * ratio)) / ratio
 }
 
+/**
+ * Two rolling hill lines, as heights from the top in rows. The near hill rises toward the left,
+ * so the bottom left stays densest.
+ */
+export function getHills(x: number, columns: number, rows: number, time: number) {
+  const across = x / columns
+  const near =
+    rows * (0.3 + 0.38 * across) +
+    rows * 0.06 * Math.sin(x * 0.045 - time * 0.8) +
+    rows * 0.03 * Math.sin(x * 0.11 + time)
+  const far =
+    rows * (0.12 + 0.3 * across) +
+    rows * 0.08 * Math.sin(x * 0.028 + time * 0.5 + 1.7) +
+    rows * 0.03 * Math.sin(x * 0.07 - time)
+
+  return { near, far }
+}
+
 export function prefersReducedMotion() {
   return window.matchMedia("(prefers-reduced-motion: reduce)").matches
 }

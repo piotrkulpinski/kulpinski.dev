@@ -2,6 +2,7 @@ import {
   bayer,
   cellSize,
   fitCanvas,
+  getHills,
   onThemeChange,
   paint,
   prefersReducedMotion,
@@ -11,24 +12,6 @@ import {
 
 const FRAME_INTERVAL = 60
 const SPEED = 0.00012
-
-/**
- * Two rolling hill lines, as heights from the top in rows. The near hill rises toward the left,
- * so the bottom left stays densest.
- */
-function getHills(x: number, columns: number, rows: number, time: number) {
-  const across = x / columns
-  const near =
-    rows * (0.3 + 0.38 * across) +
-    rows * 0.06 * Math.sin(x * 0.045 - time * 0.8) +
-    rows * 0.03 * Math.sin(x * 0.11 + time)
-  const far =
-    rows * (0.12 + 0.3 * across) +
-    rows * 0.08 * Math.sin(x * 0.028 + time * 0.5 + 1.7) +
-    rows * 0.03 * Math.sin(x * 0.07 - time)
-
-  return { near, far }
-}
 
 /**
  * The dither density at a point: a sparse sky, a mid-tone far hill and a denser near hill. Each

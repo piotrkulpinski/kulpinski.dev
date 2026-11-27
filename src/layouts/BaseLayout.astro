@@ -8,9 +8,12 @@ import Navigation from "~/components/global/Navigation.astro"
 
 import "~/styles.css"
 
-type Props = SEOProps
+interface Props extends SEOProps {
+  // The page's Open Graph card under `/og`, rendered by `src/pages/og/[...path].png.ts`.
+  ogImage?: string
+}
 
-const { title, description, ...seoProps } = Astro.props
+const { title, description, ogImage = "/og/home.png", ...seoProps } = Astro.props
 
 const globalTitle = "Piotr Kulpinski's Blog"
 const globalDescription =
@@ -27,8 +30,14 @@ const baseSeo = {
     basic: {
       title: metaTitle,
       type: "website",
-      image: new URL("/opengraph.png", Astro.request.url).toString(),
+      image: new URL(ogImage, Astro.request.url).toString(),
       url: metaUrl,
+    },
+    image: {
+      type: "image/png",
+      width: 1200,
+      height: 630,
+      alt: metaTitle,
     },
   },
   twitter: {
