@@ -7,8 +7,9 @@ import TextLink from "~/components/global/TextLink.astro"
 import PostList from "~/components/PostList.astro"
 import ProjectList from "~/components/ProjectList.astro"
 import BaseLayout from "~/layouts/BaseLayout.astro"
+import { getPosts } from "~/posts"
 
-const allPosts = await getCollection("posts", ({ data }) => !data.isDraft)
+const allPosts = await getPosts()
 const allProjects = await getCollection("projects")
 
 const posts = allPosts
